@@ -37,87 +37,84 @@
       --success:       #1db87a;
       --warning:       #f59e0b;
       --danger:        #ef4444;
-      --info:          #3b82f6;
       --shadow:        0 4px 24px rgba(15,45,92,0.10);
       --radius:        14px;
-      --cat1:          #3b82f6;
-      --cat2:          #8b5cf6;
-      --cat3:          #10b981;
-      --cat4:          #f59e0b;
-      --cat5:          #ef4444;
+      --cat1: #3b82f6; --cat2: #8b5cf6;
+      --cat3: #10b981; --cat4: #f59e0b; --cat5: #ef4444;
+      --sidebar-w: 265px;
     }
-
-    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-
+    *, *::before, *::after { box-sizing:border-box; margin:0; padding:0; }
     body {
-      font-family: 'Inter', sans-serif;
-      background: var(--bg);
-      color: var(--text);
-      display: flex;
-      min-height: 100vh;
+      font-family:'Inter',sans-serif;
+      background:var(--bg); color:var(--text);
+      display:flex; min-height:100vh;
     }
 
-    /* ── SIDEBAR ── */
+    /* ══ OVERLAY (mobile) ══ */
+    .sidebar-overlay {
+      display:none;
+      position:fixed; inset:0;
+      background:rgba(0,0,0,.55);
+      z-index:98;
+      backdrop-filter:blur(2px);
+    }
+    .sidebar-overlay.show { display:block; }
+
+    /* ══ SIDEBAR ══ */
     .sidebar {
-      width: 265px;
-      background: var(--sidebar);
-      display: flex;
-      flex-direction: column;
-      position: fixed;
-      top: 0; left: 0; bottom: 0;
-      z-index: 100;
-      overflow-y: auto;
+      width:var(--sidebar-w);
+      background:var(--sidebar);
+      display:flex; flex-direction:column;
+      position:fixed; top:0; left:0; bottom:0;
+      z-index:99; overflow-y:auto;
+      transition:transform .3s ease;
     }
     .sidebar-brand {
-      padding: 28px 24px 20px;
-      border-bottom: 1px solid rgba(255,255,255,0.07);
+      padding:26px 22px 18px;
+      border-bottom:1px solid rgba(255,255,255,.07);
     }
-    .brand-logo {
-      display: flex;
-      align-items: center;
-      gap: 12px;
-      margin-bottom: 8px;
-    }
+    .brand-logo { display:flex; align-items:center; gap:12px; margin-bottom:8px; }
     .brand-icon {
-      width: 44px; height: 44px;
-      background: linear-gradient(135deg,var(--accent),var(--accent-light));
-      border-radius: 12px;
-      display: flex; align-items: center; justify-content: center;
-      font-size: 20px; color: var(--primary);
-      flex-shrink: 0;
+      width:44px; height:44px;
+      background:linear-gradient(135deg,var(--accent),var(--accent-light));
+      border-radius:12px; display:flex; align-items:center;
+      justify-content:center; font-size:20px; color:var(--primary); flex-shrink:0;
     }
     .brand-name { color:#fff; font-size:16px; font-weight:700; line-height:1.2; }
     .brand-sub  { color:rgba(255,255,255,.4); font-size:11px; }
     .brand-tag  { color:rgba(255,255,255,.3); font-size:11px; margin-top:6px; display:flex; align-items:center; gap:5px; }
 
-    .sidebar-nav { padding:18px 12px; flex:1; }
+    /* Close btn inside sidebar (mobile) */
+    .sidebar-close {
+      display:none;
+      position:absolute; top:14px; right:14px;
+      background:rgba(255,255,255,.1); border:none;
+      color:#fff; width:32px; height:32px;
+      border-radius:8px; font-size:16px;
+      cursor:pointer; align-items:center; justify-content:center;
+    }
+
+    .sidebar-nav { padding:16px 12px; flex:1; }
     .nav-section-label {
-      color:rgba(255,255,255,.25);
-      font-size:10px; font-weight:700;
+      color:rgba(255,255,255,.25); font-size:10px; font-weight:700;
       letter-spacing:1.4px; text-transform:uppercase;
       padding:0 12px 8px; margin-top:4px;
     }
     .nav-item {
       display:flex; align-items:center; gap:11px;
       padding:10px 14px; border-radius:9px;
-      color:rgba(255,255,255,.55);
-      font-size:13px; font-weight:500;
-      cursor:pointer; transition:.2s;
-      margin-bottom:2px; text-decoration:none;
+      color:rgba(255,255,255,.55); font-size:13px; font-weight:500;
+      cursor:pointer; transition:.2s; margin-bottom:2px; text-decoration:none;
     }
     .nav-item:hover  { background:rgba(255,255,255,.07); color:#fff; }
     .nav-item.active { background:rgba(201,168,76,.15); color:var(--accent); }
     .nav-item i      { width:18px; text-align:center; font-size:14px; flex-shrink:0; }
     .nav-badge {
-      margin-left:auto;
-      background:var(--accent); color:var(--primary);
-      font-size:10px; font-weight:700;
-      padding:2px 7px; border-radius:20px;
+      margin-left:auto; background:var(--accent); color:var(--primary);
+      font-size:10px; font-weight:700; padding:2px 7px; border-radius:20px;
     }
-
     .sidebar-footer {
-      padding:16px 20px;
-      border-top:1px solid rgba(255,255,255,.07);
+      padding:16px 20px; border-top:1px solid rgba(255,255,255,.07);
     }
     .user-card { display:flex; align-items:center; gap:10px; }
     .user-avatar {
@@ -129,28 +126,38 @@
     .user-name { color:#fff; font-size:13px; font-weight:600; }
     .user-role { color:rgba(255,255,255,.35); font-size:11px; }
 
-    /* ── MAIN ── */
-    .main { margin-left:265px; flex:1; display:flex; flex-direction:column; }
+    /* ══ MAIN ══ */
+    .main { margin-left:var(--sidebar-w); flex:1; display:flex; flex-direction:column; min-width:0; }
 
-    /* ── TOPBAR ── */
+    /* ══ TOPBAR ══ */
     .topbar {
-      background:var(--card);
-      border-bottom:1px solid var(--border);
-      padding:0 32px;
-      height:68px;
+      background:var(--card); border-bottom:1px solid var(--border);
+      padding:0 24px; height:64px;
       display:flex; align-items:center; justify-content:space-between;
       position:sticky; top:0; z-index:50;
       box-shadow:0 2px 12px rgba(15,45,92,.07);
+      gap:12px;
     }
-    .topbar-left { display:flex; align-items:center; gap:16px; }
-    .page-title  { font-size:18px; font-weight:700; color:var(--primary); }
-    .page-sub    { font-size:12px; color:var(--muted); margin-top:1px; }
-    .topbar-right { display:flex; align-items:center; gap:12px; }
+    .topbar-left { display:flex; align-items:center; gap:12px; min-width:0; }
+
+    /* Hamburger button */
+    .hamburger {
+      display:none;
+      background:none; border:none;
+      color:var(--primary); font-size:22px;
+      cursor:pointer; padding:6px; border-radius:8px;
+      transition:.2s; flex-shrink:0;
+    }
+    .hamburger:hover { background:var(--bg); }
+
+    .page-title { font-size:17px; font-weight:700; color:var(--primary); white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+    .page-sub   { font-size:11px; color:var(--muted); margin-top:1px; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+    .topbar-right { display:flex; align-items:center; gap:10px; flex-shrink:0; }
 
     .year-selector {
-      display:flex; align-items:center; gap:8px;
+      display:flex; align-items:center; gap:6px;
       background:var(--bg); border-radius:9px;
-      padding:7px 14px; border:1px solid var(--border);
+      padding:7px 12px; border:1px solid var(--border);
     }
     .year-selector label { font-size:12px; color:var(--muted); font-weight:500; white-space:nowrap; }
     .year-selector select {
@@ -158,130 +165,95 @@
       font-family:'Inter',sans-serif; font-size:14px;
       font-weight:700; color:var(--primary); cursor:pointer;
     }
-
     .person-toggle { display:flex; border-radius:9px; overflow:hidden; border:1px solid var(--border); }
     .person-btn {
-      padding:7px 16px; font-size:13px; font-weight:600;
+      padding:7px 13px; font-size:12px; font-weight:600;
       background:none; border:none; cursor:pointer;
       transition:.2s; color:var(--muted); font-family:'Inter',sans-serif;
     }
     .person-btn.active { background:var(--primary); color:#fff; }
-
     .export-btn {
       display:flex; align-items:center; gap:7px;
       background:var(--accent); color:var(--primary);
       border:none; border-radius:9px;
-      padding:9px 18px; font-size:13px; font-weight:700;
-      cursor:pointer; transition:.2s; font-family:'Inter',sans-serif;
-      white-space:nowrap;
+      padding:9px 16px; font-size:13px; font-weight:700;
+      cursor:pointer; transition:.2s; font-family:'Inter',sans-serif; white-space:nowrap;
     }
-    .export-btn:hover { background:var(--accent-light); transform:translateY(-1px); }
+    .export-btn:hover { background:var(--accent-light); }
+    .export-text { display:inline; }
 
-    /* ── CONTENT ── */
-    .content { padding:28px 32px; flex:1; }
+    /* ══ CONTENT ══ */
+    .content { padding:24px 28px; flex:1; }
 
-    /* ── SUMMARY CARDS ── */
+    /* ══ SUMMARY CARDS ══ */
     .summary-grid {
-      display:grid;
-      grid-template-columns:repeat(5,1fr);
-      gap:16px; margin-bottom:26px;
+      display:grid; grid-template-columns:repeat(5,1fr);
+      gap:14px; margin-bottom:24px;
     }
     .sum-card {
-      background:var(--card);
-      border-radius:var(--radius);
-      padding:20px 18px;
-      box-shadow:var(--shadow);
+      background:var(--card); border-radius:var(--radius);
+      padding:18px 16px; box-shadow:var(--shadow);
       border-top:4px solid transparent;
-      position:relative; overflow:hidden;
-      transition:.25s;
+      position:relative; overflow:hidden; transition:.25s;
     }
     .sum-card:hover { transform:translateY(-3px); box-shadow:0 10px 36px rgba(15,45,92,.14); }
     .sum-card::after {
-      content:''; position:absolute;
-      top:0; right:0; width:64px; height:64px;
-      border-radius:0 0 0 64px; opacity:.06;
+      content:''; position:absolute; top:0; right:0;
+      width:60px; height:60px; border-radius:0 0 0 60px; opacity:.06;
     }
     .sum-card.c1{border-color:var(--cat1)} .sum-card.c1::after{background:var(--cat1)}
     .sum-card.c2{border-color:var(--cat2)} .sum-card.c2::after{background:var(--cat2)}
     .sum-card.c3{border-color:var(--cat3)} .sum-card.c3::after{background:var(--cat3)}
     .sum-card.c4{border-color:var(--cat4)} .sum-card.c4::after{background:var(--cat4)}
     .sum-card.c5{border-color:var(--cat5)} .sum-card.c5::after{background:var(--cat5)}
-
     .sum-icon {
-      width:38px; height:38px; border-radius:10px;
+      width:36px; height:36px; border-radius:9px;
       display:flex; align-items:center; justify-content:center;
-      font-size:16px; margin-bottom:13px;
+      font-size:15px; margin-bottom:12px;
     }
     .c1 .sum-icon{background:rgba(59,130,246,.12);color:var(--cat1)}
     .c2 .sum-icon{background:rgba(139,92,246,.12);color:var(--cat2)}
     .c3 .sum-icon{background:rgba(16,185,129,.12);color:var(--cat3)}
     .c4 .sum-icon{background:rgba(245,158,11,.12);color:var(--cat4)}
     .c5 .sum-icon{background:rgba(239,68,68,.12);color:var(--cat5)}
-
-    .sum-label  { font-size:10.5px; color:var(--muted); font-weight:600; text-transform:uppercase; letter-spacing:.6px; }
-    .sum-amount { font-size:20px; font-weight:800; color:var(--primary); margin:5px 0 2px; }
+    .sum-label  { font-size:10px; color:var(--muted); font-weight:600; text-transform:uppercase; letter-spacing:.6px; }
+    .sum-amount { font-size:18px; font-weight:800; color:var(--primary); margin:5px 0 2px; }
     .sum-limit  { font-size:10px; color:var(--muted); }
     .sum-bar    { height:4px; background:var(--border); border-radius:99px; margin-top:10px; overflow:hidden; }
-    .sum-bar-fill { height:100%; border-radius:99px; transition:.6s ease; }
-    .c1 .sum-bar-fill{background:var(--cat1)}
-    .c2 .sum-bar-fill{background:var(--cat2)}
-    .c3 .sum-bar-fill{background:var(--cat3)}
-    .c4 .sum-bar-fill{background:var(--cat4)}
+    .sum-bar-fill { height:100%; border-radius:99px; transition:.6s; }
+    .c1 .sum-bar-fill{background:var(--cat1)} .c2 .sum-bar-fill{background:var(--cat2)}
+    .c3 .sum-bar-fill{background:var(--cat3)} .c4 .sum-bar-fill{background:var(--cat4)}
     .c5 .sum-bar-fill{background:var(--cat5)}
 
-    /* ── CHARTS ROW ── */
-    .charts-row {
-      display:grid;
-      grid-template-columns:2fr 1fr;
-      gap:20px; margin-bottom:24px;
-    }
-    .chart-card {
-      background:var(--card);
-      border-radius:var(--radius);
-      box-shadow:var(--shadow);
-      padding:24px;
-    }
-    .chart-header {
-      display:flex; align-items:flex-start; justify-content:space-between;
-      margin-bottom:20px;
-    }
-    .chart-title { font-size:15px; font-weight:700; color:var(--primary); }
+    /* ══ CHARTS ══ */
+    .charts-row { display:grid; grid-template-columns:2fr 1fr; gap:18px; margin-bottom:22px; }
+    .chart-card { background:var(--card); border-radius:var(--radius); box-shadow:var(--shadow); padding:22px; }
+    .chart-header { display:flex; align-items:flex-start; justify-content:space-between; margin-bottom:18px; }
+    .chart-title { font-size:14px; font-weight:700; color:var(--primary); }
     .chart-sub   { font-size:12px; color:var(--muted); margin-top:3px; }
     .chart-badge {
       background:var(--bg); border:1px solid var(--border);
-      padding:4px 11px; border-radius:20px;
-      font-size:11px; font-weight:600; color:var(--primary); white-space:nowrap;
-      flex-shrink:0; margin-left:10px;
+      padding:4px 10px; border-radius:20px;
+      font-size:11px; font-weight:600; color:var(--primary);
+      white-space:nowrap; flex-shrink:0; margin-left:8px;
     }
-    .chart-wrap { position:relative; height:270px; }
-    .donut-wrap { position:relative; height:240px; }
+    .chart-wrap  { position:relative; height:260px; }
+    .donut-wrap  { position:relative; height:230px; }
 
-    /* ── ENTRY CARD ── */
-    .entry-card {
-      background:var(--card);
-      border-radius:var(--radius);
-      box-shadow:var(--shadow);
-      margin-bottom:28px;
-      overflow:hidden;
-    }
+    /* ══ ENTRY CARD ══ */
+    .entry-card { background:var(--card); border-radius:var(--radius); box-shadow:var(--shadow); margin-bottom:24px; overflow:hidden; }
     .entry-header {
-      background:linear-gradient(135deg,var(--primary) 0%,var(--primary-light) 100%);
-      padding:22px 28px;
-      display:flex; align-items:center; justify-content:space-between;
+      background:linear-gradient(135deg,var(--primary),var(--primary-light));
+      padding:20px 26px; display:flex; align-items:center; justify-content:space-between;
     }
-    .entry-header-title { color:#fff; font-size:16px; font-weight:700; }
+    .entry-header-title { color:#fff; font-size:15px; font-weight:700; }
     .entry-header-sub   { color:rgba(255,255,255,.6); font-size:12px; margin-top:3px; }
 
-    .cat-tabs {
-      display:flex; border-bottom:1px solid var(--border);
-      overflow-x:auto; background:#fafbfe;
-      scrollbar-width:none;
-    }
+    .cat-tabs { display:flex; border-bottom:1px solid var(--border); overflow-x:auto; background:#fafbfe; scrollbar-width:none; }
     .cat-tabs::-webkit-scrollbar { display:none; }
     .cat-tab {
       display:flex; align-items:center; gap:8px;
-      padding:14px 22px;
-      font-size:13px; font-weight:600; color:var(--muted);
+      padding:13px 18px; font-size:13px; font-weight:600; color:var(--muted);
       cursor:pointer; border-bottom:3px solid transparent;
       white-space:nowrap; transition:.2s; flex-shrink:0;
     }
@@ -289,204 +261,214 @@
     .cat-tab.active { color:var(--primary); border-color:var(--primary); background:var(--card); }
     .cat-tab .dot   { width:8px; height:8px; border-radius:50%; flex-shrink:0; }
 
-    .tab-content { display:none; padding:28px; }
+    .tab-content { display:none; padding:24px; }
     .tab-content.active { display:block; }
 
-    .form-grid { display:grid; grid-template-columns:1fr 1fr; gap:18px; margin-bottom:22px; }
+    .form-grid { display:grid; grid-template-columns:1fr 1fr; gap:16px; margin-bottom:20px; }
     .form-group label {
-      display:block; font-size:11.5px; font-weight:600;
+      display:block; font-size:11px; font-weight:600;
       color:var(--muted); margin-bottom:6px; text-transform:uppercase; letter-spacing:.5px;
     }
     .form-group input,
     .form-group select,
     .form-group textarea {
       width:100%; padding:11px 14px;
-      border:1.5px solid var(--border);
-      border-radius:9px; font-family:'Inter',sans-serif;
-      font-size:13.5px; color:var(--text);
-      background:#fff; outline:none; transition:.2s;
-      -webkit-appearance:none;
+      border:1.5px solid var(--border); border-radius:9px;
+      font-family:'Inter',sans-serif; font-size:13px; color:var(--text);
+      background:#fff; outline:none; transition:.2s; -webkit-appearance:none;
     }
-    .form-group input:focus,
-    .form-group select:focus { border-color:var(--primary-light); box-shadow:0 0 0 3px rgba(26,74,138,.08); }
+    .form-group input:focus, .form-group select:focus {
+      border-color:var(--primary-light); box-shadow:0 0 0 3px rgba(26,74,138,.08);
+    }
     .input-prefix { position:relative; }
     .input-prefix span {
       position:absolute; left:13px; top:50%; transform:translateY(-50%);
       color:var(--muted); font-weight:600; font-size:13px; pointer-events:none;
     }
     .input-prefix input { padding-left:36px; }
-
     .add-btn {
       display:inline-flex; align-items:center; gap:8px;
-      background:var(--primary); color:#fff;
-      border:none; border-radius:9px;
-      padding:11px 24px; font-size:13px; font-weight:700;
+      background:var(--primary); color:#fff; border:none; border-radius:9px;
+      padding:11px 22px; font-size:13px; font-weight:700;
       cursor:pointer; transition:.2s; font-family:'Inter',sans-serif;
     }
     .add-btn:hover { background:var(--primary-light); transform:translateY(-1px); }
 
-    /* ── RECEIPT UPLOAD ── */
+    /* ══ UPLOAD ══ */
     .upload-area {
-      border:2px dashed var(--border);
-      border-radius:12px; padding:26px;
-      text-align:center; cursor:pointer;
-      transition:.25s; background:#fafbfe;
-      margin-top:20px;
+      border:2px dashed var(--border); border-radius:12px; padding:24px;
+      text-align:center; cursor:pointer; transition:.25s; background:#fafbfe; margin-top:18px;
     }
-    .upload-area:hover   { border-color:var(--primary-light); background:rgba(15,45,92,.02); }
-    .upload-area.dragover{ border-color:var(--accent); background:rgba(201,168,76,.06); }
-    .upload-icon  { font-size:34px; color:var(--muted); margin-bottom:10px; }
+    .upload-area:hover    { border-color:var(--primary-light); background:rgba(15,45,92,.02); }
+    .upload-area.dragover { border-color:var(--accent); background:rgba(201,168,76,.06); }
+    .upload-icon  { font-size:32px; color:var(--muted); margin-bottom:10px; }
     .upload-title { font-size:14px; font-weight:600; color:var(--primary); }
     .upload-sub   { font-size:12px; color:var(--muted); margin-top:5px; }
     .upload-input { display:none; }
-
-    .receipts-grid {
-      display:grid; grid-template-columns:repeat(auto-fill,minmax(140px,1fr));
-      gap:12px; margin-top:16px;
-    }
+    .receipts-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(130px,1fr)); gap:12px; margin-top:16px; }
     .receipt-thumb {
-      background:var(--bg); border-radius:10px;
-      padding:14px 12px; text-align:center;
-      border:1px solid var(--border); position:relative;
-      transition:.2s; cursor:pointer;
+      background:var(--bg); border-radius:10px; padding:12px; text-align:center;
+      border:1px solid var(--border); position:relative; transition:.2s; cursor:pointer;
     }
     .receipt-thumb:hover { box-shadow:var(--shadow); border-color:var(--primary-light); }
-    .receipt-icon-big { font-size:30px; margin-bottom:8px; display:block; }
+    .receipt-icon-big { font-size:28px; margin-bottom:8px; display:block; }
     .receipt-name { font-size:11px; color:var(--text); font-weight:500; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
     .receipt-size { font-size:10px; color:var(--muted); margin-top:3px; }
     .receipt-del {
       position:absolute; top:6px; right:6px;
-      background:var(--danger); color:#fff;
-      border:none; border-radius:50%;
-      width:20px; height:20px; font-size:9px;
-      cursor:pointer; display:flex; align-items:center; justify-content:center;
-      opacity:0; transition:.2s;
+      background:var(--danger); color:#fff; border:none; border-radius:50%;
+      width:19px; height:19px; font-size:9px; cursor:pointer;
+      display:flex; align-items:center; justify-content:center; opacity:0; transition:.2s;
     }
     .receipt-thumb:hover .receipt-del { opacity:1; }
 
-    /* ── TABLE ── */
-    .entries-section { margin-top:26px; }
+    /* ══ TABLE ══ */
+    .entries-section { margin-top:24px; }
     .section-heading {
-      font-size:13px; font-weight:700;
-      color:var(--primary); margin-bottom:12px;
+      font-size:13px; font-weight:700; color:var(--primary); margin-bottom:12px;
       display:flex; align-items:center; gap:10px;
     }
     .section-heading::after { content:''; flex:1; height:1px; background:var(--border); }
     .table-wrap { overflow-x:auto; border-radius:10px; border:1px solid var(--border); }
     table { width:100%; border-collapse:collapse; }
     thead tr { background:#f4f7ff; }
-    th {
-      padding:11px 16px; text-align:left;
-      font-size:11px; font-weight:700;
-      color:var(--muted); text-transform:uppercase; letter-spacing:.5px;
-      border-bottom:1px solid var(--border); white-space:nowrap;
-    }
-    td {
-      padding:13px 16px; font-size:13px;
-      border-bottom:1px solid var(--border); color:var(--text); white-space:nowrap;
-    }
+    th { padding:11px 14px; text-align:left; font-size:11px; font-weight:700; color:var(--muted); text-transform:uppercase; letter-spacing:.5px; border-bottom:1px solid var(--border); white-space:nowrap; }
+    td { padding:12px 14px; font-size:13px; border-bottom:1px solid var(--border); color:var(--text); white-space:nowrap; }
     tr:last-child td { border-bottom:none; }
     tr:hover td { background:#fafbfe; }
-
-    .badge {
-      display:inline-flex; align-items:center; gap:5px;
-      padding:3px 10px; border-radius:20px;
-      font-size:11px; font-weight:600;
-    }
+    .badge { display:inline-flex; align-items:center; gap:5px; padding:3px 10px; border-radius:20px; font-size:11px; font-weight:600; }
     .badge-shahrul { background:rgba(59,130,246,.1); color:var(--cat1); }
     .badge-fateha  { background:rgba(139,92,246,.1);  color:var(--cat2); }
-
-    .del-row {
-      background:none; border:none; color:var(--danger);
-      cursor:pointer; font-size:13px; transition:.2s;
-      padding:5px 8px; border-radius:6px;
-    }
+    .del-row { background:none; border:none; color:var(--danger); cursor:pointer; font-size:13px; transition:.2s; padding:5px 8px; border-radius:6px; }
     .del-row:hover { background:rgba(239,68,68,.1); }
 
-    /* ── OVERVIEW TABLE ── */
-    .overview-card {
-      background:var(--card); border-radius:var(--radius);
-      box-shadow:var(--shadow); padding:28px; margin-bottom:28px;
-    }
-    .overview-table-wrap { overflow-x:auto; margin-top:18px; }
+    /* ══ OVERVIEW ══ */
+    .overview-card { background:var(--card); border-radius:var(--radius); box-shadow:var(--shadow); padding:26px; margin-bottom:26px; }
+    .overview-table-wrap { overflow-x:auto; margin-top:16px; }
     .overview-table { width:100%; border-collapse:collapse; }
-    .overview-table th {
-      background:#f4f7ff; padding:12px 18px;
-      font-size:11.5px; font-weight:700; color:var(--muted);
-      text-transform:uppercase; letter-spacing:.5px;
-      border-bottom:2px solid var(--border); white-space:nowrap;
-    }
-    .overview-table td { padding:13px 18px; font-size:13px; border-bottom:1px solid var(--border); white-space:nowrap; }
+    .overview-table th { background:#f4f7ff; padding:11px 16px; font-size:11px; font-weight:700; color:var(--muted); text-transform:uppercase; letter-spacing:.5px; border-bottom:2px solid var(--border); white-space:nowrap; }
+    .overview-table td { padding:12px 16px; font-size:13px; border-bottom:1px solid var(--border); white-space:nowrap; }
     .overview-table tr:hover td { background:#fafbfe; }
     .year-cell { font-weight:700; color:var(--primary); }
     .total-row td { background:#f4f7ff; font-weight:700; color:var(--primary); border-top:2px solid var(--border); }
+    .future-badge {
+      display:inline-flex; align-items:center; gap:5px;
+      background:rgba(201,168,76,.12); color:var(--accent);
+      border:1px solid rgba(201,168,76,.3);
+      padding:2px 8px; border-radius:20px; font-size:10px; font-weight:600; margin-left:6px;
+    }
 
-    /* ── TOAST ── */
-    .toast-container { position:fixed; top:84px; right:28px; z-index:999; display:flex; flex-direction:column; gap:10px; }
+    /* ══ TOAST ══ */
+    .toast-container { position:fixed; top:80px; right:20px; z-index:999; display:flex; flex-direction:column; gap:10px; }
     .toast {
       display:flex; align-items:center; gap:12px;
       background:var(--card); border-radius:10px;
-      padding:14px 18px; box-shadow:0 8px 32px rgba(0,0,0,.15);
+      padding:13px 16px; box-shadow:0 8px 32px rgba(0,0,0,.15);
       border-left:4px solid var(--success);
-      animation:slideIn .3s ease;
-      max-width:340px; font-size:13px; font-weight:500; color:var(--text);
+      animation:slideIn .3s ease; max-width:320px; font-size:13px; font-weight:500; color:var(--text);
     }
     .toast.error { border-color:var(--danger); }
     @keyframes slideIn { from{transform:translateX(40px);opacity:0} to{transform:translateX(0);opacity:1} }
 
-    /* ── MODAL ── */
+    /* ══ MODAL ══ */
     .modal-overlay {
       position:fixed; inset:0; background:rgba(10,31,61,.55);
-      backdrop-filter:blur(5px);
-      display:flex; align-items:center; justify-content:center;
+      backdrop-filter:blur(5px); display:flex; align-items:center; justify-content:center;
       z-index:200; opacity:0; pointer-events:none; transition:.3s;
     }
     .modal-overlay.open { opacity:1; pointer-events:all; }
     .modal-box {
-      background:var(--card); border-radius:var(--radius);
-      padding:32px; width:460px; max-width:92vw;
-      box-shadow:0 24px 64px rgba(0,0,0,.2);
-      transform:scale(.96); transition:.3s;
+      background:var(--card); border-radius:var(--radius); padding:30px;
+      width:440px; max-width:92vw;
+      box-shadow:0 24px 64px rgba(0,0,0,.2); transform:scale(.96); transition:.3s;
     }
     .modal-overlay.open .modal-box { transform:scale(1); }
-    .modal-title { font-size:18px; font-weight:700; color:var(--primary); margin-bottom:6px; }
-    .modal-sub   { font-size:13px; color:var(--muted); margin-bottom:22px; line-height:1.6; }
-    .modal-actions { display:flex; gap:12px; justify-content:flex-end; margin-top:24px; }
-    .btn-secondary {
-      padding:10px 20px; border-radius:9px; border:1.5px solid var(--border);
-      background:none; color:var(--muted); font-size:13px; font-weight:600;
-      cursor:pointer; font-family:'Inter',sans-serif; transition:.2s;
-    }
+    .modal-title { font-size:17px; font-weight:700; color:var(--primary); margin-bottom:6px; }
+    .modal-sub   { font-size:13px; color:var(--muted); margin-bottom:20px; line-height:1.6; }
+    .modal-actions { display:flex; gap:12px; justify-content:flex-end; margin-top:22px; }
+    .btn-secondary { padding:10px 18px; border-radius:9px; border:1.5px solid var(--border); background:none; color:var(--muted); font-size:13px; font-weight:600; cursor:pointer; font-family:'Inter',sans-serif; transition:.2s; }
     .btn-secondary:hover { background:var(--bg); }
 
-    /* ── EMPTY STATE ── */
-    .empty-state { text-align:center; padding:44px 20px; color:var(--muted); }
-    .empty-state i { font-size:42px; margin-bottom:12px; opacity:.25; display:block; }
+    /* ══ EMPTY STATE ══ */
+    .empty-state { text-align:center; padding:40px 20px; color:var(--muted); }
+    .empty-state i { font-size:40px; margin-bottom:12px; opacity:.25; display:block; }
     .empty-state p { font-size:13px; }
 
-    /* ── FUTURE YEAR BADGE ── */
-    .future-badge {
-      display:inline-flex; align-items:center; gap:6px;
-      background:rgba(201,168,76,.12); color:var(--accent);
-      border:1px solid rgba(201,168,76,.3);
-      padding:3px 10px; border-radius:20px;
-      font-size:11px; font-weight:600; margin-left:10px;
+    /* ══════════════════════════════════
+       RESPONSIVE — MOBILE & TABLET
+    ══════════════════════════════════ */
+    @media (max-width: 900px) {
+      /* Sidebar hidden off-screen by default on mobile */
+      .sidebar {
+        transform: translateX(-100%);
+      }
+      .sidebar.open {
+        transform: translateX(0);
+      }
+      /* Show close button inside sidebar */
+      .sidebar-close {
+        display: flex;
+      }
+      /* Main takes full width */
+      .main {
+        margin-left: 0;
+      }
+      /* Show hamburger */
+      .hamburger {
+        display: flex;
+      }
+      /* Content padding reduced */
+      .content {
+        padding: 16px;
+      }
+      /* Summary cards 2 columns on tablet */
+      .summary-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 12px;
+      }
+      /* Charts stack */
+      .charts-row {
+        grid-template-columns: 1fr;
+      }
+      /* Form single column */
+      .form-grid {
+        grid-template-columns: 1fr;
+      }
+      /* Hide export text, show icon only */
+      .export-text {
+        display: none;
+      }
+      /* Topbar adjustments */
+      .topbar {
+        padding: 0 16px;
+        height: 60px;
+        flex-wrap: nowrap;
+        overflow: hidden;
+      }
+      .page-title { font-size: 15px; }
+      .page-sub   { display: none; }
     }
 
-    /* ── RESPONSIVE ── */
-    @media(max-width:1280px) {
-      .summary-grid { grid-template-columns:repeat(3,1fr); }
-    }
-    @media(max-width:960px) {
-      .sidebar { width:0; overflow:hidden; }
-      .main    { margin-left:0; }
-      .charts-row { grid-template-columns:1fr; }
-      .summary-grid { grid-template-columns:repeat(2,1fr); }
-      .form-grid { grid-template-columns:1fr; }
-      .content { padding:20px 16px; }
+    @media (max-width: 480px) {
+      /* Summary cards single column on small phone */
+      .summary-grid {
+        grid-template-columns: 1fr 1fr;
+        gap: 10px;
+      }
+      .sum-amount { font-size: 16px; }
+      /* Year selector compact */
+      .year-selector label { display: none; }
+      /* Person toggle compact */
+      .person-btn { padding: 7px 9px; font-size: 11px; }
+      /* Tab labels shorter */
+      .cat-tab { padding: 11px 14px; font-size: 12px; }
+      .content { padding: 12px; }
+      /* Chart height reduce */
+      .chart-wrap { height: 220px; }
+      .donut-wrap { height: 200px; }
     }
 
-    /* ── SCROLLBAR ── */
+    /* Scrollbar */
     ::-webkit-scrollbar { width:5px; height:5px; }
     ::-webkit-scrollbar-track { background:transparent; }
     ::-webkit-scrollbar-thumb { background:var(--border); border-radius:99px; }
@@ -495,8 +477,16 @@
 </head>
 <body>
 
-<!-- ══════════════════ SIDEBAR ══════════════════ -->
-<aside class="sidebar">
+<!-- ══ SIDEBAR OVERLAY (mobile tap-outside to close) ══ -->
+<div class="sidebar-overlay" id="sidebarOverlay" onclick="closeSidebar()"></div>
+
+<!-- ══════════ SIDEBAR ══════════ -->
+<aside class="sidebar" id="sidebar">
+  <!-- Close button (mobile only) -->
+  <button class="sidebar-close" onclick="closeSidebar()">
+    <i class="fas fa-times"></i>
+  </button>
+
   <div class="sidebar-brand">
     <div class="brand-logo">
       <div class="brand-icon"><i class="fas fa-landmark"></i></div>
@@ -513,39 +503,39 @@
 
   <nav class="sidebar-nav">
     <div class="nav-section-label">Dashboard</div>
-    <a class="nav-item active" onclick="showPage('dashboard')">
+    <a class="nav-item active" onclick="showPage('dashboard');closeSidebar()">
       <i class="fas fa-chart-pie"></i> Overview
     </a>
-    <a class="nav-item" onclick="showPage('entry')">
+    <a class="nav-item" onclick="showPage('entry');closeSidebar()">
       <i class="fas fa-plus-circle"></i> Data Entry
       <span class="nav-badge">+</span>
     </a>
-    <a class="nav-item" onclick="showPage('history')">
+    <a class="nav-item" onclick="showPage('history');closeSidebar()">
       <i class="fas fa-history"></i> History
     </a>
 
     <div class="nav-section-label" style="margin-top:16px">Categories</div>
-    <a class="nav-item" onclick="showPage('entry');switchTab(0)">
+    <a class="nav-item" onclick="showPage('entry');switchTab(0);closeSidebar()">
       <i class="fas fa-shopping-bag"></i> Gaya Hidup
     </a>
-    <a class="nav-item" onclick="showPage('entry');switchTab(1)">
+    <a class="nav-item" onclick="showPage('entry');switchTab(1);closeSidebar()">
       <i class="fas fa-graduation-cap"></i> Child Education
     </a>
-    <a class="nav-item" onclick="showPage('entry');switchTab(2)">
+    <a class="nav-item" onclick="showPage('entry');switchTab(2);closeSidebar()">
       <i class="fas fa-heartbeat"></i> Health Insurance
     </a>
-    <a class="nav-item" onclick="showPage('entry');switchTab(3)">
+    <a class="nav-item" onclick="showPage('entry');switchTab(3);closeSidebar()">
       <i class="fas fa-user-friends"></i> Parents Cost
     </a>
-    <a class="nav-item" onclick="showPage('entry');switchTab(4)">
+    <a class="nav-item" onclick="showPage('entry');switchTab(4);closeSidebar()">
       <i class="fas fa-globe-asia"></i> Assets Overseas
     </a>
 
     <div class="nav-section-label" style="margin-top:16px">Reports</div>
-    <a class="nav-item" onclick="showPage('receipts')">
+    <a class="nav-item" onclick="showPage('receipts');closeSidebar()">
       <i class="fas fa-file-invoice"></i> Receipt Vault
     </a>
-    <a class="nav-item" onclick="showPage('summary')">
+    <a class="nav-item" onclick="showPage('summary');closeSidebar()">
       <i class="fas fa-table"></i> Yearly Summary
     </a>
   </nav>
@@ -561,12 +551,16 @@
   </div>
 </aside>
 
-<!-- ══════════════════ MAIN ══════════════════ -->
+<!-- ══════════ MAIN ══════════ -->
 <div class="main">
 
   <!-- TOPBAR -->
   <header class="topbar">
     <div class="topbar-left">
+      <!-- ☰ Hamburger (mobile only) -->
+      <button class="hamburger" id="hamburgerBtn" onclick="openSidebar()" aria-label="Open menu">
+        <i class="fas fa-bars"></i>
+      </button>
       <div>
         <div class="page-title" id="page-title">Tax Dashboard</div>
         <div class="page-sub"  id="page-sub">Yearly Overview & Analytics · 2020–2030</div>
@@ -574,19 +568,12 @@
     </div>
     <div class="topbar-right">
       <div class="year-selector">
-        <label><i class="fas fa-calendar-alt" style="margin-right:5px;color:var(--accent)"></i>Year</label>
+        <label><i class="fas fa-calendar-alt" style="margin-right:4px;color:var(--accent)"></i>Year</label>
         <select id="yearFilter" onchange="updateAll()">
-          <option value="2020">2020</option>
-          <option value="2021">2021</option>
-          <option value="2022">2022</option>
-          <option value="2023">2023</option>
-          <option value="2024">2024</option>
-          <option value="2025" selected>2025</option>
-          <option value="2026">2026</option>
-          <option value="2027">2027</option>
-          <option value="2028">2028</option>
-          <option value="2029">2029</option>
-          <option value="2030">2030</option>
+          <option>2020</option><option>2021</option><option>2022</option>
+          <option>2023</option><option>2024</option><option selected>2025</option>
+          <option>2026</option><option>2027</option><option>2028</option>
+          <option>2029</option><option>2030</option>
         </select>
       </div>
       <div class="person-toggle">
@@ -595,7 +582,8 @@
         <button class="person-btn"        id="btnBoth"    onclick="selectPerson('Both')">Both</button>
       </div>
       <button class="export-btn" onclick="exportCSV()">
-        <i class="fas fa-download"></i> Export CSV
+        <i class="fas fa-download"></i>
+        <span class="export-text">Export CSV</span>
       </button>
     </div>
   </header>
@@ -603,37 +591,35 @@
   <!-- CONTENT -->
   <div class="content">
 
-    <!-- ═══════════ PAGE: DASHBOARD ═══════════ -->
+    <!-- ═══ DASHBOARD ═══ -->
     <div id="page-dashboard" class="page-section">
-
-      <!-- Summary Cards -->
       <div class="summary-grid">
         <div class="sum-card c1">
           <div class="sum-icon"><i class="fas fa-shopping-bag"></i></div>
           <div class="sum-label">Gaya Hidup</div>
           <div class="sum-amount" id="sum-gl">RM 0.00</div>
-          <div class="sum-limit">Relief Limit: RM 2,500</div>
+          <div class="sum-limit">Limit: RM 2,500</div>
           <div class="sum-bar"><div class="sum-bar-fill" id="bar-gl" style="width:0%"></div></div>
         </div>
         <div class="sum-card c2">
           <div class="sum-icon"><i class="fas fa-graduation-cap"></i></div>
           <div class="sum-label">Child Education</div>
           <div class="sum-amount" id="sum-ce">RM 0.00</div>
-          <div class="sum-limit">Relief Limit: RM 8,000</div>
+          <div class="sum-limit">Limit: RM 8,000</div>
           <div class="sum-bar"><div class="sum-bar-fill" id="bar-ce" style="width:0%"></div></div>
         </div>
         <div class="sum-card c3">
           <div class="sum-icon"><i class="fas fa-heartbeat"></i></div>
           <div class="sum-label">Health Insurance</div>
           <div class="sum-amount" id="sum-hi">RM 0.00</div>
-          <div class="sum-limit">Relief Limit: RM 3,000</div>
+          <div class="sum-limit">Limit: RM 3,000</div>
           <div class="sum-bar"><div class="sum-bar-fill" id="bar-hi" style="width:0%"></div></div>
         </div>
         <div class="sum-card c4">
           <div class="sum-icon"><i class="fas fa-user-friends"></i></div>
           <div class="sum-label">Parents Cost</div>
           <div class="sum-amount" id="sum-pc">RM 0.00</div>
-          <div class="sum-limit">Relief Limit: RM 8,000</div>
+          <div class="sum-limit">Limit: RM 8,000</div>
           <div class="sum-bar"><div class="sum-bar-fill" id="bar-pc" style="width:0%"></div></div>
         </div>
         <div class="sum-card c5">
@@ -645,7 +631,6 @@
         </div>
       </div>
 
-      <!-- Charts Row -->
       <div class="charts-row">
         <div class="chart-card">
           <div class="chart-header">
@@ -653,13 +638,11 @@
               <div class="chart-title">Yearly Tax Relief Trend
                 <span class="future-badge"><i class="fas fa-star"></i> 2020–2030</span>
               </div>
-              <div class="chart-sub">All 5 categories stacked — RM values</div>
+              <div class="chart-sub">All 5 categories — RM values</div>
             </div>
-            <span class="chart-badge" id="trend-badge">RM 0.00 Total</span>
+            <span class="chart-badge" id="trend-badge">RM 0.00</span>
           </div>
-          <div class="chart-wrap">
-            <canvas id="lineChart"></canvas>
-          </div>
+          <div class="chart-wrap"><canvas id="lineChart"></canvas></div>
         </div>
         <div class="chart-card">
           <div class="chart-header">
@@ -668,450 +651,228 @@
               <div class="chart-sub" id="donut-year-label">Selected Year</div>
             </div>
           </div>
-          <div class="donut-wrap">
-            <canvas id="donutChart"></canvas>
-          </div>
+          <div class="donut-wrap"><canvas id="donutChart"></canvas></div>
         </div>
       </div>
 
-      <!-- Bar Chart -->
-      <div class="chart-card" style="margin-bottom:28px">
+      <div class="chart-card" style="margin-bottom:24px">
         <div class="chart-header">
           <div>
             <div class="chart-title">Relief Utilisation vs LHDN Limit</div>
-            <div class="chart-sub" id="bar-chart-sub">Claimed amount vs allowable relief limit</div>
+            <div class="chart-sub" id="bar-chart-sub">Claimed vs allowable limit</div>
           </div>
           <span class="chart-badge">vs Limit</span>
         </div>
-        <div class="chart-wrap">
-          <canvas id="barChart"></canvas>
-        </div>
+        <div class="chart-wrap"><canvas id="barChart"></canvas></div>
       </div>
+    </div>
 
-    </div><!-- /page-dashboard -->
-
-    <!-- ═══════════ PAGE: DATA ENTRY ═══════════ -->
+    <!-- ═══ DATA ENTRY ═══ -->
     <div id="page-entry" class="page-section" style="display:none">
       <div class="entry-card">
         <div class="entry-header">
           <div>
-            <div class="entry-header-title"><i class="fas fa-edit" style="margin-right:9px"></i>Tax Relief Data Entry</div>
-            <div class="entry-header-sub">Record expenses per category with receipts for LHDN audit trail</div>
+            <div class="entry-header-title"><i class="fas fa-edit" style="margin-right:8px"></i>Tax Relief Data Entry</div>
+            <div class="entry-header-sub">Record expenses per category · Upload receipts for audit trail</div>
           </div>
         </div>
-
         <div class="cat-tabs">
-          <div class="cat-tab active" onclick="switchTab(0)" id="tab-0">
-            <span class="dot" style="background:var(--cat1)"></span>Gaya Hidup
-          </div>
-          <div class="cat-tab" onclick="switchTab(1)" id="tab-1">
-            <span class="dot" style="background:var(--cat2)"></span>Child Education
-          </div>
-          <div class="cat-tab" onclick="switchTab(2)" id="tab-2">
-            <span class="dot" style="background:var(--cat3)"></span>Health Insurance
-          </div>
-          <div class="cat-tab" onclick="switchTab(3)" id="tab-3">
-            <span class="dot" style="background:var(--cat4)"></span>Parents Cost
-          </div>
-          <div class="cat-tab" onclick="switchTab(4)" id="tab-4">
-            <span class="dot" style="background:var(--cat5)"></span>Assets Overseas
-          </div>
+          <div class="cat-tab active" onclick="switchTab(0)"><span class="dot" style="background:var(--cat1)"></span>Gaya Hidup</div>
+          <div class="cat-tab" onclick="switchTab(1)"><span class="dot" style="background:var(--cat2)"></span>Child Education</div>
+          <div class="cat-tab" onclick="switchTab(2)"><span class="dot" style="background:var(--cat3)"></span>Health Insurance</div>
+          <div class="cat-tab" onclick="switchTab(3)"><span class="dot" style="background:var(--cat4)"></span>Parents Cost</div>
+          <div class="cat-tab" onclick="switchTab(4)"><span class="dot" style="background:var(--cat5)"></span>Assets Overseas</div>
         </div>
 
-        <!-- ── TAB 0: Gaya Hidup ── -->
+        <!-- TAB 0: Gaya Hidup -->
         <div class="tab-content active" id="tc-0">
           <div class="form-grid">
             <div class="form-group">
-              <label><i class="fas fa-calendar" style="margin-right:4px"></i>Year</label>
-              <select id="gl-year">
-                <option>2020</option><option>2021</option><option>2022</option><option>2023</option>
-                <option>2024</option><option selected>2025</option><option>2026</option>
-                <option>2027</option><option>2028</option><option>2029</option><option>2030</option>
-              </select>
+              <label>Year</label>
+              <select id="gl-year"><option>2020</option><option>2021</option><option>2022</option><option>2023</option><option>2024</option><option selected>2025</option><option>2026</option><option>2027</option><option>2028</option><option>2029</option><option>2030</option></select>
             </div>
             <div class="form-group">
-              <label><i class="fas fa-user" style="margin-right:4px"></i>Person</label>
+              <label>Person</label>
               <select id="gl-person"><option>Shahrul</option><option>Fateha</option></select>
             </div>
             <div class="form-group">
               <label>Sub-Category</label>
               <select id="gl-subcat">
-                <option>Books / Reading Materials</option>
-                <option>Personal Computer / Smartphone / Tablet</option>
-                <option>Internet Subscription</option>
-                <option>Sports Equipment</option>
-                <option>Gym / Sports Facility</option>
-                <option>Self-Enhancement Course</option>
-                <option>EV Charging Facility</option>
-                <option>Breastfeeding Equipment</option>
-                <option>Other</option>
+                <option>Books / Reading Materials</option><option>Personal Computer / Smartphone / Tablet</option>
+                <option>Internet Subscription</option><option>Sports Equipment</option>
+                <option>Gym / Sports Facility</option><option>Self-Enhancement Course</option>
+                <option>EV Charging Facility</option><option>Breastfeeding Equipment</option><option>Other</option>
               </select>
             </div>
             <div class="form-group">
               <label>Amount (RM)</label>
-              <div class="input-prefix">
-                <span>RM</span>
-                <input type="number" id="gl-amount" placeholder="0.00" min="0" step="0.01"/>
-              </div>
+              <div class="input-prefix"><span>RM</span><input type="number" id="gl-amount" placeholder="0.00" min="0" step="0.01"/></div>
             </div>
             <div class="form-group" style="grid-column:span 2">
               <label>Description / Notes</label>
               <input type="text" id="gl-desc" placeholder="e.g. Purchased laptop for personal use"/>
             </div>
           </div>
-          <div class="upload-area" id="upload-gl"
-            ondragover="dragOver(event,'gl')" ondragleave="dragLeave(event,'gl')" ondrop="dropFile(event,'gl')"
-            onclick="document.getElementById('file-gl').click()">
+          <div class="upload-area" id="upload-gl" ondragover="dragOver(event,'gl')" ondragleave="dragLeave(event,'gl')" ondrop="dropFile(event,'gl')" onclick="document.getElementById('file-gl').click()">
             <div class="upload-icon"><i class="fas fa-cloud-upload-alt"></i></div>
             <div class="upload-title">Upload Receipt / Invoice</div>
-            <div class="upload-sub">Drag & drop or click · PDF, JPG, PNG · Max 10MB each</div>
+            <div class="upload-sub">Drag & drop or tap to browse · PDF, JPG, PNG · Max 10MB</div>
             <input type="file" id="file-gl" class="upload-input" multiple accept=".pdf,.jpg,.jpeg,.png" onchange="handleFiles(this,'gl')"/>
           </div>
-          <div class="receipts-grid" id="receipts-gl"></div>
-          <br/>
+          <div class="receipts-grid" id="receipts-gl"></div><br/>
           <button class="add-btn" onclick="addEntry('gl')"><i class="fas fa-plus"></i> Add Entry</button>
           <div class="entries-section">
             <div class="section-heading">Recorded Entries</div>
-            <div class="table-wrap" id="table-gl-wrap">
-              <div class="empty-state"><i class="fas fa-inbox"></i><p>No entries yet. Add your first entry above.</p></div>
-            </div>
+            <div class="table-wrap" id="table-gl-wrap"><div class="empty-state"><i class="fas fa-inbox"></i><p>No entries yet.</p></div></div>
           </div>
         </div>
 
-        <!-- ── TAB 1: Child Education ── -->
+        <!-- TAB 1: Child Education -->
         <div class="tab-content" id="tc-1">
           <div class="form-grid">
-            <div class="form-group">
-              <label>Year</label>
-              <select id="ce-year">
-                <option>2020</option><option>2021</option><option>2022</option><option>2023</option>
-                <option>2024</option><option selected>2025</option><option>2026</option>
-                <option>2027</option><option>2028</option><option>2029</option><option>2030</option>
-              </select>
-            </div>
-            <div class="form-group">
-              <label>Person</label>
-              <select id="ce-person"><option>Shahrul</option><option>Fateha</option></select>
-            </div>
-            <div class="form-group">
-              <label>Sub-Category</label>
-              <select id="ce-subcat">
-                <option>Child Below 18 (RM2,000/child)</option>
-                <option>Child Higher Education Diploma+ (RM8,000/child)</option>
-                <option>Disabled Child (RM6,000)</option>
-                <option>Childcare / Kindergarten Fees (RM3,000)</option>
-                <option>SSPN Net Savings (RM8,000)</option>
-                <option>Other</option>
-              </select>
-            </div>
-            <div class="form-group">
-              <label>Child Name</label>
-              <input type="text" id="ce-child" placeholder="e.g. Anak 1, Anak 2"/>
-            </div>
-            <div class="form-group">
-              <label>Amount (RM)</label>
-              <div class="input-prefix">
-                <span>RM</span>
-                <input type="number" id="ce-amount" placeholder="0.00" min="0" step="0.01"/>
-              </div>
-            </div>
-            <div class="form-group">
-              <label>Description</label>
-              <input type="text" id="ce-desc" placeholder="e.g. School fees Semester 1"/>
-            </div>
+            <div class="form-group"><label>Year</label><select id="ce-year"><option>2020</option><option>2021</option><option>2022</option><option>2023</option><option>2024</option><option selected>2025</option><option>2026</option><option>2027</option><option>2028</option><option>2029</option><option>2030</option></select></div>
+            <div class="form-group"><label>Person</label><select id="ce-person"><option>Shahrul</option><option>Fateha</option></select></div>
+            <div class="form-group"><label>Sub-Category</label><select id="ce-subcat"><option>Child Below 18 (RM2,000/child)</option><option>Child Higher Education Diploma+ (RM8,000)</option><option>Disabled Child (RM6,000)</option><option>Childcare / Kindergarten Fees (RM3,000)</option><option>SSPN Net Savings (RM8,000)</option><option>Other</option></select></div>
+            <div class="form-group"><label>Child Name</label><input type="text" id="ce-child" placeholder="e.g. Anak 1"/></div>
+            <div class="form-group"><label>Amount (RM)</label><div class="input-prefix"><span>RM</span><input type="number" id="ce-amount" placeholder="0.00" min="0" step="0.01"/></div></div>
+            <div class="form-group"><label>Description</label><input type="text" id="ce-desc" placeholder="e.g. School fees Semester 1"/></div>
           </div>
-          <div class="upload-area" id="upload-ce"
-            ondragover="dragOver(event,'ce')" ondragleave="dragLeave(event,'ce')" ondrop="dropFile(event,'ce')"
-            onclick="document.getElementById('file-ce').click()">
+          <div class="upload-area" id="upload-ce" ondragover="dragOver(event,'ce')" ondragleave="dragLeave(event,'ce')" ondrop="dropFile(event,'ce')" onclick="document.getElementById('file-ce').click()">
             <div class="upload-icon"><i class="fas fa-cloud-upload-alt"></i></div>
             <div class="upload-title">Upload Receipt / Invoice</div>
-            <div class="upload-sub">Drag & drop or click · PDF, JPG, PNG · Max 10MB each</div>
+            <div class="upload-sub">Drag & drop or tap to browse · PDF, JPG, PNG · Max 10MB</div>
             <input type="file" id="file-ce" class="upload-input" multiple accept=".pdf,.jpg,.jpeg,.png" onchange="handleFiles(this,'ce')"/>
           </div>
-          <div class="receipts-grid" id="receipts-ce"></div>
-          <br/>
+          <div class="receipts-grid" id="receipts-ce"></div><br/>
           <button class="add-btn" onclick="addEntry('ce')"><i class="fas fa-plus"></i> Add Entry</button>
           <div class="entries-section">
             <div class="section-heading">Recorded Entries</div>
-            <div class="table-wrap" id="table-ce-wrap">
-              <div class="empty-state"><i class="fas fa-inbox"></i><p>No entries yet.</p></div>
-            </div>
+            <div class="table-wrap" id="table-ce-wrap"><div class="empty-state"><i class="fas fa-inbox"></i><p>No entries yet.</p></div></div>
           </div>
         </div>
 
-        <!-- ── TAB 2: Health Insurance ── -->
+        <!-- TAB 2: Health Insurance -->
         <div class="tab-content" id="tc-2">
           <div class="form-grid">
-            <div class="form-group">
-              <label>Year</label>
-              <select id="hi-year">
-                <option>2020</option><option>2021</option><option>2022</option><option>2023</option>
-                <option>2024</option><option selected>2025</option><option>2026</option>
-                <option>2027</option><option>2028</option><option>2029</option><option>2030</option>
-              </select>
-            </div>
-            <div class="form-group">
-              <label>Person</label>
-              <select id="hi-person"><option>Shahrul</option><option>Fateha</option></select>
-            </div>
-            <div class="form-group">
-              <label>Sub-Category</label>
-              <select id="hi-subcat">
-                <option>Medical Insurance Premium (Self)</option>
-                <option>Medical Insurance Premium (Spouse)</option>
-                <option>Medical Insurance Premium (Child)</option>
-                <option>Education Insurance</option>
-                <option>Critical Illness Coverage</option>
-                <option>Vaccination Expenses</option>
-                <option>Dental Treatment</option>
-                <option>Fertility Treatment</option>
-                <option>Other</option>
-              </select>
-            </div>
-            <div class="form-group">
-              <label>Policy / Provider</label>
-              <input type="text" id="hi-policy" placeholder="e.g. AIA, Prudential, Great Eastern"/>
-            </div>
-            <div class="form-group">
-              <label>Amount (RM)</label>
-              <div class="input-prefix">
-                <span>RM</span>
-                <input type="number" id="hi-amount" placeholder="0.00" min="0" step="0.01"/>
-              </div>
-            </div>
-            <div class="form-group">
-              <label>Description</label>
-              <input type="text" id="hi-desc" placeholder="e.g. Annual premium Jan 2025"/>
-            </div>
+            <div class="form-group"><label>Year</label><select id="hi-year"><option>2020</option><option>2021</option><option>2022</option><option>2023</option><option>2024</option><option selected>2025</option><option>2026</option><option>2027</option><option>2028</option><option>2029</option><option>2030</option></select></div>
+            <div class="form-group"><label>Person</label><select id="hi-person"><option>Shahrul</option><option>Fateha</option></select></div>
+            <div class="form-group"><label>Sub-Category</label><select id="hi-subcat"><option>Medical Insurance Premium (Self)</option><option>Medical Insurance Premium (Spouse)</option><option>Medical Insurance Premium (Child)</option><option>Education Insurance</option><option>Critical Illness Coverage</option><option>Vaccination Expenses</option><option>Dental Treatment</option><option>Fertility Treatment</option><option>Other</option></select></div>
+            <div class="form-group"><label>Policy / Provider</label><input type="text" id="hi-policy" placeholder="e.g. AIA, Prudential"/></div>
+            <div class="form-group"><label>Amount (RM)</label><div class="input-prefix"><span>RM</span><input type="number" id="hi-amount" placeholder="0.00" min="0" step="0.01"/></div></div>
+            <div class="form-group"><label>Description</label><input type="text" id="hi-desc" placeholder="e.g. Annual premium Jan 2025"/></div>
           </div>
-          <div class="upload-area" id="upload-hi"
-            ondragover="dragOver(event,'hi')" ondragleave="dragLeave(event,'hi')" ondrop="dropFile(event,'hi')"
-            onclick="document.getElementById('file-hi').click()">
+          <div class="upload-area" id="upload-hi" ondragover="dragOver(event,'hi')" ondragleave="dragLeave(event,'hi')" ondrop="dropFile(event,'hi')" onclick="document.getElementById('file-hi').click()">
             <div class="upload-icon"><i class="fas fa-cloud-upload-alt"></i></div>
             <div class="upload-title">Upload Receipt / Invoice</div>
-            <div class="upload-sub">Drag & drop or click · PDF, JPG, PNG · Max 10MB each</div>
+            <div class="upload-sub">Drag & drop or tap to browse · PDF, JPG, PNG · Max 10MB</div>
             <input type="file" id="file-hi" class="upload-input" multiple accept=".pdf,.jpg,.jpeg,.png" onchange="handleFiles(this,'hi')"/>
           </div>
-          <div class="receipts-grid" id="receipts-hi"></div>
-          <br/>
+          <div class="receipts-grid" id="receipts-hi"></div><br/>
           <button class="add-btn" onclick="addEntry('hi')"><i class="fas fa-plus"></i> Add Entry</button>
           <div class="entries-section">
             <div class="section-heading">Recorded Entries</div>
-            <div class="table-wrap" id="table-hi-wrap">
-              <div class="empty-state"><i class="fas fa-inbox"></i><p>No entries yet.</p></div>
-            </div>
+            <div class="table-wrap" id="table-hi-wrap"><div class="empty-state"><i class="fas fa-inbox"></i><p>No entries yet.</p></div></div>
           </div>
         </div>
 
-        <!-- ── TAB 3: Parents Cost ── -->
+        <!-- TAB 3: Parents Cost -->
         <div class="tab-content" id="tc-3">
           <div class="form-grid">
-            <div class="form-group">
-              <label>Year</label>
-              <select id="pc-year">
-                <option>2020</option><option>2021</option><option>2022</option><option>2023</option>
-                <option>2024</option><option selected>2025</option><option>2026</option>
-                <option>2027</option><option>2028</option><option>2029</option><option>2030</option>
-              </select>
-            </div>
-            <div class="form-group">
-              <label>Person</label>
-              <select id="pc-person"><option>Shahrul</option><option>Fateha</option></select>
-            </div>
-            <div class="form-group">
-              <label>Sub-Category</label>
-              <select id="pc-subcat">
-                <option>Monthly Living Allowance</option>
-                <option>Medical Expenses</option>
-                <option>Dental Treatment</option>
-                <option>Special Needs / Carer</option>
-                <option>Hospitalisation</option>
-                <option>Other</option>
-              </select>
-            </div>
-            <div class="form-group">
-              <label>Parent Name</label>
-              <input type="text" id="pc-parent" placeholder="e.g. Ayah Shahrul / Ibu Fateha"/>
-            </div>
-            <div class="form-group">
-              <label>Amount (RM)</label>
-              <div class="input-prefix">
-                <span>RM</span>
-                <input type="number" id="pc-amount" placeholder="0.00" min="0" step="0.01"/>
-              </div>
-            </div>
-            <div class="form-group">
-              <label>Description</label>
-              <input type="text" id="pc-desc" placeholder="e.g. Monthly allowance January"/>
-            </div>
+            <div class="form-group"><label>Year</label><select id="pc-year"><option>2020</option><option>2021</option><option>2022</option><option>2023</option><option>2024</option><option selected>2025</option><option>2026</option><option>2027</option><option>2028</option><option>2029</option><option>2030</option></select></div>
+            <div class="form-group"><label>Person</label><select id="pc-person"><option>Shahrul</option><option>Fateha</option></select></div>
+            <div class="form-group"><label>Sub-Category</label><select id="pc-subcat"><option>Monthly Living Allowance</option><option>Medical Expenses</option><option>Dental Treatment</option><option>Special Needs / Carer</option><option>Hospitalisation</option><option>Other</option></select></div>
+            <div class="form-group"><label>Parent Name</label><input type="text" id="pc-parent" placeholder="e.g. Ayah / Ibu"/></div>
+            <div class="form-group"><label>Amount (RM)</label><div class="input-prefix"><span>RM</span><input type="number" id="pc-amount" placeholder="0.00" min="0" step="0.01"/></div></div>
+            <div class="form-group"><label>Description</label><input type="text" id="pc-desc" placeholder="e.g. Monthly allowance January"/></div>
           </div>
-          <div class="upload-area" id="upload-pc"
-            ondragover="dragOver(event,'pc')" ondragleave="dragLeave(event,'pc')" ondrop="dropFile(event,'pc')"
-            onclick="document.getElementById('file-pc').click()">
+          <div class="upload-area" id="upload-pc" ondragover="dragOver(event,'pc')" ondragleave="dragLeave(event,'pc')" ondrop="dropFile(event,'pc')" onclick="document.getElementById('file-pc').click()">
             <div class="upload-icon"><i class="fas fa-cloud-upload-alt"></i></div>
             <div class="upload-title">Upload Receipt / Invoice</div>
-            <div class="upload-sub">Drag & drop or click · PDF, JPG, PNG · Max 10MB each</div>
+            <div class="upload-sub">Drag & drop or tap to browse · PDF, JPG, PNG · Max 10MB</div>
             <input type="file" id="file-pc" class="upload-input" multiple accept=".pdf,.jpg,.jpeg,.png" onchange="handleFiles(this,'pc')"/>
           </div>
-          <div class="receipts-grid" id="receipts-pc"></div>
-          <br/>
+          <div class="receipts-grid" id="receipts-pc"></div><br/>
           <button class="add-btn" onclick="addEntry('pc')"><i class="fas fa-plus"></i> Add Entry</button>
           <div class="entries-section">
             <div class="section-heading">Recorded Entries</div>
-            <div class="table-wrap" id="table-pc-wrap">
-              <div class="empty-state"><i class="fas fa-inbox"></i><p>No entries yet.</p></div>
-            </div>
+            <div class="table-wrap" id="table-pc-wrap"><div class="empty-state"><i class="fas fa-inbox"></i><p>No entries yet.</p></div></div>
           </div>
         </div>
 
-        <!-- ── TAB 4: Assets Overseas ── -->
+        <!-- TAB 4: Assets Overseas -->
         <div class="tab-content" id="tc-4">
           <div class="form-grid">
-            <div class="form-group">
-              <label>Year</label>
-              <select id="ao-year">
-                <option>2020</option><option>2021</option><option>2022</option><option>2023</option>
-                <option>2024</option><option selected>2025</option><option>2026</option>
-                <option>2027</option><option>2028</option><option>2029</option><option>2030</option>
-              </select>
-            </div>
-            <div class="form-group">
-              <label>Person</label>
-              <select id="ao-person"><option>Shahrul</option><option>Fateha</option></select>
-            </div>
-            <div class="form-group">
-              <label>Asset Type</label>
-              <select id="ao-subcat">
-                <option>Property / Real Estate</option>
-                <option>Bank Account</option>
-                <option>Stocks / Shares</option>
-                <option>Unit Trust / Fund</option>
-                <option>Cryptocurrency</option>
-                <option>Business Ownership</option>
-                <option>Vehicle</option>
-                <option>Other</option>
-              </select>
-            </div>
-            <div class="form-group">
-              <label>Country</label>
-              <input type="text" id="ao-country" placeholder="e.g. Singapore, UK, USA, Australia"/>
-            </div>
-            <div class="form-group">
-              <label>Declared Value (RM)</label>
-              <div class="input-prefix">
-                <span>RM</span>
-                <input type="number" id="ao-amount" placeholder="0.00" min="0" step="0.01"/>
-              </div>
-            </div>
-            <div class="form-group">
-              <label>Description</label>
-              <input type="text" id="ao-desc" placeholder="e.g. Apartment in Singapore (Bedok)"/>
-            </div>
+            <div class="form-group"><label>Year</label><select id="ao-year"><option>2020</option><option>2021</option><option>2022</option><option>2023</option><option>2024</option><option selected>2025</option><option>2026</option><option>2027</option><option>2028</option><option>2029</option><option>2030</option></select></div>
+            <div class="form-group"><label>Person</label><select id="ao-person"><option>Shahrul</option><option>Fateha</option></select></div>
+            <div class="form-group"><label>Asset Type</label><select id="ao-subcat"><option>Property / Real Estate</option><option>Bank Account</option><option>Stocks / Shares</option><option>Unit Trust / Fund</option><option>Cryptocurrency</option><option>Business Ownership</option><option>Vehicle</option><option>Other</option></select></div>
+            <div class="form-group"><label>Country</label><input type="text" id="ao-country" placeholder="e.g. Singapore, UK, USA"/></div>
+            <div class="form-group"><label>Declared Value (RM)</label><div class="input-prefix"><span>RM</span><input type="number" id="ao-amount" placeholder="0.00" min="0" step="0.01"/></div></div>
+            <div class="form-group"><label>Description</label><input type="text" id="ao-desc" placeholder="e.g. Apartment in Singapore"/></div>
           </div>
-          <div class="upload-area" id="upload-ao"
-            ondragover="dragOver(event,'ao')" ondragleave="dragLeave(event,'ao')" ondrop="dropFile(event,'ao')"
-            onclick="document.getElementById('file-ao').click()">
+          <div class="upload-area" id="upload-ao" ondragover="dragOver(event,'ao')" ondragleave="dragLeave(event,'ao')" ondrop="dropFile(event,'ao')" onclick="document.getElementById('file-ao').click()">
             <div class="upload-icon"><i class="fas fa-cloud-upload-alt"></i></div>
             <div class="upload-title">Upload Supporting Document</div>
             <div class="upload-sub">Title deed, bank statement, share cert · PDF, JPG, PNG · Max 10MB</div>
             <input type="file" id="file-ao" class="upload-input" multiple accept=".pdf,.jpg,.jpeg,.png" onchange="handleFiles(this,'ao')"/>
           </div>
-          <div class="receipts-grid" id="receipts-ao"></div>
-          <br/>
+          <div class="receipts-grid" id="receipts-ao"></div><br/>
           <button class="add-btn" onclick="addEntry('ao')"><i class="fas fa-plus"></i> Add Entry</button>
           <div class="entries-section">
             <div class="section-heading">Recorded Entries</div>
-            <div class="table-wrap" id="table-ao-wrap">
-              <div class="empty-state"><i class="fas fa-inbox"></i><p>No entries yet.</p></div>
-            </div>
+            <div class="table-wrap" id="table-ao-wrap"><div class="empty-state"><i class="fas fa-inbox"></i><p>No entries yet.</p></div></div>
           </div>
         </div>
+      </div>
+    </div>
 
-      </div><!-- /entry-card -->
-    </div><!-- /page-entry -->
-
-    <!-- ═══════════ PAGE: HISTORY ═══════════ -->
+    <!-- ═══ HISTORY ═══ -->
     <div id="page-history" class="page-section" style="display:none">
       <div class="overview-card">
         <div class="chart-header">
-          <div>
-            <div class="chart-title">Full Transaction History</div>
-            <div class="chart-sub">Shahrul & Fateha · All years 2020–2030 · All categories</div>
-          </div>
-          <div style="display:flex;gap:10px;align-items:center;flex-wrap:wrap">
-            <input type="text" id="histSearch" placeholder="🔍  Search..." oninput="renderHistoryTable()"
-              style="padding:8px 14px;border:1.5px solid var(--border);border-radius:9px;
-                     font-family:'Inter',sans-serif;font-size:13px;outline:none;width:200px;color:var(--text)"/>
+          <div><div class="chart-title">Full Transaction History</div><div class="chart-sub">All entries · 2020–2030</div></div>
+          <div style="display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin-top:8px">
+            <input type="text" id="histSearch" placeholder="🔍 Search..." oninput="renderHistoryTable()"
+              style="padding:8px 12px;border:1.5px solid var(--border);border-radius:9px;font-family:'Inter',sans-serif;font-size:13px;outline:none;width:160px;color:var(--text)"/>
             <select id="histYear" onchange="renderHistoryTable()"
-              style="padding:8px 14px;border:1.5px solid var(--border);border-radius:9px;
-                     font-family:'Inter',sans-serif;font-size:13px;outline:none;color:var(--text)">
+              style="padding:8px 12px;border:1.5px solid var(--border);border-radius:9px;font-family:'Inter',sans-serif;font-size:13px;outline:none;color:var(--text)">
               <option value="All">All Years</option>
               <option>2020</option><option>2021</option><option>2022</option><option>2023</option>
-              <option>2024</option><option>2025</option><option>2026</option>
-              <option>2027</option><option>2028</option><option>2029</option><option>2030</option>
+              <option>2024</option><option>2025</option><option>2026</option><option>2027</option>
+              <option>2028</option><option>2029</option><option>2030</option>
             </select>
             <select id="histPerson" onchange="renderHistoryTable()"
-              style="padding:8px 14px;border:1.5px solid var(--border);border-radius:9px;
-                     font-family:'Inter',sans-serif;font-size:13px;outline:none;color:var(--text)">
-              <option value="All">All Persons</option>
-              <option>Shahrul</option><option>Fateha</option>
+              style="padding:8px 12px;border:1.5px solid var(--border);border-radius:9px;font-family:'Inter',sans-serif;font-size:13px;outline:none;color:var(--text)">
+              <option value="All">All Persons</option><option>Shahrul</option><option>Fateha</option>
             </select>
           </div>
         </div>
-        <div class="table-wrap" id="history-table-wrap">
-          <div class="empty-state"><i class="fas fa-inbox"></i><p>No entries yet.</p></div>
-        </div>
+        <div class="table-wrap" id="history-table-wrap"><div class="empty-state"><i class="fas fa-inbox"></i><p>No entries yet.</p></div></div>
       </div>
     </div>
 
-    <!-- ═══════════ PAGE: RECEIPTS ═══════════ -->
+    <!-- ═══ RECEIPTS ═══ -->
     <div id="page-receipts" class="page-section" style="display:none">
       <div class="overview-card">
         <div class="chart-header">
-          <div>
-            <div class="chart-title">
-              <i class="fas fa-vault" style="margin-right:9px;color:var(--accent)"></i>Receipt & Document Vault
-            </div>
-            <div class="chart-sub">All uploaded files · Organised by category · Click to preview</div>
-          </div>
+          <div><div class="chart-title"><i class="fas fa-vault" style="margin-right:8px;color:var(--accent)"></i>Receipt & Document Vault</div><div class="chart-sub">All uploaded files · Tap to preview</div></div>
         </div>
-        <div id="all-receipts-container" style="margin-top:16px">
-          <div class="empty-state"><i class="fas fa-folder-open"></i><p>No documents uploaded yet.</p></div>
-        </div>
+        <div id="all-receipts-container" style="margin-top:16px"><div class="empty-state"><i class="fas fa-folder-open"></i><p>No documents uploaded yet.</p></div></div>
       </div>
     </div>
 
-    <!-- ═══════════ PAGE: SUMMARY ═══════════ -->
+    <!-- ═══ SUMMARY ═══ -->
     <div id="page-summary" class="page-section" style="display:none">
       <div class="overview-card">
         <div class="chart-header">
-          <div>
-            <div class="chart-title">Yearly Summary — 2020 to 2030</div>
-            <div class="chart-sub">Total tax relief claimed per category per year</div>
-          </div>
-          <div style="display:flex;gap:10px">
-            <select id="summaryPerson" onchange="renderSummaryTable()"
-              style="padding:8px 14px;border:1.5px solid var(--border);border-radius:9px;
-                     font-family:'Inter',sans-serif;font-size:13px;outline:none;color:var(--text)">
-              <option value="All">Both Persons</option>
-              <option>Shahrul</option><option>Fateha</option>
-            </select>
-          </div>
+          <div><div class="chart-title">Yearly Summary — 2020 to 2030</div><div class="chart-sub">Total tax relief per category per year</div></div>
+          <select id="summaryPerson" onchange="renderSummaryTable()"
+            style="padding:8px 12px;border:1.5px solid var(--border);border-radius:9px;font-family:'Inter',sans-serif;font-size:13px;outline:none;color:var(--text)">
+            <option value="All">Both Persons</option><option>Shahrul</option><option>Fateha</option>
+          </select>
         </div>
         <div class="overview-table-wrap">
           <table class="overview-table">
-            <thead>
-              <tr>
-                <th>Year</th>
-                <th>Gaya Hidup</th>
-                <th>Child Education</th>
-                <th>Health Insurance</th>
-                <th>Parents Cost</th>
-                <th>Assets Overseas</th>
-                <th>Grand Total</th>
-                <th>Status</th>
-              </tr>
-            </thead>
+            <thead><tr><th>Year</th><th>Gaya Hidup</th><th>Child Edu</th><th>Health Ins</th><th>Parents</th><th>Overseas</th><th>Total</th><th>Status</th></tr></thead>
             <tbody id="summary-tbody"></tbody>
           </table>
         </div>
@@ -1121,613 +882,338 @@
   </div><!-- /content -->
 </div><!-- /main -->
 
-<!-- Toast Container -->
 <div class="toast-container" id="toastContainer"></div>
 
-<!-- Delete Modal -->
 <div class="modal-overlay" id="deleteModal">
   <div class="modal-box">
-    <div class="modal-title"><i class="fas fa-trash-alt" style="color:var(--danger);margin-right:9px"></i>Delete Entry</div>
-    <div class="modal-sub">Are you sure you want to permanently delete this entry? This action cannot be undone and will affect your tax reports.</div>
+    <div class="modal-title"><i class="fas fa-trash-alt" style="color:var(--danger);margin-right:8px"></i>Delete Entry</div>
+    <div class="modal-sub">Are you sure you want to permanently delete this entry? This cannot be undone.</div>
     <div class="modal-actions">
       <button class="btn-secondary" onclick="closeModal()">Cancel</button>
-      <button class="add-btn" style="background:var(--danger)" onclick="confirmDelete()">
-        <i class="fas fa-trash"></i> Yes, Delete
-      </button>
+      <button class="add-btn" style="background:var(--danger)" onclick="confirmDelete()"><i class="fas fa-trash"></i> Delete</button>
     </div>
   </div>
 </div>
 
-<!-- ══════════════════ SCRIPT ══════════════════ -->
 <script>
-// ═══════════════════════════════════════════════
-//  CONSTANTS & CONFIG
-// ═══════════════════════════════════════════════
+// ══════════════════════════════════════
+//  SIDEBAR MOBILE TOGGLE
+// ══════════════════════════════════════
+function openSidebar() {
+  document.getElementById('sidebar').classList.add('open');
+  document.getElementById('sidebarOverlay').classList.add('show');
+  document.body.style.overflow = 'hidden';
+}
+function closeSidebar() {
+  document.getElementById('sidebar').classList.remove('open');
+  document.getElementById('sidebarOverlay').classList.remove('show');
+  document.body.style.overflow = '';
+}
+// Close sidebar on ESC key
+document.addEventListener('keydown', e => { if (e.key === 'Escape') closeSidebar(); });
+
+// ══════════════════════════════════════
+//  DATA & CONFIG
+// ══════════════════════════════════════
 const YEARS = ['2020','2021','2022','2023','2024','2025','2026','2027','2028','2029','2030'];
 const CURRENT_YEAR = new Date().getFullYear();
-
 const CATS = {
-  gl: { label:'Gaya Hidup',       icon:'fa-shopping-bag',   color:'#3b82f6', limit:2500  },
-  ce: { label:'Child Education',  icon:'fa-graduation-cap', color:'#8b5cf6', limit:8000  },
-  hi: { label:'Health Insurance', icon:'fa-heartbeat',      color:'#10b981', limit:3000  },
-  pc: { label:'Parents Cost',     icon:'fa-user-friends',   color:'#f59e0b', limit:8000  },
-  ao: { label:'Assets Overseas',  icon:'fa-globe-asia',     color:'#ef4444', limit:null  },
+  gl:{ label:'Gaya Hidup',       icon:'fa-shopping-bag',   color:'#3b82f6', limit:2500 },
+  ce:{ label:'Child Education',  icon:'fa-graduation-cap', color:'#8b5cf6', limit:8000 },
+  hi:{ label:'Health Insurance', icon:'fa-heartbeat',      color:'#10b981', limit:3000 },
+  pc:{ label:'Parents Cost',     icon:'fa-user-friends',   color:'#f59e0b', limit:8000 },
+  ao:{ label:'Assets Overseas',  icon:'fa-globe-asia',     color:'#ef4444', limit:null },
 };
 
-// ═══════════════════════════════════════════════
-//  STATE
-// ═══════════════════════════════════════════════
 let data = { gl:[], ce:[], hi:[], pc:[], ao:[] };
 let receiptsStore = { gl:[], ce:[], hi:[], pc:[], ao:[] };
 let currentPerson = 'Shahrul';
 let deleteTarget  = null;
 let lineChart, donutChart, barChart;
 
-// ─── Persist ────────────────────────────────
 function loadData() {
   try {
     const s = localStorage.getItem('sfTaxData_v2');
-    if (s) {
-      const p = JSON.parse(s);
-      data          = p.data          || data;
-      receiptsStore = p.receiptsStore || receiptsStore;
-    }
-  } catch(e) { console.warn('Load error',e); }
+    if (s) { const p = JSON.parse(s); data = p.data || data; receiptsStore = p.receiptsStore || receiptsStore; }
+  } catch(e){}
 }
 function saveData() {
-  try {
-    localStorage.setItem('sfTaxData_v2', JSON.stringify({ data, receiptsStore }));
-  } catch(e) {
-    showToast('Storage full — some files may not be saved.','error');
-  }
+  try { localStorage.setItem('sfTaxData_v2', JSON.stringify({ data, receiptsStore })); }
+  catch(e) { showToast('Storage full — some files may not save.','error'); }
 }
 loadData();
 
-// ═══════════════════════════════════════════════
-//  NAVIGATION
-// ═══════════════════════════════════════════════
+// ══ NAVIGATION ══
 const PAGE_META = {
-  dashboard: { title:'Tax Dashboard',      sub:'Yearly Overview & Analytics · 2020–2030' },
-  entry:     { title:'Data Entry',          sub:'Record your tax relief expenses with receipts' },
-  history:   { title:'Transaction History', sub:'Full audit log · All entries · Searchable' },
-  receipts:  { title:'Receipt Vault',       sub:'All uploaded documents & invoices for audit' },
-  summary:   { title:'Yearly Summary',      sub:'Consolidated 11-year view · 2020–2030' },
+  dashboard:{ title:'Tax Dashboard',      sub:'Yearly Overview & Analytics · 2020–2030' },
+  entry:    { title:'Data Entry',          sub:'Record tax relief expenses with receipts' },
+  history:  { title:'Transaction History', sub:'Full audit log · All entries · Searchable' },
+  receipts: { title:'Receipt Vault',       sub:'All uploaded documents & invoices' },
+  summary:  { title:'Yearly Summary',      sub:'Consolidated 11-year view · 2020–2030' },
 };
-
 function showPage(id) {
-  document.querySelectorAll('.page-section').forEach(p => p.style.display = 'none');
-  document.getElementById('page-' + id).style.display = 'block';
+  document.querySelectorAll('.page-section').forEach(p => p.style.display='none');
+  document.getElementById('page-'+id).style.display='block';
   document.getElementById('page-title').textContent = PAGE_META[id].title;
   document.getElementById('page-sub').textContent   = PAGE_META[id].sub;
-  if (id === 'dashboard') updateAll();
-  if (id === 'history')   renderHistoryTable();
-  if (id === 'receipts')  renderAllReceipts();
-  if (id === 'summary')   renderSummaryTable();
+  if (id==='dashboard') updateAll();
+  if (id==='history')   renderHistoryTable();
+  if (id==='receipts')  renderAllReceipts();
+  if (id==='summary')   renderSummaryTable();
 }
 
-// ═══════════════════════════════════════════════
-//  TAB SWITCHING
-// ═══════════════════════════════════════════════
+// ══ TABS ══
 function switchTab(i) {
-  document.querySelectorAll('.cat-tab').forEach((t,j)    => t.classList.toggle('active', i === j));
-  document.querySelectorAll('.tab-content').forEach((t,j) => t.classList.toggle('active', i === j));
+  document.querySelectorAll('.cat-tab').forEach((t,j)    => t.classList.toggle('active', i===j));
+  document.querySelectorAll('.tab-content').forEach((t,j) => t.classList.toggle('active', i===j));
 }
 
-// ═══════════════════════════════════════════════
-//  PERSON SELECTOR
-// ═══════════════════════════════════════════════
+// ══ PERSON ══
 function selectPerson(p) {
   currentPerson = p;
-  ['Shahrul','Fateha','Both'].forEach(name => {
-    const el = document.getElementById('btn'+name);
-    if (el) el.classList.toggle('active', name === p);
+  ['Shahrul','Fateha','Both'].forEach(n => {
+    const el = document.getElementById('btn'+n);
+    if (el) el.classList.toggle('active', n===p);
   });
   updateAll();
 }
 
-// ═══════════════════════════════════════════════
-//  HELPERS
-// ═══════════════════════════════════════════════
-function fmt(n) {
-  return 'RM ' + Number(n || 0).toLocaleString('en-MY', { minimumFractionDigits:2, maximumFractionDigits:2 });
+// ══ HELPERS ══
+function fmt(n) { return 'RM '+Number(n||0).toLocaleString('en-MY',{minimumFractionDigits:2,maximumFractionDigits:2}); }
+function getSum(cat,year,person) {
+  return data[cat].filter(e=>(!year||e.year===year)&&(!person||person==='Both'||e.person===person)).reduce((s,e)=>s+parseFloat(e.amount||0),0);
 }
-function getSum(cat, year, person) {
-  return data[cat]
-    .filter(e => (!year || e.year === year) && (!person || person === 'Both' || e.person === person))
-    .reduce((s, e) => s + parseFloat(e.amount || 0), 0);
-}
-function uid() { return Date.now().toString(36) + Math.random().toString(36).slice(2); }
-function fileIcon(type) {
-  if (!type) return '📄';
-  if (type.includes('pdf'))   return '📕';
-  if (type.includes('image')) return '🖼️';
-  return '📄';
-}
-function fileSize(bytes) {
-  if (bytes < 1024)    return bytes + ' B';
-  if (bytes < 1048576) return (bytes / 1024).toFixed(1) + ' KB';
-  return (bytes / 1048576).toFixed(1) + ' MB';
-}
-function isFutureYear(year) {
-  return parseInt(year) > CURRENT_YEAR;
-}
+function uid() { return Date.now().toString(36)+Math.random().toString(36).slice(2); }
+function fileIcon(type) { if(!type)return'📄'; if(type.includes('pdf'))return'📕'; if(type.includes('image'))return'🖼️'; return'📄'; }
+function fileSize(b) { if(b<1024)return b+'B'; if(b<1048576)return(b/1024).toFixed(1)+'KB'; return(b/1048576).toFixed(1)+'MB'; }
+function isFuture(y) { return parseInt(y)>CURRENT_YEAR; }
 
-// ═══════════════════════════════════════════════
-//  FILE UPLOAD
-// ═══════════════════════════════════════════════
-function dragOver(e, cat) { e.preventDefault(); document.getElementById('upload-'+cat).classList.add('dragover'); }
-function dragLeave(e, cat) { document.getElementById('upload-'+cat).classList.remove('dragover'); }
-function dropFile(e, cat) {
-  e.preventDefault();
-  document.getElementById('upload-'+cat).classList.remove('dragover');
-  processFiles(e.dataTransfer.files, cat);
-}
-function handleFiles(input, cat) { processFiles(input.files, cat); }
-
-function processFiles(files, cat) {
-  Array.from(files).forEach(file => {
-    if (file.size > 10 * 1024 * 1024) { showToast('File too large (max 10MB): ' + file.name, 'error'); return; }
-    const reader = new FileReader();
-    reader.onload = e => {
-      receiptsStore[cat].push({ name:file.name, size:file.size, type:file.type, dataUrl:e.target.result, tempId:uid() });
-      renderReceiptThumbs(cat);
-      saveData();
-    };
+// ══ FILE UPLOAD ══
+function dragOver(e,cat){e.preventDefault();document.getElementById('upload-'+cat).classList.add('dragover');}
+function dragLeave(e,cat){document.getElementById('upload-'+cat).classList.remove('dragover');}
+function dropFile(e,cat){e.preventDefault();document.getElementById('upload-'+cat).classList.remove('dragover');processFiles(e.dataTransfer.files,cat);}
+function handleFiles(input,cat){processFiles(input.files,cat);}
+function processFiles(files,cat){
+  Array.from(files).forEach(file=>{
+    if(file.size>10*1024*1024){showToast('File too large: '+file.name,'error');return;}
+    const reader=new FileReader();
+    reader.onload=e=>{receiptsStore[cat].push({name:file.name,size:file.size,type:file.type,dataUrl:e.target.result,tempId:uid()});renderReceiptThumbs(cat);saveData();};
     reader.readAsDataURL(file);
   });
 }
-function renderReceiptThumbs(cat) {
-  const wrap = document.getElementById('receipts-' + cat);
-  wrap.innerHTML = receiptsStore[cat].map((f, i) => `
+function renderReceiptThumbs(cat){
+  document.getElementById('receipts-'+cat).innerHTML=receiptsStore[cat].map((f,i)=>`
     <div class="receipt-thumb">
       <span class="receipt-icon-big">${fileIcon(f.type)}</span>
       <div class="receipt-name" title="${f.name}">${f.name}</div>
       <div class="receipt-size">${fileSize(f.size)}</div>
-      <button class="receipt-del" onclick="removeReceipt('${cat}',${i})" title="Remove">✕</button>
+      <button class="receipt-del" onclick="removeReceipt('${cat}',${i})">✕</button>
     </div>`).join('');
 }
-function removeReceipt(cat, idx) {
-  receiptsStore[cat].splice(idx, 1);
-  renderReceiptThumbs(cat);
-  saveData();
+function removeReceipt(cat,idx){receiptsStore[cat].splice(idx,1);renderReceiptThumbs(cat);saveData();}
+
+// ══ ADD ENTRY ══
+const EXTRA_FIELD={gl:null,ce:'ce-child',hi:'hi-policy',pc:'pc-parent',ao:'ao-country'};
+function addEntry(cat){
+  const year=document.getElementById(cat+'-year').value;
+  const person=document.getElementById(cat+'-person').value;
+  const subcat=document.getElementById(cat+'-subcat').value;
+  const amount=parseFloat(document.getElementById(cat+'-amount').value);
+  const desc=document.getElementById(cat+'-desc').value.trim();
+  const extraId=EXTRA_FIELD[cat];
+  const extra=extraId?document.getElementById(extraId).value.trim():'';
+  if(!amount||isNaN(amount)||amount<=0){showToast('Please enter a valid amount.','error');return;}
+  data[cat].push({id:uid(),year,person,subcat,amount:amount.toFixed(2),desc:desc||subcat,extra,date:new Date().toLocaleDateString('en-MY'),files:[...receiptsStore[cat]]});
+  receiptsStore[cat]=[];renderReceiptThumbs(cat);
+  document.getElementById(cat+'-amount').value='';
+  document.getElementById(cat+'-desc').value='';
+  if(extraId)document.getElementById(extraId).value='';
+  saveData();renderEntryTable(cat);updateAll();
+  showToast(`✅ Added: ${fmt(amount)} → ${CATS[cat].label} (${year})`);
 }
 
-// ═══════════════════════════════════════════════
-//  ADD ENTRY
-// ═══════════════════════════════════════════════
-const EXTRA_FIELD = { gl: null, ce: 'ce-child', hi: 'hi-policy', pc: 'pc-parent', ao: 'ao-country' };
+// ══ RENDER ENTRY TABLE ══
+function renderEntryTable(cat){
+  const wrap=document.getElementById('table-'+cat+'-wrap');
+  const rows=data[cat];
+  if(!rows.length){wrap.innerHTML='<div class="empty-state"><i class="fas fa-inbox"></i><p>No entries yet.</p></div>';return;}
+  const eL={gl:null,ce:'Child',hi:'Policy',pc:'Parent',ao:'Country'};
+  const hasE=!!eL[cat];
+  const total=rows.reduce((s,e)=>s+parseFloat(e.amount),0);
+  wrap.innerHTML=`<table><thead><tr><th>Year</th><th>Person</th><th>Sub-Cat</th>${hasE?`<th>${eL[cat]}</th>`:''}<th>Amount</th><th>Desc</th><th>Docs</th><th>Date</th><th></th></tr></thead><tbody>
+    ${rows.map(e=>`<tr>
+      <td><strong>${e.year}</strong>${isFuture(e.year)?'<span class="future-badge" style="font-size:9px;padding:1px 5px"><i class="fas fa-clock"></i></span>':''}</td>
+      <td><span class="badge badge-${e.person.toLowerCase()}">${e.person}</span></td>
+      <td style="max-width:150px;white-space:normal;font-size:12px">${e.subcat}</td>
+      ${hasE?`<td>${e.extra||'—'}</td>`:''}
+      <td><strong style="color:var(--primary)">${fmt(e.amount)}</strong></td>
+      <td style="color:var(--muted);max-width:140px;white-space:normal;font-size:12px">${e.desc}</td>
+      <td>${e.files&&e.files.length?`<span style="color:var(--success);font-weight:700"><i class="fas fa-paperclip"></i>${e.files.length}</span>`:'—'}</td>
+      <td style="color:var(--muted)">${e.date}</td>
+      <td><button class="del-row" onclick="openDelete('${cat}','${e.id}')"><i class="fas fa-trash-alt"></i></button></td>
+    </tr>`).join('')}
+    <tr style="background:#f4f7ff"><td colspan="${3+(hasE?1:0)}"><strong>Total</strong></td><td><strong style="color:var(--primary)">${fmt(total)}</strong></td><td colspan="4"></td></tr>
+  </tbody></table>`;
+}
+Object.keys(CATS).forEach(cat=>renderEntryTable(cat));
 
-function addEntry(cat) {
-  const year   = document.getElementById(cat + '-year').value;
-  const person = document.getElementById(cat + '-person').value;
-  const subcat = document.getElementById(cat + '-subcat').value;
-  const amount = parseFloat(document.getElementById(cat + '-amount').value);
-  const desc   = document.getElementById(cat + '-desc').value.trim();
-  const extraId = EXTRA_FIELD[cat];
-  const extra  = extraId ? document.getElementById(extraId).value.trim() : '';
+// ══ DELETE ══
+function openDelete(cat,id){deleteTarget={cat,id};document.getElementById('deleteModal').classList.add('open');}
+function closeModal(){document.getElementById('deleteModal').classList.remove('open');deleteTarget=null;}
+function confirmDelete(){if(!deleteTarget)return;const{cat,id}=deleteTarget;data[cat]=data[cat].filter(e=>e.id!==id);saveData();renderEntryTable(cat);updateAll();closeModal();showToast('Entry deleted.','error');}
+document.getElementById('deleteModal').addEventListener('click',function(e){if(e.target===this)closeModal();});
 
-  if (!amount || isNaN(amount) || amount <= 0) {
-    showToast('Please enter a valid amount greater than 0.', 'error');
-    return;
-  }
-
-  const entry = {
-    id: uid(), year, person, subcat,
-    amount: amount.toFixed(2),
-    desc: desc || subcat,
-    extra,
-    date: new Date().toLocaleDateString('en-MY'),
-    files: [...receiptsStore[cat]]
-  };
-
-  data[cat].push(entry);
-  receiptsStore[cat] = [];
-  renderReceiptThumbs(cat);
-
-  // Reset form
-  document.getElementById(cat + '-amount').value = '';
-  document.getElementById(cat + '-desc').value = '';
-  if (extraId) document.getElementById(extraId).value = '';
-
-  saveData();
-  renderEntryTable(cat);
-  updateAll();
-  showToast(`✅ Entry added: ${fmt(amount)} to ${CATS[cat].label} (${year})`);
+// ══ HISTORY ══
+function renderHistoryTable(){
+  const wrap=document.getElementById('history-table-wrap');
+  const search=(document.getElementById('histSearch')?.value||'').toLowerCase();
+  const fy=document.getElementById('histYear')?.value||'All';
+  const fp=document.getElementById('histPerson')?.value||'All';
+  let all=[];
+  Object.entries(data).forEach(([cat,rows])=>rows.forEach(e=>all.push({...e,cat})));
+  if(fy!=='All')all=all.filter(e=>e.year===fy);
+  if(fp!=='All')all=all.filter(e=>e.person===fp);
+  if(search)all=all.filter(e=>e.person.toLowerCase().includes(search)||e.subcat.toLowerCase().includes(search)||e.desc.toLowerCase().includes(search)||CATS[e.cat].label.toLowerCase().includes(search)||e.year.includes(search));
+  all.sort((a,b)=>b.year.localeCompare(a.year));
+  if(!all.length){wrap.innerHTML='<div class="empty-state"><i class="fas fa-search"></i><p>No entries found.</p></div>';return;}
+  const total=all.reduce((s,e)=>s+parseFloat(e.amount),0);
+  wrap.innerHTML=`<table><thead><tr><th>Year</th><th>Person</th><th>Category</th><th>Sub-Cat</th><th>Amount</th><th>Desc</th><th>Docs</th><th>Date</th><th></th></tr></thead><tbody>
+    ${all.map(e=>`<tr>
+      <td><strong>${e.year}</strong></td>
+      <td><span class="badge badge-${e.person.toLowerCase()}">${e.person}</span></td>
+      <td><span style="color:${CATS[e.cat].color};font-weight:600;font-size:12px"><i class="fas ${CATS[e.cat].icon}" style="margin-right:4px"></i>${CATS[e.cat].label}</span></td>
+      <td style="max-width:140px;white-space:normal;font-size:12px">${e.subcat}</td>
+      <td><strong style="color:var(--primary)">${fmt(e.amount)}</strong></td>
+      <td style="color:var(--muted);max-width:130px;white-space:normal;font-size:12px">${e.desc}</td>
+      <td>${e.files&&e.files.length?`<span style="color:var(--success);font-weight:700"><i class="fas fa-paperclip"></i>${e.files.length}</span>`:'—'}</td>
+      <td style="color:var(--muted)">${e.date}</td>
+      <td><button class="del-row" onclick="openDelete('${e.cat}','${e.id}')"><i class="fas fa-trash-alt"></i></button></td>
+    </tr>`).join('')}
+    <tr style="background:#f4f7ff"><td colspan="4"><strong>TOTAL (${all.length})</strong></td><td><strong style="color:var(--primary)">${fmt(total)}</strong></td><td colspan="4"></td></tr>
+  </tbody></table>`;
 }
 
-// ═══════════════════════════════════════════════
-//  RENDER ENTRY TABLE
-// ═══════════════════════════════════════════════
-function renderEntryTable(cat) {
-  const wrap = document.getElementById('table-' + cat + '-wrap');
-  const rows = data[cat];
-  if (!rows.length) {
-    wrap.innerHTML = '<div class="empty-state"><i class="fas fa-inbox"></i><p>No entries yet. Add your first entry above.</p></div>';
-    return;
-  }
-  const extraLabels = { gl:null, ce:'Child', hi:'Policy/Provider', pc:'Parent', ao:'Country' };
-  const hasExtra = !!extraLabels[cat];
-  const total = rows.reduce((s,e) => s + parseFloat(e.amount), 0);
-
-  wrap.innerHTML = `
-    <table>
-      <thead><tr>
-        <th>Year</th><th>Person</th><th>Sub-Category</th>
-        ${hasExtra ? `<th>${extraLabels[cat]}</th>` : ''}
-        <th>Amount</th><th>Description</th><th>Docs</th><th>Date Added</th><th>Action</th>
-      </tr></thead>
-      <tbody>
-        ${rows.map(e => `
-          <tr>
-            <td>
-              <strong>${e.year}</strong>
-              ${isFutureYear(e.year) ? '<span class="future-badge" style="font-size:9px;padding:1px 6px"><i class="fas fa-clock"></i> Future</span>' : ''}
-            </td>
-            <td><span class="badge badge-${e.person.toLowerCase()}">${e.person}</span></td>
-            <td style="max-width:200px;white-space:normal;font-size:12px">${e.subcat}</td>
-            ${hasExtra ? `<td>${e.extra || '—'}</td>` : ''}
-            <td><strong style="color:var(--primary)">${fmt(e.amount)}</strong></td>
-            <td style="color:var(--muted);max-width:180px;white-space:normal;font-size:12px">${e.desc}</td>
-            <td>
-              ${e.files && e.files.length
-                ? `<span style="color:var(--success);font-weight:700"><i class="fas fa-paperclip"></i> ${e.files.length}</span>`
-                : '<span style="color:var(--border)">—</span>'}
-            </td>
-            <td style="color:var(--muted)">${e.date}</td>
-            <td><button class="del-row" onclick="openDelete('${cat}','${e.id}')" title="Delete"><i class="fas fa-trash-alt"></i></button></td>
-          </tr>`).join('')}
-        <tr style="background:#f4f7ff">
-          <td colspan="${2 + (hasExtra?1:0)}"><strong style="color:var(--primary)">Total</strong></td>
-          <td><strong style="color:var(--primary)">${fmt(total)}</strong></td>
-          <td colspan="${4}"></td>
-        </tr>
-      </tbody>
-    </table>`;
-}
-
-// Render all tables on init
-Object.keys(CATS).forEach(cat => renderEntryTable(cat));
-
-// ═══════════════════════════════════════════════
-//  DELETE
-// ═══════════════════════════════════════════════
-function openDelete(cat, id) {
-  deleteTarget = { cat, id };
-  document.getElementById('deleteModal').classList.add('open');
-}
-function closeModal() {
-  document.getElementById('deleteModal').classList.remove('open');
-  deleteTarget = null;
-}
-function confirmDelete() {
-  if (!deleteTarget) return;
-  const { cat, id } = deleteTarget;
-  data[cat] = data[cat].filter(e => e.id !== id);
-  saveData();
-  renderEntryTable(cat);
-  updateAll();
-  closeModal();
-  showToast('Entry deleted successfully.', 'error');
-}
-document.getElementById('deleteModal').addEventListener('click', function(e) {
-  if (e.target === this) closeModal();
-});
-
-// ═══════════════════════════════════════════════
-//  HISTORY TABLE
-// ═══════════════════════════════════════════════
-function renderHistoryTable() {
-  const wrap   = document.getElementById('history-table-wrap');
-  const search = (document.getElementById('histSearch')?.value || '').toLowerCase();
-  const fy     = document.getElementById('histYear')?.value || 'All';
-  const fp     = document.getElementById('histPerson')?.value || 'All';
-
-  let all = [];
-  Object.entries(data).forEach(([cat, rows]) => rows.forEach(e => all.push({ ...e, cat })));
-
-  if (fy !== 'All') all = all.filter(e => e.year === fy);
-  if (fp !== 'All') all = all.filter(e => e.person === fp);
-  if (search) all = all.filter(e =>
-    e.person.toLowerCase().includes(search) ||
-    e.subcat.toLowerCase().includes(search) ||
-    e.desc.toLowerCase().includes(search) ||
-    CATS[e.cat].label.toLowerCase().includes(search) ||
-    e.year.includes(search)
-  );
-
-  all.sort((a,b) => b.year.localeCompare(a.year) || b.date.localeCompare(a.date));
-
-  if (!all.length) {
-    wrap.innerHTML = '<div class="empty-state"><i class="fas fa-search"></i><p>No matching entries found.</p></div>';
-    return;
-  }
-  const total = all.reduce((s, e) => s + parseFloat(e.amount), 0);
-
-  wrap.innerHTML = `
-    <table>
-      <thead><tr>
-        <th>Year</th><th>Person</th><th>Category</th>
-        <th>Sub-Category</th><th>Amount</th><th>Description</th>
-        <th>Docs</th><th>Date</th><th>Action</th>
-      </tr></thead>
-      <tbody>
-        ${all.map(e => `
-          <tr>
-            <td>
-              <strong>${e.year}</strong>
-              ${isFutureYear(e.year) ? '<span class="future-badge" style="font-size:9px;padding:1px 6px"><i class="fas fa-clock"></i></span>' : ''}
-            </td>
-            <td><span class="badge badge-${e.person.toLowerCase()}">${e.person}</span></td>
-            <td><span style="color:${CATS[e.cat].color};font-weight:600"><i class="fas ${CATS[e.cat].icon}" style="margin-right:5px"></i>${CATS[e.cat].label}</span></td>
-            <td style="max-width:180px;white-space:normal;font-size:12px">${e.subcat}</td>
-            <td><strong style="color:var(--primary)">${fmt(e.amount)}</strong></td>
-            <td style="color:var(--muted);max-width:160px;white-space:normal;font-size:12px">${e.desc}</td>
-            <td>${e.files && e.files.length ? `<span style="color:var(--success);font-weight:700"><i class="fas fa-paperclip"></i> ${e.files.length}</span>` : '—'}</td>
-            <td style="color:var(--muted)">${e.date}</td>
-            <td><button class="del-row" onclick="openDelete('${e.cat}','${e.id}')"><i class="fas fa-trash-alt"></i></button></td>
-          </tr>`).join('')}
-        <tr style="background:#f4f7ff">
-          <td colspan="4"><strong>GRAND TOTAL (${all.length} entries)</strong></td>
-          <td><strong style="color:var(--primary)">${fmt(total)}</strong></td>
-          <td colspan="4"></td>
-        </tr>
-      </tbody>
-    </table>`;
-}
-
-// ═══════════════════════════════════════════════
-//  RECEIPT VAULT
-// ═══════════════════════════════════════════════
-function renderAllReceipts() {
-  const wrap = document.getElementById('all-receipts-container');
-  let html = '';
-  let totalFiles = 0;
-
-  Object.entries(data).forEach(([cat, rows]) => {
-    const filesAll = rows.flatMap(e => (e.files || []).map(f => ({ ...f, entry: e, cat })));
-    if (!filesAll.length) return;
-    totalFiles += filesAll.length;
-    html += `
-      <div style="margin-bottom:28px">
-        <div class="section-heading" style="color:${CATS[cat].color}">
-          <i class="fas ${CATS[cat].icon}" style="margin-right:6px"></i>${CATS[cat].label}
-          <span style="font-weight:400;color:var(--muted);font-size:12px;margin-left:4px">(${filesAll.length} file${filesAll.length > 1 ? 's' : ''})</span>
-        </div>
-        <div class="receipts-grid">
-          ${filesAll.map(f => `
-            <div class="receipt-thumb" onclick="previewFile('${encodeURIComponent(f.dataUrl)}','${encodeURIComponent(f.name)}','${f.type}')">
-              <span class="receipt-icon-big">${fileIcon(f.type)}</span>
-              <div class="receipt-name" title="${f.name}">${f.name}</div>
-              <div class="receipt-size">${fileSize(f.size)}</div>
-              <div style="font-size:10px;color:var(--muted);margin-top:4px">${f.entry.year} · ${f.entry.person}</div>
-            </div>`).join('')}
-        </div>
-      </div>`;
+// ══ RECEIPT VAULT ══
+function renderAllReceipts(){
+  const wrap=document.getElementById('all-receipts-container');
+  let html='',total=0;
+  Object.entries(data).forEach(([cat,rows])=>{
+    const files=rows.flatMap(e=>(e.files||[]).map(f=>({...f,entry:e,cat})));
+    if(!files.length)return;
+    total+=files.length;
+    html+=`<div style="margin-bottom:24px">
+      <div class="section-heading" style="color:${CATS[cat].color}"><i class="fas ${CATS[cat].icon}" style="margin-right:6px"></i>${CATS[cat].label}<span style="font-weight:400;color:var(--muted);font-size:12px;margin-left:6px">(${files.length} file${files.length>1?'s':''})</span></div>
+      <div class="receipts-grid">${files.map(f=>`
+        <div class="receipt-thumb" onclick="previewFile('${encodeURIComponent(f.dataUrl)}','${encodeURIComponent(f.name)}','${f.type}')">
+          <span class="receipt-icon-big">${fileIcon(f.type)}</span>
+          <div class="receipt-name" title="${f.name}">${f.name}</div>
+          <div class="receipt-size">${fileSize(f.size)}</div>
+          <div style="font-size:10px;color:var(--muted);margin-top:4px">${f.entry.year}·${f.entry.person}</div>
+        </div>`).join('')}
+      </div></div>`;
   });
-
-  wrap.innerHTML = totalFiles
-    ? `<div style="margin-bottom:16px;font-size:13px;color:var(--muted)"><i class="fas fa-info-circle" style="margin-right:5px;color:var(--accent)"></i>${totalFiles} total document${totalFiles > 1 ? 's' : ''} stored · Click any file to preview</div>` + html
-    : '<div class="empty-state"><i class="fas fa-folder-open"></i><p>No documents uploaded yet.</p></div>';
+  wrap.innerHTML=total?`<div style="margin-bottom:14px;font-size:13px;color:var(--muted)"><i class="fas fa-info-circle" style="color:var(--accent);margin-right:5px"></i>${total} document${total>1?'s':''} · Tap to preview</div>`+html:'<div class="empty-state"><i class="fas fa-folder-open"></i><p>No documents uploaded yet.</p></div>';
 }
-
-function previewFile(encoded, name, type) {
-  const url = decodeURIComponent(encoded);
-  const win = window.open('', '_blank');
-  win.document.write(`<!DOCTYPE html><html><head><title>${decodeURIComponent(name)}</title>
-    <style>body{margin:0;background:#1a1a1a;display:flex;align-items:center;justify-content:center;min-height:100vh}</style>
-    </head><body>`);
-  if (type && type.includes('pdf')) {
-    win.document.write(`<iframe src="${url}" style="width:100vw;height:100vh;border:none"></iframe>`);
-  } else {
-    win.document.write(`<img src="${url}" style="max-width:95vw;max-height:95vh;border-radius:8px;box-shadow:0 8px 40px rgba(0,0,0,.5)"/>`);
-  }
+function previewFile(encoded,name,type){
+  const url=decodeURIComponent(encoded);
+  const win=window.open('','_blank');
+  win.document.write(`<!DOCTYPE html><html><head><title>${decodeURIComponent(name)}</title><style>body{margin:0;background:#111;display:flex;align-items:center;justify-content:center;min-height:100vh}</style></head><body>`);
+  if(type&&type.includes('pdf'))win.document.write(`<iframe src="${url}" style="width:100vw;height:100vh;border:none"></iframe>`);
+  else win.document.write(`<img src="${url}" style="max-width:95vw;max-height:95vh;border-radius:8px"/>`);
   win.document.write('</body></html>');
 }
 
-// ═══════════════════════════════════════════════
-//  SUMMARY TABLE
-// ═══════════════════════════════════════════════
-function renderSummaryTable() {
-  const person = document.getElementById('summaryPerson')?.value || 'All';
-  const filterPerson = person === 'All' ? null : person;
-  const tbody = document.getElementById('summary-tbody');
-
-  const totals = { gl:0, ce:0, hi:0, pc:0, ao:0 };
-  let grandAll = 0;
-
-  tbody.innerHTML = YEARS.map(y => {
-    const gl = getSum('gl', y, filterPerson);
-    const ce = getSum('ce', y, filterPerson);
-    const hi = getSum('hi', y, filterPerson);
-    const pc = getSum('pc', y, filterPerson);
-    const ao = getSum('ao', y, filterPerson);
-    const total = gl + ce + hi + pc + ao;
-    totals.gl += gl; totals.ce += ce; totals.hi += hi; totals.pc += pc; totals.ao += ao;
-    grandAll += total;
-
-    const future = isFutureYear(y);
-    const statusBadge = future
-      ? `<span style="color:var(--accent);font-size:11px;font-weight:600"><i class="fas fa-clock"></i> Planned</span>`
-      : total > 0
-        ? `<span style="color:var(--success);font-size:11px;font-weight:600"><i class="fas fa-check-circle"></i> Recorded</span>`
-        : `<span style="color:var(--muted);font-size:11px"><i class="fas fa-minus"></i> No data</span>`;
-
-    return `<tr style="${future ? 'opacity:.7' : ''}">
-      <td class="year-cell">
-        ${y}${future ? '<span class="future-badge" style="font-size:9px;padding:1px 6px;margin-left:6px"><i class="fas fa-star"></i></span>' : ''}
-      </td>
-      <td>${gl > 0 ? fmt(gl) : '<span style="color:var(--border)">—</span>'}</td>
-      <td>${ce > 0 ? fmt(ce) : '<span style="color:var(--border)">—</span>'}</td>
-      <td>${hi > 0 ? fmt(hi) : '<span style="color:var(--border)">—</span>'}</td>
-      <td>${pc > 0 ? fmt(pc) : '<span style="color:var(--border)">—</span>'}</td>
-      <td>${ao > 0 ? fmt(ao) : '<span style="color:var(--border)">—</span>'}</td>
-      <td><strong style="color:${total > 0 ? 'var(--primary)' : 'var(--muted)'}">${total > 0 ? fmt(total) : '—'}</strong></td>
-      <td>${statusBadge}</td>
-    </tr>`;
-  }).join('') + `
-    <tr class="total-row">
-      <td>11-Year Total</td>
-      <td>${fmt(totals.gl)}</td><td>${fmt(totals.ce)}</td><td>${fmt(totals.hi)}</td>
-      <td>${fmt(totals.pc)}</td><td>${fmt(totals.ao)}</td>
-      <td>${fmt(grandAll)}</td><td>—</td>
-    </tr>`;
+// ══ SUMMARY TABLE ══
+function renderSummaryTable(){
+  const person=document.getElementById('summaryPerson')?.value||'All';
+  const fp=person==='All'?null:person;
+  const tbody=document.getElementById('summary-tbody');
+  const totals={gl:0,ce:0,hi:0,pc:0,ao:0};let grandAll=0;
+  tbody.innerHTML=YEARS.map(y=>{
+    const gl=getSum('gl',y,fp),ce=getSum('ce',y,fp),hi=getSum('hi',y,fp),pc=getSum('pc',y,fp),ao=getSum('ao',y,fp);
+    const total=gl+ce+hi+pc+ao;
+    totals.gl+=gl;totals.ce+=ce;totals.hi+=hi;totals.pc+=pc;totals.ao+=ao;grandAll+=total;
+    const future=isFuture(y);
+    const status=future?`<span style="color:var(--accent);font-size:11px;font-weight:600"><i class="fas fa-clock"></i> Planned</span>`:total>0?`<span style="color:var(--success);font-size:11px;font-weight:600"><i class="fas fa-check-circle"></i> Recorded</span>`:`<span style="color:var(--muted);font-size:11px">—</span>`;
+    return`<tr style="${future?'opacity:.7':''}"><td class="year-cell">${y}${future?'<span class="future-badge" style="font-size:9px;padding:1px 5px"><i class="fas fa-star"></i></span>':''}</td><td>${gl>0?fmt(gl):'—'}</td><td>${ce>0?fmt(ce):'—'}</td><td>${hi>0?fmt(hi):'—'}</td><td>${pc>0?fmt(pc):'—'}</td><td>${ao>0?fmt(ao):'—'}</td><td><strong style="color:${total>0?'var(--primary)':'var(--muted)'}">${total>0?fmt(total):'—'}</strong></td><td>${status}</td></tr>`;
+  }).join('')+`<tr class="total-row"><td>Grand Total</td><td>${fmt(totals.gl)}</td><td>${fmt(totals.ce)}</td><td>${fmt(totals.hi)}</td><td>${fmt(totals.pc)}</td><td>${fmt(totals.ao)}</td><td>${fmt(grandAll)}</td><td>—</td></tr>`;
 }
 
-// ═══════════════════════════════════════════════
-//  CHARTS
-// ═══════════════════════════════════════════════
-function initCharts() {
-  const gridColor = 'rgba(0,0,0,0.04)';
-  const fontFamily = 'Inter';
-
-  // LINE CHART
-  lineChart = new Chart(document.getElementById('lineChart').getContext('2d'), {
-    type: 'line',
-    data: { labels: YEARS, datasets: [] },
-    options: {
-      responsive: true, maintainAspectRatio: false,
-      interaction: { mode:'index', intersect:false },
-      plugins: {
-        legend: { position:'top', labels:{ font:{family:fontFamily, size:11}, usePointStyle:true, pointStyleWidth:8, padding:16 } },
-        tooltip: { callbacks: { label: ctx => ` ${CATS[Object.keys(CATS)[ctx.datasetIndex]]?.label || ''}: RM ${Number(ctx.parsed.y).toLocaleString('en-MY',{minimumFractionDigits:2})}` } }
-      },
-      scales: {
-        x: { grid:{display:false}, ticks:{font:{family:fontFamily, size:11}} },
-        y: { beginAtZero:true, grid:{color:gridColor},
-             ticks:{ font:{family:fontFamily, size:11}, callback: v => 'RM '+v.toLocaleString() } }
-      }
-    }
+// ══ CHARTS ══
+function initCharts(){
+  const gc='rgba(0,0,0,0.04)',ff='Inter';
+  lineChart=new Chart(document.getElementById('lineChart').getContext('2d'),{
+    type:'line',data:{labels:YEARS,datasets:[]},
+    options:{responsive:true,maintainAspectRatio:false,interaction:{mode:'index',intersect:false},
+      plugins:{legend:{position:'top',labels:{font:{family:ff,size:11},usePointStyle:true,pointStyleWidth:8,padding:14}}},
+      scales:{x:{grid:{display:false},ticks:{font:{family:ff,size:11}}},y:{beginAtZero:true,grid:{color:gc},ticks:{font:{family:ff,size:11},callback:v=>'RM'+v.toLocaleString()}}}}
   });
-
-  // DONUT CHART
-  donutChart = new Chart(document.getElementById('donutChart').getContext('2d'), {
-    type: 'doughnut',
-    data: {
-      labels: Object.values(CATS).map(c => c.label),
-      datasets: [{
-        data: [0,0,0,0,0],
-        backgroundColor: Object.values(CATS).map(c => c.color),
-        borderWidth: 3, borderColor: '#fff', hoverOffset: 10
-      }]
-    },
-    options: {
-      responsive: true, maintainAspectRatio: false,
-      plugins: {
-        legend: { position:'bottom', labels:{ font:{family:fontFamily, size:11}, usePointStyle:true, pointStyleWidth:8, padding:14 } },
-        tooltip: { callbacks: { label: ctx => ` ${ctx.label}: RM ${Number(ctx.parsed).toLocaleString('en-MY',{minimumFractionDigits:2})}` } }
-      }
-    }
+  donutChart=new Chart(document.getElementById('donutChart').getContext('2d'),{
+    type:'doughnut',
+    data:{labels:Object.values(CATS).map(c=>c.label),datasets:[{data:[0,0,0,0,0],backgroundColor:Object.values(CATS).map(c=>c.color),borderWidth:3,borderColor:'#fff',hoverOffset:8}]},
+    options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{position:'bottom',labels:{font:{family:ff,size:11},usePointStyle:true,pointStyleWidth:8,padding:12}},tooltip:{callbacks:{label:ctx=>` ${ctx.label}: RM${Number(ctx.parsed).toLocaleString('en-MY',{minimumFractionDigits:2})}`}}}}
   });
-
-  // BAR CHART
-  barChart = new Chart(document.getElementById('barChart').getContext('2d'), {
-    type: 'bar',
-    data: {
-      labels: Object.values(CATS).map(c => c.label),
-      datasets: [
-        { label:'Amount Claimed', data:[0,0,0,0,0], backgroundColor: Object.values(CATS).map(c => c.color + 'cc'), borderRadius:8, borderSkipped:false },
-        { label:'Relief Limit',   data:[2500,8000,3000,8000,0], backgroundColor:'rgba(0,0,0,.06)', borderRadius:8, borderSkipped:false }
-      ]
-    },
-    options: {
-      responsive: true, maintainAspectRatio: false,
-      plugins: {
-        legend: { position:'top', labels:{ font:{family:fontFamily, size:11}, usePointStyle:true, padding:16 } },
-        tooltip: { callbacks: { label: ctx => ` ${ctx.dataset.label}: RM ${Number(ctx.parsed.y).toLocaleString('en-MY',{minimumFractionDigits:2})}` } }
-      },
-      scales: {
-        x: { grid:{display:false}, ticks:{font:{family:fontFamily, size:11}} },
-        y: { beginAtZero:true, grid:{color:gridColor}, ticks:{ font:{family:fontFamily, size:11}, callback: v => 'RM '+v.toLocaleString() } }
-      }
-    }
+  barChart=new Chart(document.getElementById('barChart').getContext('2d'),{
+    type:'bar',
+    data:{labels:Object.values(CATS).map(c=>c.label),datasets:[
+      {label:'Amount Claimed',data:[0,0,0,0,0],backgroundColor:Object.values(CATS).map(c=>c.color+'cc'),borderRadius:8,borderSkipped:false},
+      {label:'Relief Limit',data:[2500,8000,3000,8000,0],backgroundColor:'rgba(0,0,0,.07)',borderRadius:8,borderSkipped:false}
+    ]},
+    options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{position:'top',labels:{font:{family:ff,size:11},usePointStyle:true,padding:14}}},
+      scales:{x:{grid:{display:false},ticks:{font:{family:ff,size:11}}},y:{beginAtZero:true,grid:{color:gc},ticks:{font:{family:ff,size:11},callback:v=>'RM'+v.toLocaleString()}}}}
   });
 }
 
-// ═══════════════════════════════════════════════
-//  UPDATE ALL DASHBOARD
-// ═══════════════════════════════════════════════
-function updateAll() {
-  const year   = document.getElementById('yearFilter').value;
-  const person = currentPerson;
-  const catKeys = Object.keys(CATS);
-  const limits  = [2500, 8000, 3000, 8000, null];
-
-  let grandTotal = 0;
-  catKeys.forEach((cat, i) => {
-    const s = getSum(cat, year, person);
-    grandTotal += s;
-    document.getElementById('sum-' + cat).textContent = fmt(s);
-    const lim = limits[i];
-    const pct = lim ? Math.min(100, (s / lim) * 100) : (s > 0 ? 100 : 0);
-    document.getElementById('bar-' + cat).style.width = pct + '%';
+// ══ UPDATE ALL ══
+function updateAll(){
+  const year=document.getElementById('yearFilter').value;
+  const catKeys=Object.keys(CATS);
+  const limits=[2500,8000,3000,8000,null];
+  let grand=0;
+  catKeys.forEach((cat,i)=>{
+    const s=getSum(cat,year,currentPerson);grand+=s;
+    document.getElementById('sum-'+cat).textContent=fmt(s);
+    const lim=limits[i];
+    document.getElementById('bar-'+cat).style.width=lim?Math.min(100,s/lim*100)+'%':(s>0?'100%':'0%');
   });
-
-  document.getElementById('trend-badge').textContent = fmt(grandTotal) + ' Total';
-  document.getElementById('donut-year-label').textContent = 'Year ' + year + (isFutureYear(year) ? ' ★ Planned' : '');
-  document.getElementById('bar-chart-sub').textContent = `Year ${year} · ${person} — claimed vs LHDN relief limit`;
-
-  // Line chart: one dataset per category
-  lineChart.data.datasets = catKeys.map(cat => ({
-    label: CATS[cat].label,
-    data: YEARS.map(y => getSum(cat, y, person)),
-    borderColor: CATS[cat].color,
-    backgroundColor: CATS[cat].color + '18',
-    fill: true, tension: 0.4,
-    pointBackgroundColor: CATS[cat].color,
-    pointRadius: 5, pointHoverRadius: 7,
-    borderDash: YEARS.map(y => isFutureYear(y) ? [6,3] : []),
+  document.getElementById('trend-badge').textContent=fmt(grand);
+  document.getElementById('donut-year-label').textContent='Year '+year+(isFuture(year)?' ★ Planned':'');
+  document.getElementById('bar-chart-sub').textContent=`Year ${year} · ${currentPerson} — claimed vs limit`;
+  lineChart.data.datasets=catKeys.map(cat=>({
+    label:CATS[cat].label,data:YEARS.map(y=>getSum(cat,y,currentPerson)),
+    borderColor:CATS[cat].color,backgroundColor:CATS[cat].color+'18',
+    fill:true,tension:0.4,pointBackgroundColor:CATS[cat].color,pointRadius:4,pointHoverRadius:7
   }));
   lineChart.update();
-
-  // Donut
-  donutChart.data.datasets[0].data = catKeys.map(cat => getSum(cat, year, person));
+  donutChart.data.datasets[0].data=catKeys.map(cat=>getSum(cat,year,currentPerson));
   donutChart.update();
-
-  // Bar
-  barChart.data.datasets[0].data = catKeys.map(cat => getSum(cat, year, person));
+  barChart.data.datasets[0].data=catKeys.map(cat=>getSum(cat,year,currentPerson));
   barChart.update();
 }
 
-// ═══════════════════════════════════════════════
-//  EXPORT CSV
-// ═══════════════════════════════════════════════
-function exportCSV() {
-  let csv = 'Year,Person,Category,Sub-Category,Extra Info,Amount (RM),Description,Date Added,Attachments\n';
-  Object.entries(data).forEach(([cat, rows]) => {
-    rows.forEach(e => {
-      csv += `${e.year},"${e.person}","${CATS[cat].label}","${e.subcat}","${e.extra || ''}",${e.amount},"${e.desc}","${e.date}",${(e.files||[]).length}\n`;
-    });
-  });
-  const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
-  const a = document.createElement('a');
-  a.href = URL.createObjectURL(blob);
-  a.download = `SF_LHDN_TaxTracker_2020-2030.csv`;
-  a.click();
-  showToast('📊 Data exported: SF_LHDN_TaxTracker_2020-2030.csv');
+// ══ EXPORT ══
+function exportCSV(){
+  let csv='Year,Person,Category,Sub-Category,Extra,Amount(RM),Description,Date,Attachments\n';
+  Object.entries(data).forEach(([cat,rows])=>rows.forEach(e=>{
+    csv+=`${e.year},"${e.person}","${CATS[cat].label}","${e.subcat}","${e.extra||''}",${e.amount},"${e.desc}","${e.date}",${(e.files||[]).length}\n`;
+  }));
+  const a=document.createElement('a');
+  a.href=URL.createObjectURL(new Blob([csv],{type:'text/csv'}));
+  a.download='SF_LHDN_2020-2030.csv';a.click();
+  showToast('📊 Exported: SF_LHDN_2020-2030.csv');
 }
 
-// ═══════════════════════════════════════════════
-//  TOAST NOTIFICATIONS
-// ═══════════════════════════════════════════════
-function showToast(msg, type = 'success') {
-  const container = document.getElementById('toastContainer');
-  const toast = document.createElement('div');
-  toast.className = 'toast' + (type === 'error' ? ' error' : '');
-  const iconColor = type === 'error' ? 'var(--danger)' : 'var(--success)';
-  const icon      = type === 'error' ? 'fa-exclamation-circle' : 'fa-check-circle';
-  toast.innerHTML = `<i class="fas ${icon}" style="color:${iconColor};font-size:16px;flex-shrink:0"></i> ${msg}`;
-  container.appendChild(toast);
-  setTimeout(() => {
-    toast.style.opacity = '0';
-    toast.style.transform = 'translateX(30px)';
-    toast.style.transition = '.4s ease';
-    setTimeout(() => toast.remove(), 420);
-  }, 3200);
+// ══ TOAST ══
+function showToast(msg,type='success'){
+  const c=document.getElementById('toastContainer');
+  const t=document.createElement('div');
+  t.className='toast'+(type==='error'?' error':'');
+  t.innerHTML=`<i class="fas fa-${type==='error'?'exclamation-circle':'check-circle'}" style="color:var(--${type==='error'?'danger':'success'});font-size:16px;flex-shrink:0"></i>${msg}`;
+  c.appendChild(t);
+  setTimeout(()=>{t.style.opacity='0';t.style.transform='translateX(30px)';t.style.transition='.4s';setTimeout(()=>t.remove(),420);},3200);
 }
 
-// ═══════════════════════════════════════════════
-//  INIT
-// ═══════════════════════════════════════════════
+// ══ INIT ══
 initCharts();
 updateAll();
 </script>
