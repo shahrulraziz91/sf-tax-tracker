@@ -104,6 +104,11 @@
     .chart-badge{background:var(--bg);border:1px solid var(--border);padding:4px 10px;border-radius:20px;font-size:11px;font-weight:600;color:var(--primary);white-space:nowrap;flex-shrink:0}
     .chart-wrap{position:relative;height:260px}
     .donut-wrap{position:relative;height:230px}
+    /* Both mode color legend */
+    .both-color-legend{display:none;gap:16px;flex-wrap:wrap;margin-top:8px;font-size:11px;font-weight:600;color:var(--muted)}
+    .both-color-legend.show{display:flex}
+    .bcl-item{display:flex;align-items:center;gap:5px}
+    .bcl-dot{width:10px;height:10px;border-radius:50%;flex-shrink:0}
     .entry-card{background:var(--card);border-radius:var(--radius);box-shadow:var(--shadow);margin-bottom:24px;overflow:hidden}
     .entry-header{background:linear-gradient(135deg,var(--primary),var(--primary-light));padding:20px 26px}
     .entry-header-title{color:#fff;font-size:15px;font-weight:700}
@@ -184,11 +189,6 @@
     .empty-state{text-align:center;padding:40px 20px;color:var(--muted)}
     .empty-state i{font-size:40px;margin-bottom:12px;opacity:.25;display:block}
     .empty-state p{font-size:13px}
-    /* ── BOTH legend pill ── */
-    .both-legend{display:flex;align-items:center;gap:6px;font-size:11px;font-weight:600;color:var(--muted);margin-top:6px;flex-wrap:wrap}
-    .both-legend span{display:inline-flex;align-items:center;gap:4px}
-    .legend-line{width:20px;height:2px;display:inline-block;border-radius:2px}
-    .legend-dash{width:20px;height:0;display:inline-block;border-top:2px dashed;border-radius:2px}
     @media(max-width:900px){
       .sidebar{transform:translateX(-100%)}
       .sidebar.open{transform:translateX(0)}
@@ -311,16 +311,25 @@
         <div class="sum-card c4"><div class="sum-icon"><i class="fas fa-user-friends"></i></div><div class="sum-label">Parents Cost</div><div class="sum-amount" id="sum-pc">RM 0.00</div><div class="sum-limit">Limit: RM 8,000</div><div class="sum-bar"><div class="sum-bar-fill" id="bar-pc" style="width:0%"></div></div></div>
         <div class="sum-card c5"><div class="sum-icon"><i class="fas fa-globe-asia"></i></div><div class="sum-label">Assets Overseas</div><div class="sum-amount" id="sum-ao">RM 0.00</div><div class="sum-limit">Declared Value</div><div class="sum-bar"><div class="sum-bar-fill" id="bar-ao" style="width:0%"></div></div></div>
       </div>
+
       <div class="charts-row">
         <div class="chart-card">
           <div class="chart-header">
             <div>
               <div class="chart-title">Yearly Tax Relief Trend <span class="future-badge"><i class="fas fa-star"></i> 2020–2030</span></div>
               <div class="chart-sub" id="line-chart-sub">All 5 categories — RM values</div>
-              <!-- Both legend -->
-              <div class="both-legend" id="both-legend" style="display:none">
-                <span><span class="legend-line" style="background:#555"></span> Solid = Shahrul</span>
-                <span><span class="legend-dash" style="border-color:#555"></span> Dashed = Fateha</span>
+              <!-- Color legend for Both mode -->
+              <div class="both-color-legend" id="bothColorLegend">
+                <div class="bcl-item"><div class="bcl-dot" style="background:#3b82f6"></div><span style="color:#3b82f6">S·Gaya Hidup</span></div>
+                <div class="bcl-item"><div class="bcl-dot" style="background:#93c5fd"></div><span style="color:#93c5fd">F·Gaya Hidup</span></div>
+                <div class="bcl-item"><div class="bcl-dot" style="background:#8b5cf6"></div><span style="color:#8b5cf6">S·Child Edu</span></div>
+                <div class="bcl-item"><div class="bcl-dot" style="background:#c4b5fd"></div><span style="color:#c4b5fd">F·Child Edu</span></div>
+                <div class="bcl-item"><div class="bcl-dot" style="background:#10b981"></div><span style="color:#10b981">S·Health</span></div>
+                <div class="bcl-item"><div class="bcl-dot" style="background:#6ee7b7"></div><span style="color:#6ee7b7">F·Health</span></div>
+                <div class="bcl-item"><div class="bcl-dot" style="background:#f59e0b"></div><span style="color:#f59e0b">S·Parents</span></div>
+                <div class="bcl-item"><div class="bcl-dot" style="background:#fcd34d"></div><span style="color:#fcd34d">F·Parents</span></div>
+                <div class="bcl-item"><div class="bcl-dot" style="background:#ef4444"></div><span style="color:#ef4444">S·Overseas</span></div>
+                <div class="bcl-item"><div class="bcl-dot" style="background:#fca5a5"></div><span style="color:#fca5a5">F·Overseas</span></div>
               </div>
             </div>
             <span class="chart-badge" id="trend-badge">RM 0.00</span>
@@ -337,6 +346,7 @@
           <div class="donut-wrap"><canvas id="donutChart"></canvas></div>
         </div>
       </div>
+
       <div class="chart-card" style="margin-bottom:24px">
         <div class="chart-header">
           <div><div class="chart-title">Relief Utilisation vs LHDN Limit</div><div class="chart-sub" id="bar-chart-sub">Claimed vs limit</div></div>
@@ -538,6 +548,10 @@ var HEADERS  = {
   'X-Master-Key'    : JSONBIN_API_KEY,
   'X-Bin-Versioning': 'false'
 };
+
+// ══ Shahrul = dark, Fateha = light/pastel version ══
+var S_COLORS = ['#3b82f6','#8b5cf6','#10b981','#f59e0b','#ef4444'];
+var F_COLORS = ['#93c5fd','#c4b5fd','#6ee7b7','#fcd34d','#fca5a5'];
 
 var YEARS = ['2020','2021','2022','2023','2024','2025','2026','2027','2028','2029','2030'];
 var MONTHS = {
@@ -746,7 +760,7 @@ async function processFiles(files, cat) {
   var arr = Array.from(files);
   for (var i = 0; i < arr.length; i++) {
     var file = arr[i];
-    if (file.size > 20 * 1024 * 1024) {   // ✅ FIXED syntax error
+    if (file.size > 20 * 1024 * 1024) {    // ✅ FIXED
       showToast('❌ File too large (max 20MB): ' + file.name, 'error');
       continue;
     }
@@ -966,17 +980,28 @@ function initCharts() {
   lineChart=new Chart(document.getElementById('lineChart').getContext('2d'),{
     type:'line',data:{labels:YEARS,datasets:[]},
     options:{responsive:true,maintainAspectRatio:false,interaction:{mode:'index',intersect:false},
-      plugins:{legend:{position:'top',labels:{font:{family:ff,size:11},usePointStyle:true,pointStyleWidth:8,padding:14}}},
+      plugins:{legend:{position:'top',labels:{font:{family:ff,size:10},usePointStyle:true,pointStyleWidth:8,padding:10,boxWidth:10}}},
       scales:{x:{grid:{display:false},ticks:{font:{family:ff,size:11}}},
         y:{beginAtZero:true,grid:{color:gc},ticks:{font:{family:ff,size:11},callback:function(v){return 'RM'+v.toLocaleString();}}}}}
   });
   donutChart=new Chart(document.getElementById('donutChart').getContext('2d'),{
     type:'doughnut',
-    data:{labels:Object.values(CATS).map(function(c){return c.label;}),
-      datasets:[{data:[0,0,0,0,0],backgroundColor:Object.values(CATS).map(function(c){return c.color;}),borderWidth:3,borderColor:'#fff',hoverOffset:8}]},
+    data:{
+      labels:Object.values(CATS).map(function(c){return c.label;}),
+      datasets:[{
+        data:[0,0,0,0,0],
+        backgroundColor:Object.values(CATS).map(function(c){return c.color;}),
+        borderWidth:3,
+        borderColor:'#fff',
+        hoverOffset:8
+      }]
+    },
     options:{responsive:true,maintainAspectRatio:false,
-      plugins:{legend:{position:'bottom',labels:{font:{family:ff,size:11},usePointStyle:true,pointStyleWidth:8,padding:12}},
-        tooltip:{callbacks:{label:function(ctx){return ' '+ctx.label+': RM'+Number(ctx.parsed).toLocaleString('en-MY',{minimumFractionDigits:2});}}}}}
+      plugins:{
+        legend:{position:'bottom',labels:{font:{family:ff,size:11},usePointStyle:true,pointStyleWidth:8,padding:12}},
+        tooltip:{callbacks:{label:function(ctx){return ' '+ctx.label+': RM'+Number(ctx.parsed).toLocaleString('en-MY',{minimumFractionDigits:2});}}}
+      }
+    }
   });
   barChart=new Chart(document.getElementById('barChart').getContext('2d'),{
     type:'bar',
@@ -992,116 +1017,138 @@ function initCharts() {
   });
 }
 
-// ══════════════════════════════════════════════
-//  🎨 UPDATE ALL — "Both" shows separate colors
-// ══════════════════════════════════════════════
+// ══════════════════════════════════════════════════════
+//  🎨 UPDATE ALL
+//  Both mode:
+//    Line  → Shahrul = dark colors, Fateha = pastel colors (NO dashes)
+//    Donut → Shahrul total vs Fateha total (FIXED — always shows data)
+//    Bar   → Shahrul dark bars + Fateha pastel bars side by side
+// ══════════════════════════════════════════════════════
 function updateAll() {
   var year   = document.getElementById('yearFilter').value;
   var limits = [2500,8000,3000,8000,null];
   var grand  = 0;
 
-  // Summary cards — show combined total when Both
+  // ── Summary Cards ──
   Object.keys(CATS).forEach(function(cat,i){
-    var s = getSum(cat, year, currentPerson); grand+=s;
+    var s = getSum(cat, year, currentPerson); grand += s;
     document.getElementById('sum-'+cat).textContent = fmt(s);
     var lim = limits[i];
-    document.getElementById('bar-'+cat).style.width = lim?Math.min(100,s/lim*100)+'%':(s>0?'100%':'0%');
+    document.getElementById('bar-'+cat).style.width = lim ? Math.min(100,s/lim*100)+'%' : (s>0?'100%':'0%');
   });
 
   document.getElementById('trend-badge').textContent = fmt(grand);
-  document.getElementById('donut-year-label').textContent = 'Year '+year+(isFuture(year)?' ★ Planned':'');
   document.getElementById('bar-chart-sub').textContent = 'Year '+year+' · '+currentPerson;
 
-  // Show/hide both legend hint
-  var bothLegend = document.getElementById('both-legend');
-  if (bothLegend) bothLegend.style.display = (currentPerson==='Both') ? 'flex' : 'none';
+  // Show/hide color legend for Both mode
+  var bcl = document.getElementById('bothColorLegend');
+  if (bcl) bcl.classList.toggle('show', currentPerson==='Both');
 
-  // ── LINE CHART ──────────────────────────────
+  // ── LINE CHART ──
   if (currentPerson === 'Both') {
-    // Shahrul = solid lines, Fateha = dashed lines, same category colors
-    var shahrulDS = Object.keys(CATS).map(function(cat){
+    // Shahrul = DARK solid lines
+    var sDS = Object.keys(CATS).map(function(cat,idx){
       return {
-        label          : 'Shahrul · '+CATS[cat].label,
-        data           : YEARS.map(function(y){ return getSum(cat,y,'Shahrul'); }),
-        borderColor    : CATS[cat].color,
-        backgroundColor: CATS[cat].color+'15',
-        fill           : false,
-        tension        : 0.4,
-        borderWidth    : 2.5,
-        borderDash     : [],          // solid = Shahrul
-        pointBackgroundColor: CATS[cat].color,
-        pointRadius    : 4,
-        pointHoverRadius: 7
+        label               : 'S · '+CATS[cat].label,
+        data                : YEARS.map(function(y){ return getSum(cat,y,'Shahrul'); }),
+        borderColor         : S_COLORS[idx],
+        backgroundColor     : S_COLORS[idx]+'20',
+        fill                : false,
+        tension             : 0.4,
+        borderWidth         : 2.5,
+        borderDash          : [],
+        pointBackgroundColor: S_COLORS[idx],
+        pointRadius         : 4,
+        pointHoverRadius    : 7
       };
     });
-    var fatehaDS = Object.keys(CATS).map(function(cat){
+    // Fateha = PASTEL solid lines (different color, NO dashes)
+    var fDS = Object.keys(CATS).map(function(cat,idx){
       return {
-        label          : 'Fateha · '+CATS[cat].label,
-        data           : YEARS.map(function(y){ return getSum(cat,y,'Fateha'); }),
-        borderColor    : CATS[cat].color,
-        backgroundColor: 'transparent',
-        fill           : false,
-        tension        : 0.4,
-        borderWidth    : 2.5,
-        borderDash     : [6,3],       // dashed = Fateha
-        pointBackgroundColor: '#fff',
-        pointBorderColor    : CATS[cat].color,
-        pointBorderWidth    : 2,
-        pointRadius    : 4,
-        pointHoverRadius: 7
+        label               : 'F · '+CATS[cat].label,
+        data                : YEARS.map(function(y){ return getSum(cat,y,'Fateha'); }),
+        borderColor         : F_COLORS[idx],
+        backgroundColor     : F_COLORS[idx]+'20',
+        fill                : false,
+        tension             : 0.4,
+        borderWidth         : 2.5,
+        borderDash          : [],   // ✅ NO dashes — different color instead!
+        pointBackgroundColor: F_COLORS[idx],
+        pointRadius         : 4,
+        pointHoverRadius    : 7
       };
     });
-    lineChart.data.datasets = shahrulDS.concat(fatehaDS);
+    lineChart.data.datasets = sDS.concat(fDS);
+    document.getElementById('line-chart-sub').textContent = 'Dark = Shahrul · Pastel = Fateha';
+    document.getElementById('donut-year-label').textContent = 'Year '+year+' · S vs F';
 
   } else {
-    // Single person — normal filled lines
     lineChart.data.datasets = Object.keys(CATS).map(function(cat){
       return {
-        label          : CATS[cat].label,
-        data           : YEARS.map(function(y){ return getSum(cat,y,currentPerson); }),
-        borderColor    : CATS[cat].color,
-        backgroundColor: CATS[cat].color+'18',
-        fill           : true,
-        tension        : 0.4,
-        borderWidth    : 2,
-        borderDash     : [],
+        label               : CATS[cat].label,
+        data                : YEARS.map(function(y){ return getSum(cat,y,currentPerson); }),
+        borderColor         : CATS[cat].color,
+        backgroundColor     : CATS[cat].color+'18',
+        fill                : true,
+        tension             : 0.4,
+        borderWidth         : 2,
+        borderDash          : [],
         pointBackgroundColor: CATS[cat].color,
-        pointRadius    : 4,
-        pointHoverRadius: 7
+        pointRadius         : 4,
+        pointHoverRadius    : 7
       };
     });
+    document.getElementById('line-chart-sub').textContent = 'All 5 categories — RM values';
+    document.getElementById('donut-year-label').textContent = 'Year '+year+(isFuture(year)?' ★ Planned':'');
   }
   lineChart.update();
 
-  // ── DONUT — Both: Shahrul 🔵 vs Fateha 🟣 ──
+  // ── DONUT — FIXED: always has data to display ──
   if (currentPerson === 'Both') {
-    var sTotal = Object.keys(CATS).reduce(function(s,cat){ return s+getSum(cat,year,'Shahrul'); },0);
-    var fTotal = Object.keys(CATS).reduce(function(s,cat){ return s+getSum(cat,year,'Fateha');  },0);
-    donutChart.data.labels                      = ['Shahrul','Fateha'];
-    donutChart.data.datasets[0].data            = [sTotal, fTotal];
-    donutChart.data.datasets[0].backgroundColor = ['#3b82f6','#8b5cf6'];
+    var sTotal = Object.keys(CATS).reduce(function(s,cat){ return s+getSum(cat,year,'Shahrul'); }, 0);
+    var fTotal = Object.keys(CATS).reduce(function(s,cat){ return s+getSum(cat,year,'Fateha');  }, 0);
+
+    // If both zero, show placeholder so donut isn't empty
+    var dData  = (sTotal===0 && fTotal===0) ? [1,1] : [sTotal, fTotal];
+    var dAlpha = (sTotal===0 && fTotal===0) ? ['#e2e8f050','#e2e8f050'] : ['#3b82f6','#c4b5fd'];
+
+    donutChart.data.labels                      = ['Shahrul', 'Fateha'];
+    donutChart.data.datasets[0].data            = dData;
+    donutChart.data.datasets[0].backgroundColor = dAlpha;
+    donutChart.data.datasets[0].borderWidth     = 3;
+
   } else {
+    var catVals = Object.keys(CATS).map(function(cat){ return getSum(cat,year,currentPerson); });
+    var total   = catVals.reduce(function(a,b){return a+b;},0);
+
+    // If all zero, show equal placeholder segments so donut isn't blank
+    var dVals   = (total === 0) ? [1,1,1,1,1] : catVals;
+    var dColors = (total === 0)
+      ? ['#e2e8f0','#e2e8f0','#e2e8f0','#e2e8f0','#e2e8f0']
+      : Object.values(CATS).map(function(c){return c.color;});
+
     donutChart.data.labels                      = Object.values(CATS).map(function(c){return c.label;});
-    donutChart.data.datasets[0].data            = Object.keys(CATS).map(function(cat){return getSum(cat,year,currentPerson);});
-    donutChart.data.datasets[0].backgroundColor = Object.values(CATS).map(function(c){return c.color;});
+    donutChart.data.datasets[0].data            = dVals;
+    donutChart.data.datasets[0].backgroundColor = dColors;
+    donutChart.data.datasets[0].borderWidth     = 3;
   }
   donutChart.update();
 
-  // ── BAR — Both: side-by-side Shahrul🔵 & Fateha🟣 ──
+  // ── BAR CHART ──
   if (currentPerson === 'Both') {
     barChart.data.labels   = Object.values(CATS).map(function(c){return c.label;});
     barChart.data.datasets = [
       {
-        label          : '🔵 Shahrul',
+        label          : 'Shahrul',
         data           : Object.keys(CATS).map(function(cat){return getSum(cat,year,'Shahrul');}),
-        backgroundColor: '#3b82f6cc',
+        backgroundColor: S_COLORS.map(function(c){return c+'dd';}),
         borderRadius   : 6,
         borderSkipped  : false
       },
       {
-        label          : '🟣 Fateha',
+        label          : 'Fateha',
         data           : Object.keys(CATS).map(function(cat){return getSum(cat,year,'Fateha');}),
-        backgroundColor: '#8b5cf6cc',
+        backgroundColor: F_COLORS.map(function(c){return c+'dd';}),
         borderRadius   : 6,
         borderSkipped  : false
       },
