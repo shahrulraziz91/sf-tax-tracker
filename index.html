@@ -184,6 +184,11 @@
     .empty-state{text-align:center;padding:40px 20px;color:var(--muted)}
     .empty-state i{font-size:40px;margin-bottom:12px;opacity:.25;display:block}
     .empty-state p{font-size:13px}
+    /* ── BOTH legend pill ── */
+    .both-legend{display:flex;align-items:center;gap:6px;font-size:11px;font-weight:600;color:var(--muted);margin-top:6px;flex-wrap:wrap}
+    .both-legend span{display:inline-flex;align-items:center;gap:4px}
+    .legend-line{width:20px;height:2px;display:inline-block;border-radius:2px}
+    .legend-dash{width:20px;height:0;display:inline-block;border-top:2px dashed;border-radius:2px}
     @media(max-width:900px){
       .sidebar{transform:translateX(-100%)}
       .sidebar.open{transform:translateX(0)}
@@ -224,12 +229,10 @@
   <div class="loading-text">S&F Tax Tracker</div>
   <div class="loading-sub">Loading cloud data...</div>
 </div>
-
 <div class="sync-bar syncing" id="syncBar">
   <div class="sync-dot"></div>
   <span id="syncMsg">Connecting to cloud...</span>
 </div>
-
 <div class="sidebar-overlay" id="sidebarOverlay" onclick="closeSidebar()"></div>
 
 <aside class="sidebar" id="sidebar">
@@ -311,13 +314,26 @@
       <div class="charts-row">
         <div class="chart-card">
           <div class="chart-header">
-            <div><div class="chart-title">Yearly Tax Relief Trend <span class="future-badge"><i class="fas fa-star"></i> 2020–2030</span></div><div class="chart-sub">All 5 categories — RM values</div></div>
+            <div>
+              <div class="chart-title">Yearly Tax Relief Trend <span class="future-badge"><i class="fas fa-star"></i> 2020–2030</span></div>
+              <div class="chart-sub" id="line-chart-sub">All 5 categories — RM values</div>
+              <!-- Both legend -->
+              <div class="both-legend" id="both-legend" style="display:none">
+                <span><span class="legend-line" style="background:#555"></span> Solid = Shahrul</span>
+                <span><span class="legend-dash" style="border-color:#555"></span> Dashed = Fateha</span>
+              </div>
+            </div>
             <span class="chart-badge" id="trend-badge">RM 0.00</span>
           </div>
           <div class="chart-wrap"><canvas id="lineChart"></canvas></div>
         </div>
         <div class="chart-card">
-          <div class="chart-header"><div><div class="chart-title">Category Breakdown</div><div class="chart-sub" id="donut-year-label">Selected Year</div></div></div>
+          <div class="chart-header">
+            <div>
+              <div class="chart-title">Category Breakdown</div>
+              <div class="chart-sub" id="donut-year-label">Selected Year</div>
+            </div>
+          </div>
           <div class="donut-wrap"><canvas id="donutChart"></canvas></div>
         </div>
       </div>
@@ -344,7 +360,6 @@
           <div class="cat-tab" onclick="switchTab(3)"><span class="dot" style="background:var(--cat4)"></span>Parents Cost</div>
           <div class="cat-tab" onclick="switchTab(4)"><span class="dot" style="background:var(--cat5)"></span>Assets Overseas</div>
         </div>
-
         <!-- TAB 0 -->
         <div class="tab-content active" id="tc-0">
           <div class="form-grid">
@@ -365,7 +380,6 @@
           <button class="add-btn" id="btn-gl" onclick="addEntry('gl')"><i class="fas fa-plus"></i>Add Entry</button>
           <div class="entries-section"><div class="section-heading">Recorded Entries</div><div class="table-wrap" id="table-gl-wrap"><div class="empty-state"><i class="fas fa-inbox"></i><p>No entries yet.</p></div></div></div>
         </div>
-
         <!-- TAB 1 -->
         <div class="tab-content" id="tc-1">
           <div class="form-grid">
@@ -385,7 +399,6 @@
           <button class="add-btn" id="btn-ce" onclick="addEntry('ce')"><i class="fas fa-plus"></i>Add Entry</button>
           <div class="entries-section"><div class="section-heading">Recorded Entries</div><div class="table-wrap" id="table-ce-wrap"><div class="empty-state"><i class="fas fa-inbox"></i><p>No entries yet.</p></div></div></div>
         </div>
-
         <!-- TAB 2 -->
         <div class="tab-content" id="tc-2">
           <div class="form-grid">
@@ -405,7 +418,6 @@
           <button class="add-btn" id="btn-hi" onclick="addEntry('hi')"><i class="fas fa-plus"></i>Add Entry</button>
           <div class="entries-section"><div class="section-heading">Recorded Entries</div><div class="table-wrap" id="table-hi-wrap"><div class="empty-state"><i class="fas fa-inbox"></i><p>No entries yet.</p></div></div></div>
         </div>
-
         <!-- TAB 3 -->
         <div class="tab-content" id="tc-3">
           <div class="form-grid">
@@ -425,7 +437,6 @@
           <button class="add-btn" id="btn-pc" onclick="addEntry('pc')"><i class="fas fa-plus"></i>Add Entry</button>
           <div class="entries-section"><div class="section-heading">Recorded Entries</div><div class="table-wrap" id="table-pc-wrap"><div class="empty-state"><i class="fas fa-inbox"></i><p>No entries yet.</p></div></div></div>
         </div>
-
         <!-- TAB 4 -->
         <div class="tab-content" id="tc-4">
           <div class="form-grid">
@@ -567,7 +578,7 @@ function setDefaultMonths() {
   });
 }
 
-// ══ LOAD FROM JSONBIN ══
+// ══ LOAD ══
 async function loadFromCloud() {
   try {
     setSyncStatus('syncing', '🔄 Loading data...');
@@ -587,28 +598,24 @@ async function loadFromCloud() {
     console.error(err);
     setSyncStatus('error', '❌ Connection error — check internet');
     document.getElementById('loadingOverlay').style.display = 'none';
-    showToast('❌ Failed to load. Check internet connection.', 'error');
+    showToast('❌ Failed to load. Check internet.', 'error');
     return false;
   }
 }
 
-// ══ SAVE TO JSONBIN ══
+// ══ SAVE ══
 async function saveToCloud() {
   try {
     setSyncStatus('syncing', '☁️ Saving...');
-    var res = await fetch(BIN_URL, {
-      method: 'PUT', headers: HEADERS, body: JSON.stringify(data)
-    });
+    var res = await fetch(BIN_URL, { method:'PUT', headers:HEADERS, body:JSON.stringify(data) });
     if (!res.ok) throw new Error('HTTP ' + res.status);
     setSyncStatus('synced', '✅ Saved & synced to both devices!');
-    setTimeout(function() {
-      setSyncStatus('synced', '✅ Synced — Shahrul & Fateha see same data');
-    }, 3000);
+    setTimeout(function() { setSyncStatus('synced', '✅ Synced — Shahrul & Fateha see same data'); }, 3000);
     return true;
   } catch(err) {
     console.error(err);
     setSyncStatus('error', '❌ Save failed — check internet');
-    showToast('❌ Save failed. Check internet.', 'error');
+    showToast('❌ Save failed.', 'error');
     return false;
   }
 }
@@ -619,16 +626,8 @@ function startAutoRefresh() {
 }
 
 // ══ SIDEBAR ══
-function openSidebar()  {
-  document.getElementById('sidebar').classList.add('open');
-  document.getElementById('sidebarOverlay').classList.add('show');
-  document.body.style.overflow = 'hidden';
-}
-function closeSidebar() {
-  document.getElementById('sidebar').classList.remove('open');
-  document.getElementById('sidebarOverlay').classList.remove('show');
-  document.body.style.overflow = '';
-}
+function openSidebar()  { document.getElementById('sidebar').classList.add('open'); document.getElementById('sidebarOverlay').classList.add('show'); document.body.style.overflow='hidden'; }
+function closeSidebar() { document.getElementById('sidebar').classList.remove('open'); document.getElementById('sidebarOverlay').classList.remove('show'); document.body.style.overflow=''; }
 document.addEventListener('keydown', function(e) { if(e.key==='Escape') closeSidebar(); });
 
 // ══ NAVIGATION ══
@@ -665,9 +664,7 @@ function selectPerson(p) {
 }
 
 // ══ HELPERS ══
-function fmt(n) {
-  return 'RM ' + Number(n||0).toLocaleString('en-MY',{minimumFractionDigits:2,maximumFractionDigits:2});
-}
+function fmt(n) { return 'RM '+Number(n||0).toLocaleString('en-MY',{minimumFractionDigits:2,maximumFractionDigits:2}); }
 function getSum(cat, year, person) {
   return (data[cat]||[]).filter(function(e){
     return (!year||e.year===year) && (!person||person==='Both'||e.person===person);
@@ -678,47 +675,28 @@ function fileIcon()      { return '🖼️'; }
 function isFuture(y)     { return parseInt(y)>CURRENT_YEAR; }
 function getMonthName(m) { return MONTHS[m]||m; }
 
-// ══════════════════════════════════════════════════
-//  🔥 CLOUDINARY UPLOAD
-//  Images stored on Cloudinary — only URL in JSONBin
-//  No more size limit errors!
-// ══════════════════════════════════════════════════
+// ══ CLOUDINARY UPLOAD ══
 async function uploadToCloudinary(file) {
   try {
     showToast('☁️ Uploading to Cloudinary...', 'success');
-
-    // Compress image first
     var compressed = await compressImage(file);
     if (!compressed) return null;
-
-    // Convert base64 to Blob
     var parts  = compressed.split(',');
     var mime   = parts[0].match(/:(.*?);/)[1];
     var binary = atob(parts[1]);
     var arr    = new Uint8Array(binary.length);
-    for (var i = 0; i < binary.length; i++) {
-      arr[i] = binary.charCodeAt(i);
-    }
+    for (var i = 0; i < binary.length; i++) { arr[i] = binary.charCodeAt(i); }
     var blob = new Blob([arr], { type: mime });
-
-    // Upload to Cloudinary
     var formData = new FormData();
     formData.append('file', blob, file.name);
     formData.append('upload_preset', CLOUDINARY_PRESET);
     formData.append('folder', 'sf_tax_tracker');
-
     var res = await fetch(
       'https://api.cloudinary.com/v1_1/' + CLOUDINARY_CLOUD + '/image/upload',
       { method: 'POST', body: formData }
     );
-
-    if (!res.ok) {
-      var errBody = await res.text();
-      throw new Error('Cloudinary: ' + res.status + ' — ' + errBody);
-    }
-
+    if (!res.ok) { var errBody = await res.text(); throw new Error('Cloudinary: ' + res.status + ' — ' + errBody); }
     var json = await res.json();
-
     return {
       name    : file.name,
       url     : json.secure_url,
@@ -727,7 +705,6 @@ async function uploadToCloudinary(file) {
       type    : 'image/jpeg',
       size    : json.bytes
     };
-
   } catch(err) {
     console.error('Cloudinary upload error:', err);
     showToast('❌ Upload failed: ' + err.message, 'error');
@@ -735,19 +712,14 @@ async function uploadToCloudinary(file) {
   }
 }
 
-// Compress image before Cloudinary upload
 function compressImage(file) {
   return new Promise(function(resolve) {
-    if (!file.type.startsWith('image/')) {
-      showToast('⚠️ Only JPG/PNG supported.', 'error');
-      resolve(null); return;
-    }
+    if (!file.type.startsWith('image/')) { showToast('⚠️ Only JPG/PNG supported.', 'error'); resolve(null); return; }
     var reader = new FileReader();
     reader.onload = function(e) {
       var img = new Image();
       img.onload = function() {
-        var maxW = 1200;
-        var w = img.width, h = img.height;
+        var maxW = 1200, w = img.width, h = img.height;
         if (w > maxW) { h = Math.round(h * maxW / w); w = maxW; }
         var canvas = document.createElement('canvas');
         canvas.width = w; canvas.height = h;
@@ -774,7 +746,7 @@ async function processFiles(files, cat) {
   var arr = Array.from(files);
   for (var i = 0; i < arr.length; i++) {
     var file = arr[i];
-    if (file.size > 20 * 1024 * 1024) {
+    if (file.size > 20 * 1024 * 1024) {   // ✅ FIXED syntax error
       showToast('❌ File too large (max 20MB): ' + file.name, 'error');
       continue;
     }
@@ -790,8 +762,7 @@ function renderReceiptThumbs(cat) {
   document.getElementById('receipts-'+cat).innerHTML =
     receiptsStore[cat].map(function(f,i){
       return '<div class="receipt-thumb" onclick="previewFile(\'' +
-        encodeURIComponent(f.url) + '\',\'' +
-        encodeURIComponent(f.name||'receipt') + '\')">' +
+        encodeURIComponent(f.url) + '\',\'' + encodeURIComponent(f.name||'receipt') + '\')">' +
         '<span class="receipt-icon-big">🖼️</span>' +
         '<div class="receipt-name" title="'+(f.name||'')+'">'+( f.name||'receipt')+'</div>' +
         '<div class="receipt-size" style="color:var(--success)">☁️ Cloudinary</div>' +
@@ -799,12 +770,9 @@ function renderReceiptThumbs(cat) {
         '</div>';
     }).join('');
 }
-function removeReceipt(cat,idx) {
-  receiptsStore[cat].splice(idx,1);
-  renderReceiptThumbs(cat);
-}
+function removeReceipt(cat,idx) { receiptsStore[cat].splice(idx,1); renderReceiptThumbs(cat); }
 
-// ══ ADD ENTRY — saves only URLs, tiny size! ══
+// ══ ADD ENTRY ══
 async function addEntry(cat) {
   var year    = document.getElementById(cat+'-year').value;
   var month   = document.getElementById(cat+'-month').value;
@@ -814,388 +782,385 @@ async function addEntry(cat) {
   var desc    = document.getElementById(cat+'-desc').value.trim();
   var extraId = EXTRA_FIELD[cat];
   var extra   = extraId ? document.getElementById(extraId).value.trim() : '';
-
-  if (!amount||isNaN(amount)||amount<=0) {
-    showToast('Please enter a valid amount.','error'); return;
-  }
-
+  if (!amount||isNaN(amount)||amount<=0) { showToast('Please enter a valid amount.','error'); return; }
   var btn = document.getElementById('btn-'+cat);
-  btn.disabled = true;
-  btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Saving...';
-
-  // Only save URL — NOT base64. Tiny data!
+  btn.disabled = true; btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Saving...';
   var filesForStorage = receiptsStore[cat].map(function(f) {
-    return {
-      name    : f.name || 'receipt',
-      url     : f.url,
-      thumbUrl: f.thumbUrl || f.url,
-      publicId: f.publicId || '',
-      type    : 'image/jpeg'
-    };
+    return { name:f.name||'receipt', url:f.url, thumbUrl:f.thumbUrl||f.url, publicId:f.publicId||'', type:'image/jpeg' };
   });
-
   var entry = {
-    id       : uid(),
-    cat      : cat,
-    year     : year,
-    month    : month,
-    monthName: getMonthName(month),
-    person   : person,
-    subcat   : subcat,
-    amount   : amount.toFixed(2),
-    desc     : desc || subcat,
-    extra    : extra,
-    date     : new Date().toLocaleDateString('en-MY'),
-    files    : filesForStorage
+    id:uid(), cat:cat, year:year, month:month, monthName:getMonthName(month),
+    person:person, subcat:subcat, amount:amount.toFixed(2),
+    desc:desc||subcat, extra:extra,
+    date:new Date().toLocaleDateString('en-MY'),
+    files:filesForStorage
   };
-
   if (!Array.isArray(data[cat])) data[cat] = [];
   data[cat].push(entry);
-
   var saved = await saveToCloud();
   if (saved) {
-    receiptsStore[cat] = [];
-    renderReceiptThumbs(cat);
+    receiptsStore[cat] = []; renderReceiptThumbs(cat);
     document.getElementById(cat+'-amount').value = '';
     document.getElementById(cat+'-desc').value   = '';
     if (extraId) document.getElementById(extraId).value = '';
     renderAllTables(); updateAll();
-    showToast('✅ Saved: ' + fmt(amount) + ' → ' + CATS[cat].label + ' (' + getMonthName(month) + ' ' + year + ')');
+    showToast('✅ Saved: '+fmt(amount)+' → '+CATS[cat].label+' ('+getMonthName(month)+' '+year+')');
   } else {
     data[cat] = data[cat].filter(function(e){ return e.id!==entry.id; });
-    showToast('❌ Entry save failed. Please try again.', 'error');
+    showToast('❌ Entry save failed. Please try again.','error');
   }
-  btn.disabled = false;
-  btn.innerHTML = '<i class="fas fa-plus"></i>Add Entry';
+  btn.disabled = false; btn.innerHTML = '<i class="fas fa-plus"></i>Add Entry';
 }
 
 // ══ RENDER TABLES ══
-function renderAllTables() {
-  Object.keys(CATS).forEach(function(cat){ renderEntryTable(cat); });
-}
+function renderAllTables() { Object.keys(CATS).forEach(function(cat){ renderEntryTable(cat); }); }
 function renderEntryTable(cat) {
   var wrap = document.getElementById('table-'+cat+'-wrap');
   var rows = data[cat] || [];
-  if (!rows.length) {
-    wrap.innerHTML = '<div class="empty-state"><i class="fas fa-inbox"></i><p>No entries yet.</p></div>';
-    return;
-  }
-  var eL   = { gl:null, ce:'Child', hi:'Policy', pc:'Parent', ao:'Country' };
-  var hasE = !!eL[cat];
-  var total = rows.reduce(function(s,e){ return s+parseFloat(e.amount||0); }, 0);
-  var sorted = rows.slice().sort(function(a,b){
-    return b.year.localeCompare(a.year) || (b.month||'01').localeCompare(a.month||'01');
-  });
-  var rhtml = sorted.map(function(e){
-    return '<tr>' +
-      '<td><div><strong>'+e.year+'</strong>' +
-        (isFuture(e.year)?'<span class="future-badge" style="font-size:9px;padding:1px 4px;margin-left:4px"><i class="fas fa-clock"></i></span>':'') +
-      '</div><div class="month-badge" style="margin-top:4px">' +
-        '<i class="fas fa-calendar-day" style="margin-right:4px;font-size:9px"></i>' +
-        (e.monthName||getMonthName(e.month)||'—')+'</div></td>' +
-      '<td><span class="badge badge-'+(e.person||'').toLowerCase()+'">'+e.person+'</span></td>' +
-      '<td style="max-width:140px;white-space:normal;font-size:12px">'+e.subcat+'</td>' +
-      (hasE?'<td>'+(e.extra||'—')+'</td>':'') +
-      '<td><strong style="color:var(--primary)">'+fmt(e.amount)+'</strong></td>' +
-      '<td style="color:var(--muted);max-width:130px;white-space:normal;font-size:12px">'+e.desc+'</td>' +
-      '<td>'+(e.files&&e.files.length
-        ?'<span style="color:var(--success);font-weight:700"><i class="fas fa-paperclip"></i> '+e.files.length+'</span>'
-        :'—')+'</td>' +
-      '<td style="color:var(--muted);font-size:11px">'+e.date+'</td>' +
-      '<td><button class="del-row" onclick="openDelete(\''+cat+'\',\''+e.id+'\')"><i class="fas fa-trash-alt"></i></button></td>' +
+  if (!rows.length) { wrap.innerHTML='<div class="empty-state"><i class="fas fa-inbox"></i><p>No entries yet.</p></div>'; return; }
+  var eL={gl:null,ce:'Child',hi:'Policy',pc:'Parent',ao:'Country'}, hasE=!!eL[cat];
+  var total=rows.reduce(function(s,e){return s+parseFloat(e.amount||0);},0);
+  var sorted=rows.slice().sort(function(a,b){return b.year.localeCompare(a.year)||(b.month||'01').localeCompare(a.month||'01');});
+  var rhtml=sorted.map(function(e){
+    return '<tr>'+
+      '<td><div><strong>'+e.year+'</strong>'+(isFuture(e.year)?'<span class="future-badge" style="font-size:9px;padding:1px 4px;margin-left:4px"><i class="fas fa-clock"></i></span>':'')+'</div>'+
+      '<div class="month-badge" style="margin-top:4px"><i class="fas fa-calendar-day" style="margin-right:4px;font-size:9px"></i>'+(e.monthName||getMonthName(e.month)||'—')+'</div></td>'+
+      '<td><span class="badge badge-'+(e.person||'').toLowerCase()+'">'+e.person+'</span></td>'+
+      '<td style="max-width:140px;white-space:normal;font-size:12px">'+e.subcat+'</td>'+
+      (hasE?'<td>'+(e.extra||'—')+'</td>':'')+
+      '<td><strong style="color:var(--primary)">'+fmt(e.amount)+'</strong></td>'+
+      '<td style="color:var(--muted);max-width:130px;white-space:normal;font-size:12px">'+e.desc+'</td>'+
+      '<td>'+(e.files&&e.files.length?'<span style="color:var(--success);font-weight:700"><i class="fas fa-paperclip"></i> '+e.files.length+'</span>':'—')+'</td>'+
+      '<td style="color:var(--muted);font-size:11px">'+e.date+'</td>'+
+      '<td><button class="del-row" onclick="openDelete(\''+cat+'\',\''+e.id+'\')"><i class="fas fa-trash-alt"></i></button></td>'+
       '</tr>';
   }).join('');
-  wrap.innerHTML =
-    '<table><thead><tr><th>Period</th><th>Person</th><th>Sub-Cat</th>' +
-    (hasE?'<th>'+eL[cat]+'</th>':'') +
-    '<th>Amount</th><th>Description</th><th>Docs</th><th>Added</th><th></th></tr></thead><tbody>' +
-    rhtml +
-    '<tr style="background:#f4f7ff"><td colspan="'+(3+(hasE?1:0))+'"><strong>Total ('+sorted.length+')</strong></td>' +
-    '<td><strong style="color:var(--primary)">'+fmt(total)+'</strong></td><td colspan="4"></td></tr>' +
-    '</tbody></table>';
+  wrap.innerHTML='<table><thead><tr><th>Period</th><th>Person</th><th>Sub-Cat</th>'+(hasE?'<th>'+eL[cat]+'</th>':'')+
+    '<th>Amount</th><th>Description</th><th>Docs</th><th>Added</th><th></th></tr></thead><tbody>'+rhtml+
+    '<tr style="background:#f4f7ff"><td colspan="'+(3+(hasE?1:0))+'"><strong>Total ('+sorted.length+')</strong></td>'+
+    '<td><strong style="color:var(--primary)">'+fmt(total)+'</strong></td><td colspan="4"></td></tr></tbody></table>';
 }
 
 // ══ DELETE ══
-function openDelete(cat,id) {
-  deleteTarget = {cat:cat, id:id};
-  document.getElementById('deleteModal').classList.add('open');
-}
-function closeModal() {
-  document.getElementById('deleteModal').classList.remove('open');
-  deleteTarget = null;
-}
+function openDelete(cat,id) { deleteTarget={cat:cat,id:id}; document.getElementById('deleteModal').classList.add('open'); }
+function closeModal() { document.getElementById('deleteModal').classList.remove('open'); deleteTarget=null; }
 async function confirmDelete() {
   if (!deleteTarget) return;
-  var cat = deleteTarget.cat, id = deleteTarget.id;
-  var backup = data[cat].slice();
-  data[cat] = (data[cat]||[]).filter(function(e){ return e.id!==id; });
-  var saved = await saveToCloud();
-  if (saved) { renderAllTables(); updateAll(); showToast('Entry deleted.','error'); }
-  else        { data[cat]=backup; renderAllTables(); showToast('Delete failed.','error'); }
+  var cat=deleteTarget.cat, id=deleteTarget.id, backup=data[cat].slice();
+  data[cat]=(data[cat]||[]).filter(function(e){return e.id!==id;});
+  var saved=await saveToCloud();
+  if(saved){renderAllTables();updateAll();showToast('Entry deleted.','error');}
+  else{data[cat]=backup;renderAllTables();showToast('Delete failed.','error');}
   closeModal();
 }
-document.getElementById('deleteModal').addEventListener('click', function(e){
-  if(e.target===this) closeModal();
-});
+document.getElementById('deleteModal').addEventListener('click',function(e){if(e.target===this)closeModal();});
 
 // ══ HISTORY ══
 function renderHistoryTable() {
-  var wrap   = document.getElementById('history-table-wrap');
-  var search = (document.getElementById('histSearch')&&document.getElementById('histSearch').value||'').toLowerCase();
-  var fy     = document.getElementById('histYear')   ? document.getElementById('histYear').value   : 'All';
-  var fm     = document.getElementById('histMonth')  ? document.getElementById('histMonth').value  : 'All';
-  var fp     = document.getElementById('histPerson') ? document.getElementById('histPerson').value : 'All';
-  var all = [];
-  Object.keys(data).forEach(function(cat){
-    (data[cat]||[]).forEach(function(e){ all.push(Object.assign({},e,{cat:cat})); });
-  });
-  if(fy!=='All') all=all.filter(function(e){ return e.year===fy; });
-  if(fm!=='All') all=all.filter(function(e){ return e.month===fm; });
-  if(fp!=='All') all=all.filter(function(e){ return e.person===fp; });
+  var wrap=document.getElementById('history-table-wrap');
+  var search=(document.getElementById('histSearch')&&document.getElementById('histSearch').value||'').toLowerCase();
+  var fy=document.getElementById('histYear')?document.getElementById('histYear').value:'All';
+  var fm=document.getElementById('histMonth')?document.getElementById('histMonth').value:'All';
+  var fp=document.getElementById('histPerson')?document.getElementById('histPerson').value:'All';
+  var all=[];
+  Object.keys(data).forEach(function(cat){(data[cat]||[]).forEach(function(e){all.push(Object.assign({},e,{cat:cat}));});});
+  if(fy!=='All') all=all.filter(function(e){return e.year===fy;});
+  if(fm!=='All') all=all.filter(function(e){return e.month===fm;});
+  if(fp!=='All') all=all.filter(function(e){return e.person===fp;});
   if(search) all=all.filter(function(e){
-    return (e.person||'').toLowerCase().includes(search)||
-           (e.subcat||'').toLowerCase().includes(search)||
-           (e.desc||'').toLowerCase().includes(search)||
-           (e.monthName||'').toLowerCase().includes(search)||
-           CATS[e.cat].label.toLowerCase().includes(search)||
-           e.year.includes(search);
+    return (e.person||'').toLowerCase().includes(search)||(e.subcat||'').toLowerCase().includes(search)||
+           (e.desc||'').toLowerCase().includes(search)||(e.monthName||'').toLowerCase().includes(search)||
+           CATS[e.cat].label.toLowerCase().includes(search)||e.year.includes(search);
   });
-  all.sort(function(a,b){
-    return b.year.localeCompare(a.year)||(b.month||'01').localeCompare(a.month||'01');
-  });
-  if (!all.length) {
-    wrap.innerHTML='<div class="empty-state"><i class="fas fa-search"></i><p>No entries found.</p></div>';
-    return;
-  }
-  var total = all.reduce(function(s,e){ return s+parseFloat(e.amount||0); }, 0);
-  var rhtml = all.map(function(e){
-    return '<tr>' +
-      '<td><div><strong>'+e.year+'</strong></div>' +
-      '<div class="month-badge" style="margin-top:4px"><i class="fas fa-calendar-day" style="margin-right:4px;font-size:9px"></i>' +
-        (e.monthName||getMonthName(e.month)||'—')+'</div></td>' +
-      '<td><span class="badge badge-'+(e.person||'').toLowerCase()+'">'+e.person+'</span></td>' +
-      '<td><span style="color:'+CATS[e.cat].color+';font-weight:600;font-size:12px">' +
-        '<i class="fas '+CATS[e.cat].icon+'" style="margin-right:4px"></i>'+CATS[e.cat].label+'</span></td>' +
-      '<td style="max-width:120px;white-space:normal;font-size:12px">'+e.subcat+'</td>' +
-      '<td><strong style="color:var(--primary)">'+fmt(e.amount)+'</strong></td>' +
-      '<td style="color:var(--muted);font-size:12px;max-width:120px;white-space:normal">'+e.desc+'</td>' +
-      '<td>'+(e.files&&e.files.length
-        ?'<span style="color:var(--success);font-weight:700"><i class="fas fa-paperclip"></i> '+e.files.length+'</span>'
-        :'—')+'</td>' +
-      '<td style="color:var(--muted);font-size:11px">'+e.date+'</td>' +
-      '<td><button class="del-row" onclick="openDelete(\''+e.cat+'\',\''+e.id+'\')"><i class="fas fa-trash-alt"></i></button></td>' +
+  all.sort(function(a,b){return b.year.localeCompare(a.year)||(b.month||'01').localeCompare(a.month||'01');});
+  if(!all.length){wrap.innerHTML='<div class="empty-state"><i class="fas fa-search"></i><p>No entries found.</p></div>';return;}
+  var total=all.reduce(function(s,e){return s+parseFloat(e.amount||0);},0);
+  var rhtml=all.map(function(e){
+    return '<tr>'+
+      '<td><div><strong>'+e.year+'</strong></div>'+
+      '<div class="month-badge" style="margin-top:4px"><i class="fas fa-calendar-day" style="margin-right:4px;font-size:9px"></i>'+(e.monthName||getMonthName(e.month)||'—')+'</div></td>'+
+      '<td><span class="badge badge-'+(e.person||'').toLowerCase()+'">'+e.person+'</span></td>'+
+      '<td><span style="color:'+CATS[e.cat].color+';font-weight:600;font-size:12px"><i class="fas '+CATS[e.cat].icon+'" style="margin-right:4px"></i>'+CATS[e.cat].label+'</span></td>'+
+      '<td style="max-width:120px;white-space:normal;font-size:12px">'+e.subcat+'</td>'+
+      '<td><strong style="color:var(--primary)">'+fmt(e.amount)+'</strong></td>'+
+      '<td style="color:var(--muted);font-size:12px;max-width:120px;white-space:normal">'+e.desc+'</td>'+
+      '<td>'+(e.files&&e.files.length?'<span style="color:var(--success);font-weight:700"><i class="fas fa-paperclip"></i> '+e.files.length+'</span>':'—')+'</td>'+
+      '<td style="color:var(--muted);font-size:11px">'+e.date+'</td>'+
+      '<td><button class="del-row" onclick="openDelete(\''+e.cat+'\',\''+e.id+'\')"><i class="fas fa-trash-alt"></i></button></td>'+
       '</tr>';
   }).join('');
-  wrap.innerHTML =
-    '<table><thead><tr><th>Period</th><th>Person</th><th>Category</th><th>Sub-Cat</th>' +
-    '<th>Amount</th><th>Desc</th><th>Docs</th><th>Added</th><th></th></tr></thead><tbody>' +
-    rhtml +
-    '<tr style="background:#f4f7ff"><td colspan="4"><strong>TOTAL ('+all.length+' entries)</strong></td>' +
-    '<td><strong style="color:var(--primary)">'+fmt(total)+'</strong></td><td colspan="4"></td></tr>' +
-    '</tbody></table>';
+  wrap.innerHTML='<table><thead><tr><th>Period</th><th>Person</th><th>Category</th><th>Sub-Cat</th>'+
+    '<th>Amount</th><th>Desc</th><th>Docs</th><th>Added</th><th></th></tr></thead><tbody>'+rhtml+
+    '<tr style="background:#f4f7ff"><td colspan="4"><strong>TOTAL ('+all.length+' entries)</strong></td>'+
+    '<td><strong style="color:var(--primary)">'+fmt(total)+'</strong></td><td colspan="4"></td></tr></tbody></table>';
 }
 
 // ══ RECEIPT VAULT ══
 function renderAllReceipts() {
-  var wrap = document.getElementById('all-receipts-container');
-  var html = '', totalFiles = 0;
+  var wrap=document.getElementById('all-receipts-container'), html='', totalFiles=0;
   Object.keys(data).forEach(function(cat){
-    var rows = data[cat]||[], files = [];
-    rows.forEach(function(e){
-      (e.files||[]).forEach(function(f){ files.push(Object.assign({},f,{entry:e,cat:cat})); });
-    });
-    if (!files.length) return;
-    totalFiles += files.length;
-    html += '<div style="margin-bottom:24px">' +
-      '<div class="section-heading" style="color:'+CATS[cat].color+'">' +
-        '<i class="fas '+CATS[cat].icon+'" style="margin-right:6px"></i>'+CATS[cat].label+
-        '<span style="font-weight:400;color:var(--muted);font-size:12px;margin-left:6px">' +
-          '('+files.length+' file'+(files.length>1?'s':'')+')</span></div>' +
-      '<div class="receipts-grid">' +
+    var rows=data[cat]||[], files=[];
+    rows.forEach(function(e){(e.files||[]).forEach(function(f){files.push(Object.assign({},f,{entry:e,cat:cat}));});});
+    if(!files.length) return;
+    totalFiles+=files.length;
+    html+='<div style="margin-bottom:24px">'+
+      '<div class="section-heading" style="color:'+CATS[cat].color+'"><i class="fas '+CATS[cat].icon+'" style="margin-right:6px"></i>'+CATS[cat].label+
+      '<span style="font-weight:400;color:var(--muted);font-size:12px;margin-left:6px">('+files.length+' file'+(files.length>1?'s':'')+')</span></div>'+
+      '<div class="receipts-grid">'+
       files.map(function(f){
-        var url  = f.url || '';
-        var name = f.name || 'receipt';
+        var url=f.url||'', name=f.name||'receipt';
         return '<div class="receipt-thumb" onclick="previewFile(\''+encodeURIComponent(url)+'\',\''+encodeURIComponent(name)+'\')">'+
-          '<span class="receipt-icon-big">🖼️</span>' +
-          '<div class="receipt-name" title="'+name+'">'+name+'</div>' +
-          '<div class="receipt-size" style="color:var(--success)">☁️ Cloud</div>' +
-          '<div style="font-size:10px;color:var(--muted);margin-top:4px">' +
-            (f.entry.monthName||getMonthName(f.entry.month)||'')+' '+f.entry.year+' · '+f.entry.person+
-          '</div></div>';
-      }).join('')+
-      '</div></div>';
+          '<span class="receipt-icon-big">🖼️</span>'+
+          '<div class="receipt-name" title="'+name+'">'+name+'</div>'+
+          '<div class="receipt-size" style="color:var(--success)">☁️ Cloud</div>'+
+          '<div style="font-size:10px;color:var(--muted);margin-top:4px">'+(f.entry.monthName||getMonthName(f.entry.month)||'')+' '+f.entry.year+' · '+f.entry.person+'</div>'+
+          '</div>';
+      }).join('')+'</div></div>';
   });
-  wrap.innerHTML = totalFiles
-    ? '<div style="margin-bottom:14px;font-size:13px;color:var(--muted)">' +
-        '<i class="fas fa-info-circle" style="color:var(--accent);margin-right:5px"></i>' +
-        totalFiles+' receipt'+(totalFiles>1?'s':'')+' on Cloudinary · Tap to preview</div>'+html
-    : '<div class="empty-state"><i class="fas fa-folder-open"></i><p>No documents uploaded yet.</p></div>';
+  wrap.innerHTML=totalFiles
+    ?'<div style="margin-bottom:14px;font-size:13px;color:var(--muted)"><i class="fas fa-info-circle" style="color:var(--accent);margin-right:5px"></i>'+totalFiles+' receipt'+(totalFiles>1?'s':'')+' on Cloudinary · Tap to preview</div>'+html
+    :'<div class="empty-state"><i class="fas fa-folder-open"></i><p>No documents uploaded yet.</p></div>';
 }
 
 function previewFile(encodedUrl, encodedName) {
-  var url  = decodeURIComponent(encodedUrl);
-  var name = decodeURIComponent(encodedName);
-  var win  = window.open('','_blank');
-  win.document.write(
-    '<!DOCTYPE html><html><head><title>'+name+'</title>' +
-    '<style>body{margin:0;background:#111;display:flex;align-items:center;justify-content:center;min-height:100vh;flex-direction:column;gap:16px}' +
-    'img{max-width:95vw;max-height:88vh;border-radius:8px;box-shadow:0 8px 40px rgba(0,0,0,.5)}' +
-    'a{color:#c9a84c;font-family:sans-serif;font-size:13px;text-decoration:none;padding:8px 16px;border:1px solid #c9a84c;border-radius:8px}' +
-    'a:hover{background:#c9a84c;color:#000}</style>' +
-    '</head><body>' +
-    '<img src="'+url+'" alt="'+name+'"/>' +
-    '<a href="'+url+'" download="'+name+'" target="_blank">⬇️ Download Receipt</a>' +
-    '</body></html>'
-  );
+  var url=decodeURIComponent(encodedUrl), name=decodeURIComponent(encodedName);
+  var win=window.open('','_blank');
+  win.document.write('<!DOCTYPE html><html><head><title>'+name+'</title>'+
+    '<style>body{margin:0;background:#111;display:flex;align-items:center;justify-content:center;min-height:100vh;flex-direction:column;gap:16px}'+
+    'img{max-width:95vw;max-height:88vh;border-radius:8px;box-shadow:0 8px 40px rgba(0,0,0,.5)}'+
+    'a{color:#c9a84c;font-family:sans-serif;font-size:13px;text-decoration:none;padding:8px 16px;border:1px solid #c9a84c;border-radius:8px}'+
+    'a:hover{background:#c9a84c;color:#000}</style>'+
+    '</head><body><img src="'+url+'" alt="'+name+'"/>'+
+    '<a href="'+url+'" download="'+name+'" target="_blank">⬇️ Download Receipt</a></body></html>');
 }
 
 // ══ SUMMARY ══
 function renderSummaryTable() {
-  var person = document.getElementById('summaryPerson') ?
-    document.getElementById('summaryPerson').value : 'All';
-  var fp = (person==='All') ? null : person;
-  var tbody = document.getElementById('summary-tbody');
-  var totals = {gl:0,ce:0,hi:0,pc:0,ao:0}, grandAll = 0;
-  tbody.innerHTML = YEARS.map(function(y){
-    var gl=getSum('gl',y,fp), ce=getSum('ce',y,fp), hi=getSum('hi',y,fp),
-        pc=getSum('pc',y,fp), ao=getSum('ao',y,fp);
-    var total = gl+ce+hi+pc+ao;
-    totals.gl+=gl; totals.ce+=ce; totals.hi+=hi; totals.pc+=pc; totals.ao+=ao; grandAll+=total;
-    var future = isFuture(y);
-    var status = future
-      ? '<span style="color:var(--accent);font-size:11px;font-weight:600"><i class="fas fa-clock"></i> Planned</span>'
-      : (total>0
-          ? '<span style="color:var(--success);font-size:11px;font-weight:600"><i class="fas fa-check-circle"></i> Recorded</span>'
-          : '<span style="color:var(--muted);font-size:11px">—</span>');
+  var person=document.getElementById('summaryPerson')?document.getElementById('summaryPerson').value:'All';
+  var fp=(person==='All')?null:person;
+  var tbody=document.getElementById('summary-tbody');
+  var totals={gl:0,ce:0,hi:0,pc:0,ao:0}, grandAll=0;
+  tbody.innerHTML=YEARS.map(function(y){
+    var gl=getSum('gl',y,fp),ce=getSum('ce',y,fp),hi=getSum('hi',y,fp),pc=getSum('pc',y,fp),ao=getSum('ao',y,fp);
+    var total=gl+ce+hi+pc+ao;
+    totals.gl+=gl;totals.ce+=ce;totals.hi+=hi;totals.pc+=pc;totals.ao+=ao;grandAll+=total;
+    var future=isFuture(y);
+    var status=future?'<span style="color:var(--accent);font-size:11px;font-weight:600"><i class="fas fa-clock"></i> Planned</span>'
+      :(total>0?'<span style="color:var(--success);font-size:11px;font-weight:600"><i class="fas fa-check-circle"></i> Recorded</span>'
+      :'<span style="color:var(--muted);font-size:11px">—</span>');
     return '<tr style="'+(future?'opacity:.7':'')+'">'+
-      '<td class="year-cell">'+y+
-        (future?'<span class="future-badge" style="font-size:9px;padding:1px 5px"><i class="fas fa-star"></i></span>':'')+
-      '</td>'+
+      '<td class="year-cell">'+y+(future?'<span class="future-badge" style="font-size:9px;padding:1px 5px"><i class="fas fa-star"></i></span>':'')+'</td>'+
       '<td>'+(gl>0?fmt(gl):'—')+'</td><td>'+(ce>0?fmt(ce):'—')+'</td>'+
       '<td>'+(hi>0?fmt(hi):'—')+'</td><td>'+(pc>0?fmt(pc):'—')+'</td><td>'+(ao>0?fmt(ao):'—')+'</td>'+
-      '<td><strong style="color:'+(total>0?'var(--primary)':'var(--muted)')+'">'+
-        (total>0?fmt(total):'—')+'</strong></td>'+
+      '<td><strong style="color:'+(total>0?'var(--primary)':'var(--muted)')+'">'+( total>0?fmt(total):'—')+'</strong></td>'+
       '<td>'+status+'</td></tr>';
   }).join('')+
-  '<tr class="total-row"><td>Grand Total</td>'+
-  '<td>'+fmt(totals.gl)+'</td><td>'+fmt(totals.ce)+'</td>'+
+  '<tr class="total-row"><td>Grand Total</td><td>'+fmt(totals.gl)+'</td><td>'+fmt(totals.ce)+'</td>'+
   '<td>'+fmt(totals.hi)+'</td><td>'+fmt(totals.pc)+'</td><td>'+fmt(totals.ao)+'</td>'+
   '<td>'+fmt(grandAll)+'</td><td>—</td></tr>';
 }
 
-// ══ CHARTS ══
+// ══ CHARTS INIT ══
 function initCharts() {
-  var gc = 'rgba(0,0,0,0.04)', ff = 'Inter';
-  lineChart = new Chart(document.getElementById('lineChart').getContext('2d'), {
-    type:'line', data:{labels:YEARS, datasets:[]},
-    options:{responsive:true,maintainAspectRatio:false,
-      interaction:{mode:'index',intersect:false},
+  var gc='rgba(0,0,0,0.04)', ff='Inter';
+  lineChart=new Chart(document.getElementById('lineChart').getContext('2d'),{
+    type:'line',data:{labels:YEARS,datasets:[]},
+    options:{responsive:true,maintainAspectRatio:false,interaction:{mode:'index',intersect:false},
       plugins:{legend:{position:'top',labels:{font:{family:ff,size:11},usePointStyle:true,pointStyleWidth:8,padding:14}}},
-      scales:{
-        x:{grid:{display:false},ticks:{font:{family:ff,size:11}}},
-        y:{beginAtZero:true,grid:{color:gc},ticks:{font:{family:ff,size:11},
-          callback:function(v){return 'RM'+v.toLocaleString();}}}}}
+      scales:{x:{grid:{display:false},ticks:{font:{family:ff,size:11}}},
+        y:{beginAtZero:true,grid:{color:gc},ticks:{font:{family:ff,size:11},callback:function(v){return 'RM'+v.toLocaleString();}}}}}
   });
-  donutChart = new Chart(document.getElementById('donutChart').getContext('2d'), {
+  donutChart=new Chart(document.getElementById('donutChart').getContext('2d'),{
     type:'doughnut',
-    data:{
-      labels:Object.values(CATS).map(function(c){return c.label;}),
-      datasets:[{data:[0,0,0,0,0],
-        backgroundColor:Object.values(CATS).map(function(c){return c.color;}),
-        borderWidth:3,borderColor:'#fff',hoverOffset:8}]
-    },
+    data:{labels:Object.values(CATS).map(function(c){return c.label;}),
+      datasets:[{data:[0,0,0,0,0],backgroundColor:Object.values(CATS).map(function(c){return c.color;}),borderWidth:3,borderColor:'#fff',hoverOffset:8}]},
     options:{responsive:true,maintainAspectRatio:false,
-      plugins:{
-        legend:{position:'bottom',labels:{font:{family:ff,size:11},usePointStyle:true,pointStyleWidth:8,padding:12}},
-        tooltip:{callbacks:{label:function(ctx){
-          return ' '+ctx.label+': RM'+Number(ctx.parsed).toLocaleString('en-MY',{minimumFractionDigits:2});
-        }}}}}
+      plugins:{legend:{position:'bottom',labels:{font:{family:ff,size:11},usePointStyle:true,pointStyleWidth:8,padding:12}},
+        tooltip:{callbacks:{label:function(ctx){return ' '+ctx.label+': RM'+Number(ctx.parsed).toLocaleString('en-MY',{minimumFractionDigits:2});}}}}}
   });
-  barChart = new Chart(document.getElementById('barChart').getContext('2d'), {
+  barChart=new Chart(document.getElementById('barChart').getContext('2d'),{
     type:'bar',
-    data:{
-      labels:Object.values(CATS).map(function(c){return c.label;}),
+    data:{labels:Object.values(CATS).map(function(c){return c.label;}),
       datasets:[
-        {label:'Amount Claimed',data:[0,0,0,0,0],
-          backgroundColor:Object.values(CATS).map(function(c){return c.color+'cc';}),
-          borderRadius:8,borderSkipped:false},
-        {label:'Relief Limit',data:[2500,8000,3000,8000,0],
-          backgroundColor:'rgba(0,0,0,.07)',borderRadius:8,borderSkipped:false}
-      ]
-    },
+        {label:'Amount Claimed',data:[0,0,0,0,0],backgroundColor:Object.values(CATS).map(function(c){return c.color+'cc';}),borderRadius:8,borderSkipped:false},
+        {label:'Relief Limit',data:[2500,8000,3000,8000,0],backgroundColor:'rgba(0,0,0,.07)',borderRadius:8,borderSkipped:false}
+      ]},
     options:{responsive:true,maintainAspectRatio:false,
       plugins:{legend:{position:'top',labels:{font:{family:ff,size:11},usePointStyle:true,padding:14}}},
-      scales:{
-        x:{grid:{display:false},ticks:{font:{family:ff,size:11}}},
-        y:{beginAtZero:true,grid:{color:gc},ticks:{font:{family:ff,size:11},
-          callback:function(v){return 'RM'+v.toLocaleString();}}}}}
+      scales:{x:{grid:{display:false},ticks:{font:{family:ff,size:11}}},
+        y:{beginAtZero:true,grid:{color:gc},ticks:{font:{family:ff,size:11},callback:function(v){return 'RM'+v.toLocaleString();}}}}}
   });
 }
 
+// ══════════════════════════════════════════════
+//  🎨 UPDATE ALL — "Both" shows separate colors
+// ══════════════════════════════════════════════
 function updateAll() {
   var year   = document.getElementById('yearFilter').value;
   var limits = [2500,8000,3000,8000,null];
   var grand  = 0;
+
+  // Summary cards — show combined total when Both
   Object.keys(CATS).forEach(function(cat,i){
-    var s = getSum(cat,year,currentPerson); grand+=s;
+    var s = getSum(cat, year, currentPerson); grand+=s;
     document.getElementById('sum-'+cat).textContent = fmt(s);
     var lim = limits[i];
-    document.getElementById('bar-'+cat).style.width =
-      lim ? Math.min(100,s/lim*100)+'%' : (s>0?'100%':'0%');
+    document.getElementById('bar-'+cat).style.width = lim?Math.min(100,s/lim*100)+'%':(s>0?'100%':'0%');
   });
+
   document.getElementById('trend-badge').textContent = fmt(grand);
-  document.getElementById('donut-year-label').textContent =
-    'Year '+year+(isFuture(year)?' ★ Planned':'');
-  document.getElementById('bar-chart-sub').textContent =
-    'Year '+year+' · '+currentPerson;
-  lineChart.data.datasets = Object.keys(CATS).map(function(cat){
-    return {
-      label:CATS[cat].label,
-      data:YEARS.map(function(y){return getSum(cat,y,currentPerson);}),
-      borderColor:CATS[cat].color, backgroundColor:CATS[cat].color+'18',
-      fill:true, tension:0.4,
-      pointBackgroundColor:CATS[cat].color, pointRadius:4, pointHoverRadius:7
-    };
-  });
+  document.getElementById('donut-year-label').textContent = 'Year '+year+(isFuture(year)?' ★ Planned':'');
+  document.getElementById('bar-chart-sub').textContent = 'Year '+year+' · '+currentPerson;
+
+  // Show/hide both legend hint
+  var bothLegend = document.getElementById('both-legend');
+  if (bothLegend) bothLegend.style.display = (currentPerson==='Both') ? 'flex' : 'none';
+
+  // ── LINE CHART ──────────────────────────────
+  if (currentPerson === 'Both') {
+    // Shahrul = solid lines, Fateha = dashed lines, same category colors
+    var shahrulDS = Object.keys(CATS).map(function(cat){
+      return {
+        label          : 'Shahrul · '+CATS[cat].label,
+        data           : YEARS.map(function(y){ return getSum(cat,y,'Shahrul'); }),
+        borderColor    : CATS[cat].color,
+        backgroundColor: CATS[cat].color+'15',
+        fill           : false,
+        tension        : 0.4,
+        borderWidth    : 2.5,
+        borderDash     : [],          // solid = Shahrul
+        pointBackgroundColor: CATS[cat].color,
+        pointRadius    : 4,
+        pointHoverRadius: 7
+      };
+    });
+    var fatehaDS = Object.keys(CATS).map(function(cat){
+      return {
+        label          : 'Fateha · '+CATS[cat].label,
+        data           : YEARS.map(function(y){ return getSum(cat,y,'Fateha'); }),
+        borderColor    : CATS[cat].color,
+        backgroundColor: 'transparent',
+        fill           : false,
+        tension        : 0.4,
+        borderWidth    : 2.5,
+        borderDash     : [6,3],       // dashed = Fateha
+        pointBackgroundColor: '#fff',
+        pointBorderColor    : CATS[cat].color,
+        pointBorderWidth    : 2,
+        pointRadius    : 4,
+        pointHoverRadius: 7
+      };
+    });
+    lineChart.data.datasets = shahrulDS.concat(fatehaDS);
+
+  } else {
+    // Single person — normal filled lines
+    lineChart.data.datasets = Object.keys(CATS).map(function(cat){
+      return {
+        label          : CATS[cat].label,
+        data           : YEARS.map(function(y){ return getSum(cat,y,currentPerson); }),
+        borderColor    : CATS[cat].color,
+        backgroundColor: CATS[cat].color+'18',
+        fill           : true,
+        tension        : 0.4,
+        borderWidth    : 2,
+        borderDash     : [],
+        pointBackgroundColor: CATS[cat].color,
+        pointRadius    : 4,
+        pointHoverRadius: 7
+      };
+    });
+  }
   lineChart.update();
-  donutChart.data.datasets[0].data =
-    Object.keys(CATS).map(function(cat){return getSum(cat,year,currentPerson);});
+
+  // ── DONUT — Both: Shahrul 🔵 vs Fateha 🟣 ──
+  if (currentPerson === 'Both') {
+    var sTotal = Object.keys(CATS).reduce(function(s,cat){ return s+getSum(cat,year,'Shahrul'); },0);
+    var fTotal = Object.keys(CATS).reduce(function(s,cat){ return s+getSum(cat,year,'Fateha');  },0);
+    donutChart.data.labels                      = ['Shahrul','Fateha'];
+    donutChart.data.datasets[0].data            = [sTotal, fTotal];
+    donutChart.data.datasets[0].backgroundColor = ['#3b82f6','#8b5cf6'];
+  } else {
+    donutChart.data.labels                      = Object.values(CATS).map(function(c){return c.label;});
+    donutChart.data.datasets[0].data            = Object.keys(CATS).map(function(cat){return getSum(cat,year,currentPerson);});
+    donutChart.data.datasets[0].backgroundColor = Object.values(CATS).map(function(c){return c.color;});
+  }
   donutChart.update();
-  barChart.data.datasets[0].data =
-    Object.keys(CATS).map(function(cat){return getSum(cat,year,currentPerson);});
+
+  // ── BAR — Both: side-by-side Shahrul🔵 & Fateha🟣 ──
+  if (currentPerson === 'Both') {
+    barChart.data.labels   = Object.values(CATS).map(function(c){return c.label;});
+    barChart.data.datasets = [
+      {
+        label          : '🔵 Shahrul',
+        data           : Object.keys(CATS).map(function(cat){return getSum(cat,year,'Shahrul');}),
+        backgroundColor: '#3b82f6cc',
+        borderRadius   : 6,
+        borderSkipped  : false
+      },
+      {
+        label          : '🟣 Fateha',
+        data           : Object.keys(CATS).map(function(cat){return getSum(cat,year,'Fateha');}),
+        backgroundColor: '#8b5cf6cc',
+        borderRadius   : 6,
+        borderSkipped  : false
+      },
+      {
+        label          : 'Relief Limit',
+        data           : [2500,8000,3000,8000,0],
+        backgroundColor: 'rgba(0,0,0,.07)',
+        borderRadius   : 6,
+        borderSkipped  : false
+      }
+    ];
+  } else {
+    barChart.data.labels   = Object.values(CATS).map(function(c){return c.label;});
+    barChart.data.datasets = [
+      {
+        label          : 'Amount Claimed',
+        data           : Object.keys(CATS).map(function(cat){return getSum(cat,year,currentPerson);}),
+        backgroundColor: Object.values(CATS).map(function(c){return c.color+'cc';}),
+        borderRadius   : 8,
+        borderSkipped  : false
+      },
+      {
+        label          : 'Relief Limit',
+        data           : [2500,8000,3000,8000,0],
+        backgroundColor: 'rgba(0,0,0,.07)',
+        borderRadius   : 8,
+        borderSkipped  : false
+      }
+    ];
+  }
   barChart.update();
 }
 
 // ══ EXPORT CSV ══
 function exportCSV() {
-  var csv = 'Year,Month,Person,Category,Sub-Category,Extra,Amount(RM),Description,Date Added,Attachments\n';
+  var csv='Year,Month,Person,Category,Sub-Category,Extra,Amount(RM),Description,Date Added,Attachments\n';
   Object.keys(data).forEach(function(cat){
     (data[cat]||[]).forEach(function(e){
-      csv += e.year+',"'+(e.monthName||getMonthName(e.month)||'')+'","'+e.person+'","'+
+      csv+=e.year+',"'+(e.monthName||getMonthName(e.month)||'')+'","'+e.person+'","'+
         CATS[cat].label+'","'+e.subcat+'","'+(e.extra||'')+'",'+
         e.amount+',"'+e.desc+'","'+e.date+'",'+(e.files||[]).length+'\n';
     });
   });
-  var a = document.createElement('a');
-  a.href = URL.createObjectURL(new Blob([csv],{type:'text/csv'}));
-  a.download = 'SF_LHDN_TaxTracker_2020-2030.csv';
+  var a=document.createElement('a');
+  a.href=URL.createObjectURL(new Blob([csv],{type:'text/csv'}));
+  a.download='SF_LHDN_TaxTracker_2020-2030.csv';
   a.click();
   showToast('📊 Exported: SF_LHDN_TaxTracker_2020-2030.csv');
 }
 
 // ══ TOAST ══
 function showToast(msg, type) {
-  type = type || 'success';
-  var c = document.getElementById('toastContainer');
-  var t = document.createElement('div');
-  t.className = 'toast'+(type==='error'?' error':'');
-  t.innerHTML = '<i class="fas fa-'+(type==='error'?'exclamation-circle':'check-circle')+
-    '" style="color:var(--'+(type==='error'?'danger':'success')+');font-size:16px;flex-shrink:0"></i>'+msg;
+  type=type||'success';
+  var c=document.getElementById('toastContainer');
+  var t=document.createElement('div');
+  t.className='toast'+(type==='error'?' error':'');
+  t.innerHTML='<i class="fas fa-'+(type==='error'?'exclamation-circle':'check-circle')+'" style="color:var(--'+(type==='error'?'danger':'success')+');font-size:16px;flex-shrink:0"></i>'+msg;
   c.appendChild(t);
-  setTimeout(function(){
-    t.style.opacity='0'; t.style.transform='translateX(30px)'; t.style.transition='.4s';
-    setTimeout(function(){ t.remove(); }, 420);
-  }, 3200);
+  setTimeout(function(){t.style.opacity='0';t.style.transform='translateX(30px)';t.style.transition='.4s';setTimeout(function(){t.remove();},420);},3200);
 }
 
 // ══ INIT ══
