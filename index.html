@@ -20,23 +20,19 @@
     }
     *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
     body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--text);display:flex;min-height:100vh}
-
     .sync-bar{position:fixed;top:0;left:0;right:0;height:38px;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:600;gap:8px;z-index:300;transition:.4s;background:var(--primary);color:#fff}
     .sync-bar.synced{background:var(--success)}
     .sync-bar.error{background:var(--danger)}
     .sync-bar.syncing{background:var(--warning);color:var(--primary)}
     .sync-dot{width:8px;height:8px;border-radius:50%;background:#fff;animation:pulse 1.2s infinite}
     @keyframes pulse{0%,100%{opacity:1}50%{opacity:.2}}
-
     .loading-overlay{position:fixed;inset:0;background:rgba(255,255,255,.96);display:flex;flex-direction:column;align-items:center;justify-content:center;z-index:500;gap:16px}
     .spinner{width:50px;height:50px;border:4px solid var(--border);border-top-color:var(--primary);border-radius:50%;animation:spin .8s linear infinite}
     @keyframes spin{to{transform:rotate(360deg)}}
     .loading-text{font-size:15px;font-weight:700;color:var(--primary)}
     .loading-sub{font-size:12px;color:var(--muted)}
-
     .sidebar-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.5);z-index:98;backdrop-filter:blur(2px)}
     .sidebar-overlay.show{display:block}
-
     .sidebar{width:var(--sidebar-w);background:var(--sidebar);display:flex;flex-direction:column;position:fixed;top:38px;left:0;bottom:0;z-index:99;overflow-y:auto;transition:transform .3s ease}
     .sidebar-brand{padding:22px 22px 16px;border-bottom:1px solid rgba(255,255,255,.07);position:relative}
     .brand-logo{display:flex;align-items:center;gap:12px;margin-bottom:8px}
@@ -57,9 +53,7 @@
     .user-avatar{width:38px;height:38px;background:linear-gradient(135deg,var(--accent),var(--accent-light));border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:800;color:var(--primary);flex-shrink:0}
     .user-name{color:#fff;font-size:13px;font-weight:600}
     .user-role{color:rgba(255,255,255,.35);font-size:11px}
-
     .main{margin-left:var(--sidebar-w);flex:1;display:flex;flex-direction:column;min-width:0;padding-top:38px}
-
     .topbar{background:var(--card);border-bottom:1px solid var(--border);padding:0 24px;height:64px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:38px;z-index:50;box-shadow:0 2px 12px rgba(15,45,92,.07);gap:12px}
     .topbar-left{display:flex;align-items:center;gap:12px;min-width:0}
     .hamburger{display:none;background:none;border:none;color:var(--primary);font-size:22px;cursor:pointer;padding:6px;border-radius:8px;transition:.2s;flex-shrink:0}
@@ -78,9 +72,7 @@
     .export-text{display:inline}
     .refresh-btn{display:flex;align-items:center;gap:6px;background:var(--bg);border:1px solid var(--border);border-radius:9px;padding:7px 14px;font-size:12px;font-weight:600;color:var(--primary);cursor:pointer;font-family:'Inter',sans-serif;transition:.2s}
     .refresh-btn:hover{background:var(--border)}
-
     .content{padding:24px 28px;flex:1}
-
     .summary-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:14px;margin-bottom:24px}
     .sum-card{background:var(--card);border-radius:var(--radius);padding:18px 16px;box-shadow:var(--shadow);border-top:4px solid transparent;position:relative;overflow:hidden;transition:.25s}
     .sum-card:hover{transform:translateY(-3px);box-shadow:0 10px 36px rgba(15,45,92,.14)}
@@ -104,7 +96,6 @@
     .c1 .sum-bar-fill{background:var(--cat1)}.c2 .sum-bar-fill{background:var(--cat2)}
     .c3 .sum-bar-fill{background:var(--cat3)}.c4 .sum-bar-fill{background:var(--cat4)}
     .c5 .sum-bar-fill{background:var(--cat5)}
-
     .charts-row{display:grid;grid-template-columns:2fr 1fr;gap:18px;margin-bottom:22px}
     .chart-card{background:var(--card);border-radius:var(--radius);box-shadow:var(--shadow);padding:22px}
     .chart-header{display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:18px;flex-wrap:wrap;gap:8px}
@@ -113,7 +104,6 @@
     .chart-badge{background:var(--bg);border:1px solid var(--border);padding:4px 10px;border-radius:20px;font-size:11px;font-weight:600;color:var(--primary);white-space:nowrap;flex-shrink:0}
     .chart-wrap{position:relative;height:260px}
     .donut-wrap{position:relative;height:230px}
-
     .entry-card{background:var(--card);border-radius:var(--radius);box-shadow:var(--shadow);margin-bottom:24px;overflow:hidden}
     .entry-header{background:linear-gradient(135deg,var(--primary),var(--primary-light));padding:20px 26px}
     .entry-header-title{color:#fff;font-size:15px;font-weight:700}
@@ -126,8 +116,6 @@
     .cat-tab .dot{width:8px;height:8px;border-radius:50%;flex-shrink:0}
     .tab-content{display:none;padding:24px}
     .tab-content.active{display:block}
-
-    /* ── FORM ── */
     .form-grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:16px;margin-bottom:20px}
     .form-group label{display:block;font-size:11px;font-weight:600;color:var(--muted);margin-bottom:6px;text-transform:uppercase;letter-spacing:.5px}
     .form-group input,.form-group select{width:100%;padding:11px 14px;border:1.5px solid var(--border);border-radius:9px;font-family:'Inter',sans-serif;font-size:13px;color:var(--text);background:#fff;outline:none;transition:.2s;-webkit-appearance:none}
@@ -137,11 +125,9 @@
     .input-prefix input{padding-left:36px}
     .span-2{grid-column:span 2}
     .span-3{grid-column:span 3}
-
     .add-btn{display:inline-flex;align-items:center;gap:8px;background:var(--primary);color:#fff;border:none;border-radius:9px;padding:11px 22px;font-size:13px;font-weight:700;cursor:pointer;transition:.2s;font-family:'Inter',sans-serif}
     .add-btn:hover{background:var(--primary-light);transform:translateY(-1px)}
     .add-btn:disabled{opacity:.6;cursor:not-allowed;transform:none}
-
     .upload-area{border:2px dashed var(--border);border-radius:12px;padding:22px;text-align:center;cursor:pointer;transition:.25s;background:#fafbfe;margin-top:18px}
     .upload-area:hover{border-color:var(--primary-light);background:rgba(15,45,92,.02)}
     .upload-area.dragover{border-color:var(--accent);background:rgba(201,168,76,.06)}
@@ -157,7 +143,6 @@
     .receipt-size{font-size:10px;color:var(--muted);margin-top:3px}
     .receipt-del{position:absolute;top:6px;right:6px;background:var(--danger);color:#fff;border:none;border-radius:50%;width:19px;height:19px;font-size:9px;cursor:pointer;display:flex;align-items:center;justify-content:center;opacity:0;transition:.2s}
     .receipt-thumb:hover .receipt-del{opacity:1}
-
     .entries-section{margin-top:24px}
     .section-heading{font-size:13px;font-weight:700;color:var(--primary);margin-bottom:12px;display:flex;align-items:center;gap:10px}
     .section-heading::after{content:'';flex:1;height:1px;background:var(--border)}
@@ -174,7 +159,6 @@
     .month-badge{display:inline-flex;align-items:center;background:rgba(15,45,92,.08);color:var(--primary);padding:2px 8px;border-radius:20px;font-size:11px;font-weight:600}
     .del-row{background:none;border:none;color:var(--danger);cursor:pointer;font-size:13px;transition:.2s;padding:5px 8px;border-radius:6px}
     .del-row:hover{background:rgba(239,68,68,.1)}
-
     .overview-card{background:var(--card);border-radius:var(--radius);box-shadow:var(--shadow);padding:26px;margin-bottom:26px}
     .overview-table-wrap{overflow-x:auto;margin-top:16px}
     .overview-table{width:100%;border-collapse:collapse}
@@ -184,12 +168,10 @@
     .year-cell{font-weight:700;color:var(--primary)}
     .total-row td{background:#f4f7ff;font-weight:700;color:var(--primary);border-top:2px solid var(--border)}
     .future-badge{display:inline-flex;align-items:center;gap:4px;background:rgba(201,168,76,.12);color:var(--accent);border:1px solid rgba(201,168,76,.3);padding:2px 7px;border-radius:20px;font-size:10px;font-weight:600;margin-left:6px}
-
     .toast-container{position:fixed;top:110px;right:20px;z-index:999;display:flex;flex-direction:column;gap:10px}
     .toast{display:flex;align-items:center;gap:12px;background:var(--card);border-radius:10px;padding:13px 16px;box-shadow:0 8px 32px rgba(0,0,0,.15);border-left:4px solid var(--success);animation:slideIn .3s ease;max-width:320px;font-size:13px;font-weight:500;color:var(--text)}
     .toast.error{border-color:var(--danger)}
     @keyframes slideIn{from{transform:translateX(40px);opacity:0}to{transform:translateX(0);opacity:1}}
-
     .modal-overlay{position:fixed;inset:0;background:rgba(10,31,61,.55);backdrop-filter:blur(5px);display:flex;align-items:center;justify-content:center;z-index:400;opacity:0;pointer-events:none;transition:.3s}
     .modal-overlay.open{opacity:1;pointer-events:all}
     .modal-box{background:var(--card);border-radius:var(--radius);padding:30px;width:440px;max-width:92vw;box-shadow:0 24px 64px rgba(0,0,0,.2);transform:scale(.96);transition:.3s}
@@ -199,11 +181,10 @@
     .modal-actions{display:flex;gap:12px;justify-content:flex-end;margin-top:22px}
     .btn-secondary{padding:10px 18px;border-radius:9px;border:1.5px solid var(--border);background:none;color:var(--muted);font-size:13px;font-weight:600;cursor:pointer;font-family:'Inter',sans-serif;transition:.2s}
     .btn-secondary:hover{background:var(--bg)}
-
     .empty-state{text-align:center;padding:40px 20px;color:var(--muted)}
     .empty-state i{font-size:40px;margin-bottom:12px;opacity:.25;display:block}
     .empty-state p{font-size:13px}
-
+    .compress-info{font-size:11px;color:var(--success);margin-top:8px;font-weight:600}
     @media(max-width:900px){
       .sidebar{transform:translateX(-100%)}
       .sidebar.open{transform:translateX(0)}
@@ -293,7 +274,7 @@
       <button class="hamburger" onclick="openSidebar()"><i class="fas fa-bars"></i></button>
       <div>
         <div class="page-title" id="page-title">Tax Dashboard</div>
-        <div class="page-sub"  id="page-sub">Yearly Overview & Analytics · 2020–2030</div>
+        <div class="page-sub" id="page-sub">Yearly Overview & Analytics · 2020–2030</div>
       </div>
     </div>
     <div class="topbar-right">
@@ -368,307 +349,103 @@
         <!-- TAB 0: Gaya Hidup -->
         <div class="tab-content active" id="tc-0">
           <div class="form-grid">
-            <div class="form-group">
-              <label><i class="fas fa-calendar" style="margin-right:4px"></i>Year</label>
-              <select id="gl-year"><option>2020</option><option>2021</option><option>2022</option><option>2023</option><option>2024</option><option selected>2025</option><option>2026</option><option>2027</option><option>2028</option><option>2029</option><option>2030</option></select>
-            </div>
-            <div class="form-group">
-              <label><i class="fas fa-calendar-day" style="margin-right:4px"></i>Month</label>
-              <select id="gl-month">
-                <option value="01">January</option><option value="02">February</option>
-                <option value="03">March</option><option value="04">April</option>
-                <option value="05">May</option><option value="06">June</option>
-                <option value="07">July</option><option value="08">August</option>
-                <option value="09">September</option><option value="10">October</option>
-                <option value="11">November</option><option value="12">December</option>
-              </select>
-            </div>
-            <div class="form-group">
-              <label><i class="fas fa-user" style="margin-right:4px"></i>Person</label>
-              <select id="gl-person"><option>Shahrul</option><option>Fateha</option></select>
-            </div>
-            <div class="form-group span-2">
-              <label>Sub-Category</label>
-              <select id="gl-subcat">
-                <option>Books / Reading Materials</option>
-                <option>Personal Computer / Smartphone / Tablet</option>
-                <option>Internet Subscription</option>
-                <option>Sports Equipment</option>
-                <option>Gym / Sports Facility</option>
-                <option>Self-Enhancement Course</option>
-                <option>EV Charging Facility</option>
-                <option>Breastfeeding Equipment</option>
-                <option>Other</option>
-              </select>
-            </div>
-            <div class="form-group">
-              <label>Amount (RM)</label>
-              <div class="input-prefix"><span>RM</span><input type="number" id="gl-amount" placeholder="0.00" min="0" step="0.01"/></div>
-            </div>
-            <div class="form-group span-3">
-              <label>Description / Notes</label>
-              <input type="text" id="gl-desc" placeholder="e.g. Purchased laptop for personal use"/>
-            </div>
+            <div class="form-group"><label><i class="fas fa-calendar" style="margin-right:4px"></i>Year</label><select id="gl-year"><option>2020</option><option>2021</option><option>2022</option><option>2023</option><option>2024</option><option selected>2025</option><option>2026</option><option>2027</option><option>2028</option><option>2029</option><option>2030</option></select></div>
+            <div class="form-group"><label><i class="fas fa-calendar-day" style="margin-right:4px"></i>Month</label><select id="gl-month"><option value="01">January</option><option value="02">February</option><option value="03">March</option><option value="04">April</option><option value="05">May</option><option value="06">June</option><option value="07">July</option><option value="08">August</option><option value="09">September</option><option value="10">October</option><option value="11">November</option><option value="12">December</option></select></div>
+            <div class="form-group"><label><i class="fas fa-user" style="margin-right:4px"></i>Person</label><select id="gl-person"><option>Shahrul</option><option>Fateha</option></select></div>
+            <div class="form-group span-2"><label>Sub-Category</label><select id="gl-subcat"><option>Books / Reading Materials</option><option>Personal Computer / Smartphone / Tablet</option><option>Internet Subscription</option><option>Sports Equipment</option><option>Gym / Sports Facility</option><option>Self-Enhancement Course</option><option>EV Charging Facility</option><option>Breastfeeding Equipment</option><option>Other</option></select></div>
+            <div class="form-group"><label>Amount (RM)</label><div class="input-prefix"><span>RM</span><input type="number" id="gl-amount" placeholder="0.00" min="0" step="0.01"/></div></div>
+            <div class="form-group span-3"><label>Description / Notes</label><input type="text" id="gl-desc" placeholder="e.g. Purchased laptop for personal use"/></div>
           </div>
           <div class="upload-area" id="upload-gl" ondragover="dragOver(event,'gl')" ondragleave="dragLeave(event,'gl')" ondrop="dropFile(event,'gl')" onclick="document.getElementById('file-gl').click()">
             <div class="upload-icon"><i class="fas fa-cloud-upload-alt"></i></div>
             <div class="upload-title">Upload Receipt / Invoice</div>
-            <div class="upload-sub">Drag & drop or tap · PDF, JPG, PNG · Max 3MB</div>
+            <div class="upload-sub">📱 Images auto-compressed · PDF, JPG, PNG · Max 5MB</div>
             <input type="file" id="file-gl" class="upload-input" multiple accept=".pdf,.jpg,.jpeg,.png" onchange="handleFiles(this,'gl')"/>
           </div>
           <div class="receipts-grid" id="receipts-gl"></div><br/>
           <button class="add-btn" id="btn-gl" onclick="addEntry('gl')"><i class="fas fa-plus"></i>Add Entry</button>
-          <div class="entries-section">
-            <div class="section-heading">Recorded Entries</div>
-            <div class="table-wrap" id="table-gl-wrap"><div class="empty-state"><i class="fas fa-inbox"></i><p>No entries yet.</p></div></div>
-          </div>
+          <div class="entries-section"><div class="section-heading">Recorded Entries</div><div class="table-wrap" id="table-gl-wrap"><div class="empty-state"><i class="fas fa-inbox"></i><p>No entries yet.</p></div></div></div>
         </div>
 
         <!-- TAB 1: Child Education -->
         <div class="tab-content" id="tc-1">
           <div class="form-grid">
-            <div class="form-group">
-              <label><i class="fas fa-calendar" style="margin-right:4px"></i>Year</label>
-              <select id="ce-year"><option>2020</option><option>2021</option><option>2022</option><option>2023</option><option>2024</option><option selected>2025</option><option>2026</option><option>2027</option><option>2028</option><option>2029</option><option>2030</option></select>
-            </div>
-            <div class="form-group">
-              <label><i class="fas fa-calendar-day" style="margin-right:4px"></i>Month</label>
-              <select id="ce-month">
-                <option value="01">January</option><option value="02">February</option>
-                <option value="03">March</option><option value="04">April</option>
-                <option value="05">May</option><option value="06">June</option>
-                <option value="07">July</option><option value="08">August</option>
-                <option value="09">September</option><option value="10">October</option>
-                <option value="11">November</option><option value="12">December</option>
-              </select>
-            </div>
-            <div class="form-group">
-              <label>Person</label>
-              <select id="ce-person"><option>Shahrul</option><option>Fateha</option></select>
-            </div>
-            <div class="form-group span-2">
-              <label>Sub-Category</label>
-              <select id="ce-subcat">
-                <option>Child Below 18 (RM2,000/child)</option>
-                <option>Child Higher Education (RM8,000)</option>
-                <option>Disabled Child (RM6,000)</option>
-                <option>Childcare / Kindergarten (RM3,000)</option>
-                <option>SSPN Net Savings (RM8,000)</option>
-                <option>Other</option>
-              </select>
-            </div>
-            <div class="form-group">
-              <label>Child Name</label>
-              <input type="text" id="ce-child" placeholder="e.g. Anak 1"/>
-            </div>
-            <div class="form-group">
-              <label>Amount (RM)</label>
-              <div class="input-prefix"><span>RM</span><input type="number" id="ce-amount" placeholder="0.00" min="0" step="0.01"/></div>
-            </div>
-            <div class="form-group span-2">
-              <label>Description</label>
-              <input type="text" id="ce-desc" placeholder="e.g. School fees Semester 1"/>
-            </div>
+            <div class="form-group"><label>Year</label><select id="ce-year"><option>2020</option><option>2021</option><option>2022</option><option>2023</option><option>2024</option><option selected>2025</option><option>2026</option><option>2027</option><option>2028</option><option>2029</option><option>2030</option></select></div>
+            <div class="form-group"><label>Month</label><select id="ce-month"><option value="01">January</option><option value="02">February</option><option value="03">March</option><option value="04">April</option><option value="05">May</option><option value="06">June</option><option value="07">July</option><option value="08">August</option><option value="09">September</option><option value="10">October</option><option value="11">November</option><option value="12">December</option></select></div>
+            <div class="form-group"><label>Person</label><select id="ce-person"><option>Shahrul</option><option>Fateha</option></select></div>
+            <div class="form-group span-2"><label>Sub-Category</label><select id="ce-subcat"><option>Child Below 18 (RM2,000/child)</option><option>Child Higher Education (RM8,000)</option><option>Disabled Child (RM6,000)</option><option>Childcare / Kindergarten (RM3,000)</option><option>SSPN Net Savings (RM8,000)</option><option>Other</option></select></div>
+            <div class="form-group"><label>Child Name</label><input type="text" id="ce-child" placeholder="e.g. Anak 1"/></div>
+            <div class="form-group"><label>Amount (RM)</label><div class="input-prefix"><span>RM</span><input type="number" id="ce-amount" placeholder="0.00" min="0" step="0.01"/></div></div>
+            <div class="form-group span-2"><label>Description</label><input type="text" id="ce-desc" placeholder="e.g. School fees Semester 1"/></div>
           </div>
           <div class="upload-area" id="upload-ce" ondragover="dragOver(event,'ce')" ondragleave="dragLeave(event,'ce')" ondrop="dropFile(event,'ce')" onclick="document.getElementById('file-ce').click()">
-            <div class="upload-icon"><i class="fas fa-cloud-upload-alt"></i></div>
-            <div class="upload-title">Upload Receipt / Invoice</div>
-            <div class="upload-sub">PDF, JPG, PNG · Max 3MB</div>
+            <div class="upload-icon"><i class="fas fa-cloud-upload-alt"></i></div><div class="upload-title">Upload Receipt / Invoice</div><div class="upload-sub">📱 Images auto-compressed · PDF, JPG, PNG · Max 5MB</div>
             <input type="file" id="file-ce" class="upload-input" multiple accept=".pdf,.jpg,.jpeg,.png" onchange="handleFiles(this,'ce')"/>
           </div>
           <div class="receipts-grid" id="receipts-ce"></div><br/>
           <button class="add-btn" id="btn-ce" onclick="addEntry('ce')"><i class="fas fa-plus"></i>Add Entry</button>
-          <div class="entries-section">
-            <div class="section-heading">Recorded Entries</div>
-            <div class="table-wrap" id="table-ce-wrap"><div class="empty-state"><i class="fas fa-inbox"></i><p>No entries yet.</p></div></div>
-          </div>
+          <div class="entries-section"><div class="section-heading">Recorded Entries</div><div class="table-wrap" id="table-ce-wrap"><div class="empty-state"><i class="fas fa-inbox"></i><p>No entries yet.</p></div></div></div>
         </div>
 
         <!-- TAB 2: Health Insurance -->
         <div class="tab-content" id="tc-2">
           <div class="form-grid">
-            <div class="form-group">
-              <label><i class="fas fa-calendar" style="margin-right:4px"></i>Year</label>
-              <select id="hi-year"><option>2020</option><option>2021</option><option>2022</option><option>2023</option><option>2024</option><option selected>2025</option><option>2026</option><option>2027</option><option>2028</option><option>2029</option><option>2030</option></select>
-            </div>
-            <div class="form-group">
-              <label><i class="fas fa-calendar-day" style="margin-right:4px"></i>Month</label>
-              <select id="hi-month">
-                <option value="01">January</option><option value="02">February</option>
-                <option value="03">March</option><option value="04">April</option>
-                <option value="05">May</option><option value="06">June</option>
-                <option value="07">July</option><option value="08">August</option>
-                <option value="09">September</option><option value="10">October</option>
-                <option value="11">November</option><option value="12">December</option>
-              </select>
-            </div>
-            <div class="form-group">
-              <label>Person</label>
-              <select id="hi-person"><option>Shahrul</option><option>Fateha</option></select>
-            </div>
-            <div class="form-group span-2">
-              <label>Sub-Category</label>
-              <select id="hi-subcat">
-                <option>Medical Insurance (Self)</option>
-                <option>Medical Insurance (Spouse)</option>
-                <option>Medical Insurance (Child)</option>
-                <option>Education Insurance</option>
-                <option>Critical Illness Coverage</option>
-                <option>Vaccination</option>
-                <option>Dental Treatment</option>
-                <option>Fertility Treatment</option>
-                <option>Other</option>
-              </select>
-            </div>
-            <div class="form-group">
-              <label>Policy / Provider</label>
-              <input type="text" id="hi-policy" placeholder="e.g. AIA, Prudential"/>
-            </div>
-            <div class="form-group">
-              <label>Amount (RM)</label>
-              <div class="input-prefix"><span>RM</span><input type="number" id="hi-amount" placeholder="0.00" min="0" step="0.01"/></div>
-            </div>
-            <div class="form-group span-2">
-              <label>Description</label>
-              <input type="text" id="hi-desc" placeholder="e.g. Annual premium 2025"/>
-            </div>
+            <div class="form-group"><label>Year</label><select id="hi-year"><option>2020</option><option>2021</option><option>2022</option><option>2023</option><option>2024</option><option selected>2025</option><option>2026</option><option>2027</option><option>2028</option><option>2029</option><option>2030</option></select></div>
+            <div class="form-group"><label>Month</label><select id="hi-month"><option value="01">January</option><option value="02">February</option><option value="03">March</option><option value="04">April</option><option value="05">May</option><option value="06">June</option><option value="07">July</option><option value="08">August</option><option value="09">September</option><option value="10">October</option><option value="11">November</option><option value="12">December</option></select></div>
+            <div class="form-group"><label>Person</label><select id="hi-person"><option>Shahrul</option><option>Fateha</option></select></div>
+            <div class="form-group span-2"><label>Sub-Category</label><select id="hi-subcat"><option>Medical Insurance (Self)</option><option>Medical Insurance (Spouse)</option><option>Medical Insurance (Child)</option><option>Education Insurance</option><option>Critical Illness Coverage</option><option>Vaccination</option><option>Dental Treatment</option><option>Fertility Treatment</option><option>Other</option></select></div>
+            <div class="form-group"><label>Policy / Provider</label><input type="text" id="hi-policy" placeholder="e.g. AIA, Prudential"/></div>
+            <div class="form-group"><label>Amount (RM)</label><div class="input-prefix"><span>RM</span><input type="number" id="hi-amount" placeholder="0.00" min="0" step="0.01"/></div></div>
+            <div class="form-group span-2"><label>Description</label><input type="text" id="hi-desc" placeholder="e.g. Annual premium 2025"/></div>
           </div>
           <div class="upload-area" id="upload-hi" ondragover="dragOver(event,'hi')" ondragleave="dragLeave(event,'hi')" ondrop="dropFile(event,'hi')" onclick="document.getElementById('file-hi').click()">
-            <div class="upload-icon"><i class="fas fa-cloud-upload-alt"></i></div>
-            <div class="upload-title">Upload Receipt / Invoice</div>
-            <div class="upload-sub">PDF, JPG, PNG · Max 3MB</div>
+            <div class="upload-icon"><i class="fas fa-cloud-upload-alt"></i></div><div class="upload-title">Upload Receipt / Invoice</div><div class="upload-sub">📱 Images auto-compressed · PDF, JPG, PNG · Max 5MB</div>
             <input type="file" id="file-hi" class="upload-input" multiple accept=".pdf,.jpg,.jpeg,.png" onchange="handleFiles(this,'hi')"/>
           </div>
           <div class="receipts-grid" id="receipts-hi"></div><br/>
           <button class="add-btn" id="btn-hi" onclick="addEntry('hi')"><i class="fas fa-plus"></i>Add Entry</button>
-          <div class="entries-section">
-            <div class="section-heading">Recorded Entries</div>
-            <div class="table-wrap" id="table-hi-wrap"><div class="empty-state"><i class="fas fa-inbox"></i><p>No entries yet.</p></div></div>
-          </div>
+          <div class="entries-section"><div class="section-heading">Recorded Entries</div><div class="table-wrap" id="table-hi-wrap"><div class="empty-state"><i class="fas fa-inbox"></i><p>No entries yet.</p></div></div></div>
         </div>
 
         <!-- TAB 3: Parents Cost -->
         <div class="tab-content" id="tc-3">
           <div class="form-grid">
-            <div class="form-group">
-              <label><i class="fas fa-calendar" style="margin-right:4px"></i>Year</label>
-              <select id="pc-year"><option>2020</option><option>2021</option><option>2022</option><option>2023</option><option>2024</option><option selected>2025</option><option>2026</option><option>2027</option><option>2028</option><option>2029</option><option>2030</option></select>
-            </div>
-            <div class="form-group">
-              <label><i class="fas fa-calendar-day" style="margin-right:4px"></i>Month</label>
-              <select id="pc-month">
-                <option value="01">January</option><option value="02">February</option>
-                <option value="03">March</option><option value="04">April</option>
-                <option value="05">May</option><option value="06">June</option>
-                <option value="07">July</option><option value="08">August</option>
-                <option value="09">September</option><option value="10">October</option>
-                <option value="11">November</option><option value="12">December</option>
-              </select>
-            </div>
-            <div class="form-group">
-              <label>Person</label>
-              <select id="pc-person"><option>Shahrul</option><option>Fateha</option></select>
-            </div>
-            <div class="form-group span-2">
-              <label>Sub-Category</label>
-              <select id="pc-subcat">
-                <option>Monthly Living Allowance</option>
-                <option>Medical Expenses</option>
-                <option>Dental Treatment</option>
-                <option>Special Needs / Carer</option>
-                <option>Hospitalisation</option>
-                <option>Other</option>
-              </select>
-            </div>
-            <div class="form-group">
-              <label>Parent Name</label>
-              <input type="text" id="pc-parent" placeholder="e.g. Ayah / Ibu"/>
-            </div>
-            <div class="form-group">
-              <label>Amount (RM)</label>
-              <div class="input-prefix"><span>RM</span><input type="number" id="pc-amount" placeholder="0.00" min="0" step="0.01"/></div>
-            </div>
-            <div class="form-group span-2">
-              <label>Description</label>
-              <input type="text" id="pc-desc" placeholder="e.g. Monthly allowance January"/>
-            </div>
+            <div class="form-group"><label>Year</label><select id="pc-year"><option>2020</option><option>2021</option><option>2022</option><option>2023</option><option>2024</option><option selected>2025</option><option>2026</option><option>2027</option><option>2028</option><option>2029</option><option>2030</option></select></div>
+            <div class="form-group"><label>Month</label><select id="pc-month"><option value="01">January</option><option value="02">February</option><option value="03">March</option><option value="04">April</option><option value="05">May</option><option value="06">June</option><option value="07">July</option><option value="08">August</option><option value="09">September</option><option value="10">October</option><option value="11">November</option><option value="12">December</option></select></div>
+            <div class="form-group"><label>Person</label><select id="pc-person"><option>Shahrul</option><option>Fateha</option></select></div>
+            <div class="form-group span-2"><label>Sub-Category</label><select id="pc-subcat"><option>Monthly Living Allowance</option><option>Medical Expenses</option><option>Dental Treatment</option><option>Special Needs / Carer</option><option>Hospitalisation</option><option>Other</option></select></div>
+            <div class="form-group"><label>Parent Name</label><input type="text" id="pc-parent" placeholder="e.g. Ayah / Ibu"/></div>
+            <div class="form-group"><label>Amount (RM)</label><div class="input-prefix"><span>RM</span><input type="number" id="pc-amount" placeholder="0.00" min="0" step="0.01"/></div></div>
+            <div class="form-group span-2"><label>Description</label><input type="text" id="pc-desc" placeholder="e.g. Monthly allowance January"/></div>
           </div>
           <div class="upload-area" id="upload-pc" ondragover="dragOver(event,'pc')" ondragleave="dragLeave(event,'pc')" ondrop="dropFile(event,'pc')" onclick="document.getElementById('file-pc').click()">
-            <div class="upload-icon"><i class="fas fa-cloud-upload-alt"></i></div>
-            <div class="upload-title">Upload Receipt / Invoice</div>
-            <div class="upload-sub">PDF, JPG, PNG · Max 3MB</div>
+            <div class="upload-icon"><i class="fas fa-cloud-upload-alt"></i></div><div class="upload-title">Upload Receipt / Invoice</div><div class="upload-sub">📱 Images auto-compressed · PDF, JPG, PNG · Max 5MB</div>
             <input type="file" id="file-pc" class="upload-input" multiple accept=".pdf,.jpg,.jpeg,.png" onchange="handleFiles(this,'pc')"/>
           </div>
           <div class="receipts-grid" id="receipts-pc"></div><br/>
           <button class="add-btn" id="btn-pc" onclick="addEntry('pc')"><i class="fas fa-plus"></i>Add Entry</button>
-          <div class="entries-section">
-            <div class="section-heading">Recorded Entries</div>
-            <div class="table-wrap" id="table-pc-wrap"><div class="empty-state"><i class="fas fa-inbox"></i><p>No entries yet.</p></div></div>
-          </div>
+          <div class="entries-section"><div class="section-heading">Recorded Entries</div><div class="table-wrap" id="table-pc-wrap"><div class="empty-state"><i class="fas fa-inbox"></i><p>No entries yet.</p></div></div></div>
         </div>
 
         <!-- TAB 4: Assets Overseas -->
         <div class="tab-content" id="tc-4">
           <div class="form-grid">
-            <div class="form-group">
-              <label><i class="fas fa-calendar" style="margin-right:4px"></i>Year</label>
-              <select id="ao-year"><option>2020</option><option>2021</option><option>2022</option><option>2023</option><option>2024</option><option selected>2025</option><option>2026</option><option>2027</option><option>2028</option><option>2029</option><option>2030</option></select>
-            </div>
-            <div class="form-group">
-              <label><i class="fas fa-calendar-day" style="margin-right:4px"></i>Month</label>
-              <select id="ao-month">
-                <option value="01">January</option><option value="02">February</option>
-                <option value="03">March</option><option value="04">April</option>
-                <option value="05">May</option><option value="06">June</option>
-                <option value="07">July</option><option value="08">August</option>
-                <option value="09">September</option><option value="10">October</option>
-                <option value="11">November</option><option value="12">December</option>
-              </select>
-            </div>
-            <div class="form-group">
-              <label>Person</label>
-              <select id="ao-person"><option>Shahrul</option><option>Fateha</option></select>
-            </div>
-            <div class="form-group span-2">
-              <label>Asset Type</label>
-              <select id="ao-subcat">
-                <option>Property / Real Estate</option>
-                <option>Bank Account</option>
-                <option>Stocks / Shares</option>
-                <option>Unit Trust / Fund</option>
-                <option>Cryptocurrency</option>
-                <option>Business Ownership</option>
-                <option>Vehicle</option>
-                <option>Other</option>
-              </select>
-            </div>
-            <div class="form-group">
-              <label>Country</label>
-              <input type="text" id="ao-country" placeholder="e.g. Singapore, UK"/>
-            </div>
-            <div class="form-group">
-              <label>Declared Value (RM)</label>
-              <div class="input-prefix"><span>RM</span><input type="number" id="ao-amount" placeholder="0.00" min="0" step="0.01"/></div>
-            </div>
-            <div class="form-group span-2">
-              <label>Description</label>
-              <input type="text" id="ao-desc" placeholder="e.g. Apartment in Singapore"/>
-            </div>
+            <div class="form-group"><label>Year</label><select id="ao-year"><option>2020</option><option>2021</option><option>2022</option><option>2023</option><option>2024</option><option selected>2025</option><option>2026</option><option>2027</option><option>2028</option><option>2029</option><option>2030</option></select></div>
+            <div class="form-group"><label>Month</label><select id="ao-month"><option value="01">January</option><option value="02">February</option><option value="03">March</option><option value="04">April</option><option value="05">May</option><option value="06">June</option><option value="07">July</option><option value="08">August</option><option value="09">September</option><option value="10">October</option><option value="11">November</option><option value="12">December</option></select></div>
+            <div class="form-group"><label>Person</label><select id="ao-person"><option>Shahrul</option><option>Fateha</option></select></div>
+            <div class="form-group span-2"><label>Asset Type</label><select id="ao-subcat"><option>Property / Real Estate</option><option>Bank Account</option><option>Stocks / Shares</option><option>Unit Trust / Fund</option><option>Cryptocurrency</option><option>Business Ownership</option><option>Vehicle</option><option>Other</option></select></div>
+            <div class="form-group"><label>Country</label><input type="text" id="ao-country" placeholder="e.g. Singapore, UK"/></div>
+            <div class="form-group"><label>Declared Value (RM)</label><div class="input-prefix"><span>RM</span><input type="number" id="ao-amount" placeholder="0.00" min="0" step="0.01"/></div></div>
+            <div class="form-group span-2"><label>Description</label><input type="text" id="ao-desc" placeholder="e.g. Apartment in Singapore"/></div>
           </div>
           <div class="upload-area" id="upload-ao" ondragover="dragOver(event,'ao')" ondragleave="dragLeave(event,'ao')" ondrop="dropFile(event,'ao')" onclick="document.getElementById('file-ao').click()">
-            <div class="upload-icon"><i class="fas fa-cloud-upload-alt"></i></div>
-            <div class="upload-title">Upload Supporting Document</div>
-            <div class="upload-sub">Title deed, bank statement · PDF, JPG, PNG · Max 3MB</div>
+            <div class="upload-icon"><i class="fas fa-cloud-upload-alt"></i></div><div class="upload-title">Upload Supporting Document</div><div class="upload-sub">📱 Images auto-compressed · PDF, JPG, PNG · Max 5MB</div>
             <input type="file" id="file-ao" class="upload-input" multiple accept=".pdf,.jpg,.jpeg,.png" onchange="handleFiles(this,'ao')"/>
           </div>
           <div class="receipts-grid" id="receipts-ao"></div><br/>
           <button class="add-btn" id="btn-ao" onclick="addEntry('ao')"><i class="fas fa-plus"></i>Add Entry</button>
-          <div class="entries-section">
-            <div class="section-heading">Recorded Entries</div>
-            <div class="table-wrap" id="table-ao-wrap"><div class="empty-state"><i class="fas fa-inbox"></i><p>No entries yet.</p></div></div>
-          </div>
+          <div class="entries-section"><div class="section-heading">Recorded Entries</div><div class="table-wrap" id="table-ao-wrap"><div class="empty-state"><i class="fas fa-inbox"></i><p>No entries yet.</p></div></div></div>
         </div>
-
       </div>
     </div>
 
@@ -678,50 +455,28 @@
         <div class="chart-header">
           <div><div class="chart-title">Full Transaction History</div><div class="chart-sub">All entries · Cloud synced ☁️</div></div>
           <div style="display:flex;gap:8px;flex-wrap:wrap;margin-top:8px;align-items:center">
-            <input type="text" id="histSearch" placeholder="🔍 Search..." oninput="renderHistoryTable()"
-              style="padding:8px 12px;border:1.5px solid var(--border);border-radius:9px;font-family:'Inter',sans-serif;font-size:13px;outline:none;width:140px;color:var(--text)"/>
-            <select id="histYear" onchange="renderHistoryTable()"
-              style="padding:8px 12px;border:1.5px solid var(--border);border-radius:9px;font-family:'Inter',sans-serif;font-size:13px;outline:none;color:var(--text)">
-              <option value="All">All Years</option>
-              <option>2020</option><option>2021</option><option>2022</option><option>2023</option>
-              <option>2024</option><option>2025</option><option>2026</option><option>2027</option>
-              <option>2028</option><option>2029</option><option>2030</option>
+            <input type="text" id="histSearch" placeholder="🔍 Search..." oninput="renderHistoryTable()" style="padding:8px 12px;border:1.5px solid var(--border);border-radius:9px;font-family:'Inter',sans-serif;font-size:13px;outline:none;width:140px;color:var(--text)"/>
+            <select id="histYear" onchange="renderHistoryTable()" style="padding:8px 12px;border:1.5px solid var(--border);border-radius:9px;font-family:'Inter',sans-serif;font-size:13px;outline:none;color:var(--text)">
+              <option value="All">All Years</option><option>2020</option><option>2021</option><option>2022</option><option>2023</option><option>2024</option><option>2025</option><option>2026</option><option>2027</option><option>2028</option><option>2029</option><option>2030</option>
             </select>
-            <select id="histMonth" onchange="renderHistoryTable()"
-              style="padding:8px 12px;border:1.5px solid var(--border);border-radius:9px;font-family:'Inter',sans-serif;font-size:13px;outline:none;color:var(--text)">
-              <option value="All">All Months</option>
-              <option value="01">January</option><option value="02">February</option>
-              <option value="03">March</option><option value="04">April</option>
-              <option value="05">May</option><option value="06">June</option>
-              <option value="07">July</option><option value="08">August</option>
-              <option value="09">September</option><option value="10">October</option>
-              <option value="11">November</option><option value="12">December</option>
+            <select id="histMonth" onchange="renderHistoryTable()" style="padding:8px 12px;border:1.5px solid var(--border);border-radius:9px;font-family:'Inter',sans-serif;font-size:13px;outline:none;color:var(--text)">
+              <option value="All">All Months</option><option value="01">January</option><option value="02">February</option><option value="03">March</option><option value="04">April</option><option value="05">May</option><option value="06">June</option><option value="07">July</option><option value="08">August</option><option value="09">September</option><option value="10">October</option><option value="11">November</option><option value="12">December</option>
             </select>
-            <select id="histPerson" onchange="renderHistoryTable()"
-              style="padding:8px 12px;border:1.5px solid var(--border);border-radius:9px;font-family:'Inter',sans-serif;font-size:13px;outline:none;color:var(--text)">
+            <select id="histPerson" onchange="renderHistoryTable()" style="padding:8px 12px;border:1.5px solid var(--border);border-radius:9px;font-family:'Inter',sans-serif;font-size:13px;outline:none;color:var(--text)">
               <option value="All">All Persons</option><option>Shahrul</option><option>Fateha</option>
             </select>
-            <button class="refresh-btn" onclick="loadFromCloud().then(()=>renderHistoryTable())">
-              <i class="fas fa-sync-alt"></i>
-            </button>
+            <button class="refresh-btn" onclick="loadFromCloud().then(()=>renderHistoryTable())"><i class="fas fa-sync-alt"></i></button>
           </div>
         </div>
-        <div class="table-wrap" id="history-table-wrap">
-          <div class="empty-state"><i class="fas fa-inbox"></i><p>No entries yet.</p></div>
-        </div>
+        <div class="table-wrap" id="history-table-wrap"><div class="empty-state"><i class="fas fa-inbox"></i><p>No entries yet.</p></div></div>
       </div>
     </div>
 
     <!-- RECEIPTS -->
     <div id="page-receipts" class="page-section" style="display:none">
       <div class="overview-card">
-        <div class="chart-header">
-          <div><div class="chart-title"><i class="fas fa-vault" style="margin-right:8px;color:var(--accent)"></i>Receipt & Document Vault</div>
-          <div class="chart-sub">All uploaded files · Cloud synced · Tap to preview</div></div>
-        </div>
-        <div id="all-receipts-container" style="margin-top:16px">
-          <div class="empty-state"><i class="fas fa-folder-open"></i><p>No documents uploaded yet.</p></div>
-        </div>
+        <div class="chart-header"><div><div class="chart-title"><i class="fas fa-vault" style="margin-right:8px;color:var(--accent)"></i>Receipt & Document Vault</div><div class="chart-sub">All uploaded files · Cloud synced · Tap to preview</div></div></div>
+        <div id="all-receipts-container" style="margin-top:16px"><div class="empty-state"><i class="fas fa-folder-open"></i><p>No documents uploaded yet.</p></div></div>
       </div>
     </div>
 
@@ -730,8 +485,7 @@
       <div class="overview-card">
         <div class="chart-header">
           <div><div class="chart-title">Yearly Summary — 2020 to 2030</div><div class="chart-sub">Total tax relief per category per year</div></div>
-          <select id="summaryPerson" onchange="renderSummaryTable()"
-            style="padding:8px 12px;border:1.5px solid var(--border);border-radius:9px;font-family:'Inter',sans-serif;font-size:13px;outline:none;color:var(--text)">
+          <select id="summaryPerson" onchange="renderSummaryTable()" style="padding:8px 12px;border:1.5px solid var(--border);border-radius:9px;font-family:'Inter',sans-serif;font-size:13px;outline:none;color:var(--text)">
             <option value="All">Both Persons</option><option>Shahrul</option><option>Fateha</option>
           </select>
         </div>
@@ -748,7 +502,6 @@
 </div>
 
 <div class="toast-container" id="toastContainer"></div>
-
 <div class="modal-overlay" id="deleteModal">
   <div class="modal-box">
     <div class="modal-title"><i class="fas fa-trash-alt" style="color:var(--danger);margin-right:8px"></i>Delete Entry</div>
@@ -767,27 +520,22 @@
 const JSONBIN_API_KEY = '$2a$10$rwaw78iVCwKPkuHs8bLi..DQc0Lz2ucOHP5jHW3ERi5VQnWG.J9k2';
 const JSONBIN_BIN_ID  = '69c2bd16b7ec241ddc9bec95';
 
-const BIN_URL = `https://api.jsonbin.io/v3/b/${JSONBIN_BIN_ID}`;
-const HEADERS  = {
-  'Content-Type':'application/json',
-  'X-Master-Key':JSONBIN_API_KEY,
-  'X-Bin-Versioning':'false'
+const BIN_URL = 'https://api.jsonbin.io/v3/b/' + JSONBIN_BIN_ID;
+const HEADERS = {
+  'Content-Type'    : 'application/json',
+  'X-Master-Key'    : JSONBIN_API_KEY,
+  'X-Bin-Versioning': 'false'
 };
 
-// ══════════════════════════════════════════════
 const YEARS = ['2020','2021','2022','2023','2024','2025','2026','2027','2028','2029','2030'];
-const MONTHS = {
-  '01':'January','02':'February','03':'March','04':'April',
-  '05':'May','06':'June','07':'July','08':'August',
-  '09':'September','10':'October','11':'November','12':'December'
-};
+const MONTHS = {'01':'January','02':'February','03':'March','04':'April','05':'May','06':'June','07':'July','08':'August','09':'September','10':'October','11':'November','12':'December'};
 const CURRENT_YEAR = new Date().getFullYear();
 const CATS = {
   gl:{ label:'Gaya Hidup',       icon:'fa-shopping-bag',   color:'#3b82f6', limit:2500 },
   ce:{ label:'Child Education',  icon:'fa-graduation-cap', color:'#8b5cf6', limit:8000 },
   hi:{ label:'Health Insurance', icon:'fa-heartbeat',      color:'#10b981', limit:3000 },
   pc:{ label:'Parents Cost',     icon:'fa-user-friends',   color:'#f59e0b', limit:8000 },
-  ao:{ label:'Assets Overseas',  icon:'fa-globe-asia',     color:'#ef4444', limit:null  },
+  ao:{ label:'Assets Overseas',  icon:'fa-globe-asia',     color:'#ef4444', limit:null  }
 };
 const EXTRA_FIELD = { gl:null, ce:'ce-child', hi:'hi-policy', pc:'pc-parent', ao:'ao-country' };
 
@@ -799,23 +547,23 @@ let lineChart, donutChart, barChart;
 let autoRefreshTimer = null;
 
 // ══════════════════════════════════════════════
-//  SET DEFAULT MONTH TO CURRENT MONTH
-// ══════════════════════════════════════════════
-function setDefaultMonths() {
-  const currentMonth = String(new Date().getMonth() + 1).padStart(2, '0');
-  ['gl','ce','hi','pc','ao'].forEach(cat => {
-    const el = document.getElementById(cat + '-month');
-    if (el) el.value = currentMonth;
-  });
-}
-
-// ══════════════════════════════════════════════
 //  SYNC UI
 // ══════════════════════════════════════════════
 function setSyncStatus(status, msg) {
-  const bar = document.getElementById('syncBar');
+  var bar = document.getElementById('syncBar');
   bar.className = 'sync-bar ' + status;
   document.getElementById('syncMsg').textContent = msg;
+}
+
+// ══════════════════════════════════════════════
+//  SET DEFAULT MONTH
+// ══════════════════════════════════════════════
+function setDefaultMonths() {
+  var m = String(new Date().getMonth() + 1).padStart(2, '0');
+  ['gl','ce','hi','pc','ao'].forEach(function(cat) {
+    var el = document.getElementById(cat + '-month');
+    if (el) el.value = m;
+  });
 }
 
 // ══════════════════════════════════════════════
@@ -823,12 +571,12 @@ function setSyncStatus(status, msg) {
 // ══════════════════════════════════════════════
 async function loadFromCloud() {
   try {
-    setSyncStatus('syncing','🔄 Loading data...');
-    const res = await fetch(BIN_URL + '/latest', { headers: HEADERS });
+    setSyncStatus('syncing', '🔄 Loading data...');
+    var res = await fetch(BIN_URL + '/latest', { headers: HEADERS });
     if (!res.ok) throw new Error('HTTP ' + res.status);
-    const json = await res.json();
-    const record = json.record || {};
-    Object.keys(CATS).forEach(cat => {
+    var json = await res.json();
+    var record = json.record || {};
+    Object.keys(CATS).forEach(function(cat) {
       data[cat] = Array.isArray(record[cat]) ? record[cat] : [];
     });
     renderAllTables();
@@ -836,14 +584,14 @@ async function loadFromCloud() {
     renderHistoryTable();
     renderAllReceipts();
     renderSummaryTable();
-    setSyncStatus('synced','✅ Synced — Shahrul & Fateha see same data');
+    setSyncStatus('synced', '✅ Synced — Shahrul & Fateha see same data');
     document.getElementById('loadingOverlay').style.display = 'none';
     return true;
   } catch(err) {
     console.error(err);
-    setSyncStatus('error','❌ Connection error — check API Key or internet');
+    setSyncStatus('error', '❌ Connection error — check API Key or internet');
     document.getElementById('loadingOverlay').style.display = 'none';
-    showToast('❌ Failed to load. Check API Key.','error');
+    showToast('❌ Failed to load. Check API Key.', 'error');
     return false;
   }
 }
@@ -853,463 +601,532 @@ async function loadFromCloud() {
 // ══════════════════════════════════════════════
 async function saveToCloud() {
   try {
-    setSyncStatus('syncing','☁️ Saving...');
-    const res = await fetch(BIN_URL, {
-      method:'PUT', headers:HEADERS,
-      body:JSON.stringify(data)
+    setSyncStatus('syncing', '☁️ Saving...');
+    var res = await fetch(BIN_URL, {
+      method: 'PUT',
+      headers: HEADERS,
+      body: JSON.stringify(data)
     });
     if (!res.ok) throw new Error('HTTP ' + res.status);
-    setSyncStatus('synced','✅ Saved & synced to both devices!');
-    setTimeout(() => setSyncStatus('synced','✅ Synced — Shahrul & Fateha see same data'), 3000);
+    setSyncStatus('synced', '✅ Saved & synced to both devices!');
+    setTimeout(function() { setSyncStatus('synced', '✅ Synced — Shahrul & Fateha see same data'); }, 3000);
     return true;
   } catch(err) {
     console.error(err);
-    setSyncStatus('error','❌ Save failed — check internet');
-    showToast('❌ Save failed.','error');
+    setSyncStatus('error', '❌ Save failed — check internet');
+    showToast('❌ Save failed.', 'error');
     return false;
   }
 }
 
 function startAutoRefresh() {
   if (autoRefreshTimer) clearInterval(autoRefreshTimer);
-  autoRefreshTimer = setInterval(() => loadFromCloud(), 30000);
+  autoRefreshTimer = setInterval(function() { loadFromCloud(); }, 30000);
 }
 
 // ══════════════════════════════════════════════
 //  SIDEBAR
 // ══════════════════════════════════════════════
-function openSidebar()  { document.getElementById('sidebar').classList.add('open'); document.getElementById('sidebarOverlay').classList.add('show'); document.body.style.overflow='hidden'; }
-function closeSidebar() { document.getElementById('sidebar').classList.remove('open'); document.getElementById('sidebarOverlay').classList.remove('show'); document.body.style.overflow=''; }
-document.addEventListener('keydown', e => { if(e.key==='Escape') closeSidebar(); });
+function openSidebar()  { document.getElementById('sidebar').classList.add('open'); document.getElementById('sidebarOverlay').classList.add('show'); document.body.style.overflow = 'hidden'; }
+function closeSidebar() { document.getElementById('sidebar').classList.remove('open'); document.getElementById('sidebarOverlay').classList.remove('show'); document.body.style.overflow = ''; }
+document.addEventListener('keydown', function(e) { if (e.key === 'Escape') closeSidebar(); });
 
 // ══════════════════════════════════════════════
 //  NAVIGATION
 // ══════════════════════════════════════════════
-const PAGE_META = {
-  dashboard:{ title:'Tax Dashboard',      sub:'Yearly Overview & Analytics · 2020–2030' },
-  entry:    { title:'Data Entry',          sub:'Record tax relief with Month & Year · Auto-syncs ☁️' },
-  history:  { title:'Transaction History', sub:'Full audit log · Filter by Month, Year & Person' },
-  receipts: { title:'Receipt Vault',       sub:'All uploaded documents · Cloud synced' },
-  summary:  { title:'Yearly Summary',      sub:'Consolidated 11-year view · 2020–2030' },
+var PAGE_META = {
+  dashboard: { title:'Tax Dashboard',       sub:'Yearly Overview & Analytics · 2020–2030' },
+  entry:     { title:'Data Entry',           sub:'Record tax relief with Month & Year · Auto-syncs ☁️' },
+  history:   { title:'Transaction History',  sub:'Full audit log · Filter by Month, Year & Person' },
+  receipts:  { title:'Receipt Vault',        sub:'All uploaded documents · Cloud synced' },
+  summary:   { title:'Yearly Summary',       sub:'Consolidated 11-year view · 2020–2030' }
 };
 function showPage(id) {
-  document.querySelectorAll('.page-section').forEach(p => p.style.display='none');
-  document.getElementById('page-'+id).style.display='block';
+  document.querySelectorAll('.page-section').forEach(function(p) { p.style.display = 'none'; });
+  document.getElementById('page-' + id).style.display = 'block';
   document.getElementById('page-title').textContent = PAGE_META[id].title;
   document.getElementById('page-sub').textContent   = PAGE_META[id].sub;
-  if(id==='dashboard') loadFromCloud();
-  if(id==='history')   loadFromCloud().then(()=>renderHistoryTable());
-  if(id==='receipts')  renderAllReceipts();
-  if(id==='summary')   renderSummaryTable();
+  if (id === 'dashboard') loadFromCloud();
+  if (id === 'history')   loadFromCloud().then(function() { renderHistoryTable(); });
+  if (id === 'receipts')  renderAllReceipts();
+  if (id === 'summary')   renderSummaryTable();
 }
 
 // ══════════════════════════════════════════════
 //  TABS & PERSON
 // ══════════════════════════════════════════════
 function switchTab(i) {
-  document.querySelectorAll('.cat-tab').forEach((t,j)    => t.classList.toggle('active',i===j));
-  document.querySelectorAll('.tab-content').forEach((t,j) => t.classList.toggle('active',i===j));
+  document.querySelectorAll('.cat-tab').forEach(function(t,j)    { t.classList.toggle('active', i===j); });
+  document.querySelectorAll('.tab-content').forEach(function(t,j) { t.classList.toggle('active', i===j); });
 }
 function selectPerson(p) {
-  currentPerson=p;
-  ['Shahrul','Fateha','Both'].forEach(n=>{ const el=document.getElementById('btn'+n); if(el) el.classList.toggle('active',n===p); });
+  currentPerson = p;
+  ['Shahrul','Fateha','Both'].forEach(function(n) {
+    var el = document.getElementById('btn' + n);
+    if (el) el.classList.toggle('active', n === p);
+  });
   updateAll();
 }
 
 // ══════════════════════════════════════════════
 //  HELPERS
 // ══════════════════════════════════════════════
-function fmt(n) { return 'RM '+Number(n||0).toLocaleString('en-MY',{minimumFractionDigits:2,maximumFractionDigits:2}); }
-function getSum(cat,year,person) {
-  return (data[cat]||[]).filter(e=>(!year||e.year===year)&&(!person||person==='Both'||e.person===person)).reduce((s,e)=>s+parseFloat(e.amount||0),0);
+function fmt(n) { return 'RM ' + Number(n||0).toLocaleString('en-MY', {minimumFractionDigits:2, maximumFractionDigits:2}); }
+function getSum(cat, year, person) {
+  return (data[cat]||[]).filter(function(e) {
+    return (!year || e.year===year) && (!person || person==='Both' || e.person===person);
+  }).reduce(function(s,e) { return s + parseFloat(e.amount||0); }, 0);
 }
-function uid()       { return Date.now().toString(36)+Math.random().toString(36).slice(2); }
-function fileIcon(t) { if(!t)return'📄'; if(t.includes('pdf'))return'📕'; if(t.includes('image'))return'🖼️'; return'📄'; }
-function fileSize(b) { if(b<1024)return b+'B'; if(b<1048576)return(b/1024).toFixed(1)+'KB'; return(b/1048576).toFixed(1)+'MB'; }
-function isFuture(y) { return parseInt(y)>CURRENT_YEAR; }
+function uid() { return Date.now().toString(36) + Math.random().toString(36).slice(2); }
+function fileIcon(t) { if(!t) return '📄'; if(t.includes('pdf')) return '📕'; if(t.includes('image')) return '🖼️'; return '📄'; }
+function fileSize(b) { if(b<1024) return b+'B'; if(b<1048576) return (b/1024).toFixed(1)+'KB'; return (b/1048576).toFixed(1)+'MB'; }
+function isFuture(y) { return parseInt(y) > CURRENT_YEAR; }
 function getMonthName(m) { return MONTHS[m] || m; }
 
 // ══════════════════════════════════════════════
-//  FILE UPLOAD
+//  🔥 IMAGE COMPRESSION — FIXES SAVE ERROR!
 // ══════════════════════════════════════════════
-function dragOver(e,cat){e.preventDefault();document.getElementById('upload-'+cat).classList.add('dragover')}
-function dragLeave(e,cat){document.getElementById('upload-'+cat).classList.remove('dragover')}
-function dropFile(e,cat){e.preventDefault();document.getElementById('upload-'+cat).classList.remove('dragover');processFiles(e.dataTransfer.files,cat)}
-function handleFiles(inp,cat){processFiles(inp.files,cat)}
-function processFiles(files,cat){
-  Array.from(files).forEach(file=>{
-    if(file.size>3*1024*1024){showToast('Max 3MB: '+file.name,'error');return;}
-    const reader=new FileReader();
-    reader.onload=e=>{receiptsStore[cat].push({name:file.name,size:file.size,type:file.type,dataUrl:e.target.result});renderReceiptThumbs(cat);};
+function compressImage(file) {
+  return new Promise(function(resolve) {
+    // PDF: read as-is, warn if too big
+    if (file.type === 'application/pdf') {
+      if (file.size > 80 * 1024) {
+        showToast('⚠️ PDF too large. Please use a smaller/shorter PDF.', 'error');
+        resolve(null);
+        return;
+      }
+      var r = new FileReader();
+      r.onload = function(e) { resolve(e.target.result); };
+      r.readAsDataURL(file);
+      return;
+    }
+    // IMAGE: compress using canvas
+    var reader = new FileReader();
+    reader.onload = function(e) {
+      var img = new Image();
+      img.onload = function() {
+        var maxW = 800;
+        var w = img.width, h = img.height;
+        if (w > maxW) { h = Math.round(h * maxW / w); w = maxW; }
+        var canvas = document.createElement('canvas');
+        canvas.width = w; canvas.height = h;
+        canvas.getContext('2d').drawImage(img, 0, 0, w, h);
+        var compressed = canvas.toDataURL('image/jpeg', 0.55);
+        resolve(compressed);
+      };
+      img.onerror = function() { resolve(null); };
+      img.src = e.target.result;
+    };
     reader.readAsDataURL(file);
   });
 }
-function renderReceiptThumbs(cat){
-  document.getElementById('receipts-'+cat).innerHTML=receiptsStore[cat].map((f,i)=>`
-    <div class="receipt-thumb">
-      <span class="receipt-icon-big">${fileIcon(f.type)}</span>
-      <div class="receipt-name" title="${f.name}">${f.name}</div>
-      <div class="receipt-size">${fileSize(f.size)}</div>
-      <button class="receipt-del" onclick="removeReceipt('${cat}',${i})">✕</button>
-    </div>`).join('');
-}
-function removeReceipt(cat,idx){receiptsStore[cat].splice(idx,1);renderReceiptThumbs(cat);}
 
 // ══════════════════════════════════════════════
-//  ADD ENTRY — NOW WITH MONTH! 📅
+//  FILE UPLOAD WITH COMPRESSION
+// ══════════════════════════════════════════════
+function dragOver(e,cat)  { e.preventDefault(); document.getElementById('upload-'+cat).classList.add('dragover'); }
+function dragLeave(e,cat) { document.getElementById('upload-'+cat).classList.remove('dragover'); }
+function dropFile(e,cat)  { e.preventDefault(); document.getElementById('upload-'+cat).classList.remove('dragover'); processFiles(e.dataTransfer.files, cat); }
+function handleFiles(inp,cat) { processFiles(inp.files, cat); }
+
+async function processFiles(files, cat) {
+  var arr = Array.from(files);
+  for (var i = 0; i < arr.length; i++) {
+    var file = arr[i];
+    if (file.size > 5 * 1024 * 1024) {
+      showToast('❌ File too large (max 5MB): ' + file.name, 'error');
+      continue;
+    }
+    showToast('🔄 Processing ' + file.name + '...', 'success');
+    var compressed = await compressImage(file);
+    if (!compressed) {
+      showToast('❌ Could not process: ' + file.name, 'error');
+      continue;
+    }
+    var compBytes = Math.round((compressed.length * 3) / 4);
+    var compKB    = (compBytes / 1024).toFixed(1);
+    if (compBytes > 85 * 1024) {
+      showToast('❌ Still too large after compress (' + compKB + 'KB). Try smaller image.', 'error');
+      continue;
+    }
+    receiptsStore[cat].push({
+      name    : file.name,
+      size    : compBytes,
+      origSize: file.size,
+      type    : file.type.includes('pdf') ? 'application/pdf' : 'image/jpeg',
+      dataUrl : compressed
+    });
+    renderReceiptThumbs(cat);
+    showToast('✅ ' + file.name + ' ready (' + compKB + 'KB)');
+  }
+}
+
+function renderReceiptThumbs(cat) {
+  document.getElementById('receipts-'+cat).innerHTML = receiptsStore[cat].map(function(f,i) {
+    return '<div class="receipt-thumb">' +
+      '<span class="receipt-icon-big">' + fileIcon(f.type) + '</span>' +
+      '<div class="receipt-name" title="' + f.name + '">' + f.name + '</div>' +
+      '<div class="receipt-size">' + fileSize(f.size) + '</div>' +
+      '<button class="receipt-del" onclick="removeReceipt(\'' + cat + '\',' + i + ')">✕</button>' +
+      '</div>';
+  }).join('');
+}
+function removeReceipt(cat,idx) { receiptsStore[cat].splice(idx,1); renderReceiptThumbs(cat); }
+
+// ══════════════════════════════════════════════
+//  ADD ENTRY
 // ══════════════════════════════════════════════
 async function addEntry(cat) {
-  const year    = document.getElementById(cat+'-year').value;
-  const month   = document.getElementById(cat+'-month').value;   // ← NEW!
-  const person  = document.getElementById(cat+'-person').value;
-  const subcat  = document.getElementById(cat+'-subcat').value;
-  const amount  = parseFloat(document.getElementById(cat+'-amount').value);
-  const desc    = document.getElementById(cat+'-desc').value.trim();
-  const extraId = EXTRA_FIELD[cat];
-  const extra   = extraId ? document.getElementById(extraId).value.trim() : '';
+  var year    = document.getElementById(cat+'-year').value;
+  var month   = document.getElementById(cat+'-month').value;
+  var person  = document.getElementById(cat+'-person').value;
+  var subcat  = document.getElementById(cat+'-subcat').value;
+  var amount  = parseFloat(document.getElementById(cat+'-amount').value);
+  var desc    = document.getElementById(cat+'-desc').value.trim();
+  var extraId = EXTRA_FIELD[cat];
+  var extra   = extraId ? document.getElementById(extraId).value.trim() : '';
 
-  if(!amount||isNaN(amount)||amount<=0){showToast('Please enter a valid amount.','error');return;}
-
-  const btn=document.getElementById('btn-'+cat);
-  btn.disabled=true;
-  btn.innerHTML='<i class="fas fa-spinner fa-spin"></i> Saving...';
-
-  const entry = {
-    id:uid(), cat, year,
-    month,                           // ← NEW!
-    monthName: getMonthName(month),  // ← NEW! Store month name too
-    person, subcat,
-    amount:amount.toFixed(2),
-    desc:desc||subcat, extra,
-    date:new Date().toLocaleDateString('en-MY'),
-    files:[...receiptsStore[cat]]
-  };
-
-  if(!Array.isArray(data[cat])) data[cat]=[];
-  data[cat].push(entry);
-
-  const saved=await saveToCloud();
-  if(saved){
-    receiptsStore[cat]=[];
-    renderReceiptThumbs(cat);
-    document.getElementById(cat+'-amount').value='';
-    document.getElementById(cat+'-desc').value='';
-    if(extraId) document.getElementById(extraId).value='';
-    renderAllTables();
-    updateAll();
-    showToast(`✅ Saved: ${fmt(amount)} → ${CATS[cat].label} (${getMonthName(month)} ${year})`);
-  } else {
-    data[cat]=data[cat].filter(e=>e.id!==entry.id);
-    showToast('❌ Save failed. Please try again.','error');
+  if (!amount || isNaN(amount) || amount <= 0) {
+    showToast('Please enter a valid amount.', 'error');
+    return;
   }
 
-  btn.disabled=false;
-  btn.innerHTML='<i class="fas fa-plus"></i>Add Entry';
+  var btn = document.getElementById('btn-'+cat);
+  btn.disabled = true;
+  btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Saving...';
+
+  var entry = {
+    id       : uid(),
+    cat      : cat,
+    year     : year,
+    month    : month,
+    monthName: getMonthName(month),
+    person   : person,
+    subcat   : subcat,
+    amount   : amount.toFixed(2),
+    desc     : desc || subcat,
+    extra    : extra,
+    date     : new Date().toLocaleDateString('en-MY'),
+    files    : receiptsStore[cat].slice()
+  };
+
+  if (!Array.isArray(data[cat])) data[cat] = [];
+  data[cat].push(entry);
+
+  var saved = await saveToCloud();
+  if (saved) {
+    receiptsStore[cat] = [];
+    renderReceiptThumbs(cat);
+    document.getElementById(cat+'-amount').value = '';
+    document.getElementById(cat+'-desc').value   = '';
+    if (extraId) document.getElementById(extraId).value = '';
+    renderAllTables();
+    updateAll();
+    showToast('✅ Saved: ' + fmt(amount) + ' → ' + CATS[cat].label + ' (' + getMonthName(month) + ' ' + year + ')');
+  } else {
+    data[cat] = data[cat].filter(function(e) { return e.id !== entry.id; });
+    showToast('❌ Save failed. Please try again.', 'error');
+  }
+
+  btn.disabled = false;
+  btn.innerHTML = '<i class="fas fa-plus"></i>Add Entry';
 }
 
 // ══════════════════════════════════════════════
 //  RENDER TABLES
 // ══════════════════════════════════════════════
-function renderAllTables(){ Object.keys(CATS).forEach(cat=>renderEntryTable(cat)); }
+function renderAllTables() { Object.keys(CATS).forEach(function(cat) { renderEntryTable(cat); }); }
 
-function renderEntryTable(cat){
-  const wrap=document.getElementById('table-'+cat+'-wrap');
-  const rows=data[cat]||[];
-  if(!rows.length){wrap.innerHTML='<div class="empty-state"><i class="fas fa-inbox"></i><p>No entries yet.</p></div>';return;}
-  const eL={gl:null,ce:'Child',hi:'Policy',pc:'Parent',ao:'Country'};
-  const hasE=!!eL[cat];
-  const total=rows.reduce((s,e)=>s+parseFloat(e.amount||0),0);
+function renderEntryTable(cat) {
+  var wrap = document.getElementById('table-'+cat+'-wrap');
+  var rows = data[cat] || [];
+  if (!rows.length) {
+    wrap.innerHTML = '<div class="empty-state"><i class="fas fa-inbox"></i><p>No entries yet.</p></div>';
+    return;
+  }
+  var eL   = { gl:null, ce:'Child', hi:'Policy', pc:'Parent', ao:'Country' };
+  var hasE = !!eL[cat];
+  var total = rows.reduce(function(s,e) { return s + parseFloat(e.amount||0); }, 0);
+  var sorted = rows.slice().sort(function(a,b) {
+    return b.year.localeCompare(a.year) || (b.month||'01').localeCompare(a.month||'01');
+  });
 
-  // Sort by year then month
-  const sorted=[...rows].sort((a,b)=>
-    b.year.localeCompare(a.year)||((b.month||'01').localeCompare(a.month||'01'))
-  );
+  var rows_html = sorted.map(function(e) {
+    return '<tr>' +
+      '<td><div><strong>' + e.year + '</strong>' + (isFuture(e.year)?'<span class="future-badge" style="font-size:9px;padding:1px 4px;margin-left:4px"><i class="fas fa-clock"></i></span>':'') + '</div>' +
+      '<div class="month-badge" style="margin-top:4px"><i class="fas fa-calendar-day" style="margin-right:4px;font-size:9px"></i>' + (e.monthName||getMonthName(e.month)||'—') + '</div></td>' +
+      '<td><span class="badge badge-' + (e.person||'').toLowerCase() + '">' + e.person + '</span></td>' +
+      '<td style="max-width:140px;white-space:normal;font-size:12px">' + e.subcat + '</td>' +
+      (hasE ? '<td>' + (e.extra||'—') + '</td>' : '') +
+      '<td><strong style="color:var(--primary)">' + fmt(e.amount) + '</strong></td>' +
+      '<td style="color:var(--muted);max-width:130px;white-space:normal;font-size:12px">' + e.desc + '</td>' +
+      '<td>' + (e.files&&e.files.length ? '<span style="color:var(--success);font-weight:700"><i class="fas fa-paperclip"></i> ' + e.files.length + '</span>' : '—') + '</td>' +
+      '<td style="color:var(--muted);font-size:11px">' + e.date + '</td>' +
+      '<td><button class="del-row" onclick="openDelete(\'' + cat + '\',\'' + e.id + '\')"><i class="fas fa-trash-alt"></i></button></td>' +
+      '</tr>';
+  }).join('');
 
-  wrap.innerHTML=`
-    <table>
-      <thead><tr>
-        <th>Period</th><th>Person</th><th>Sub-Cat</th>
-        ${hasE?`<th>${eL[cat]}</th>`:''}
-        <th>Amount</th><th>Description</th><th>Docs</th><th>Added</th><th></th>
-      </tr></thead>
-      <tbody>
-        ${sorted.map(e=>`
-          <tr>
-            <td>
-              <div><strong>${e.year}</strong>${isFuture(e.year)?'<span class="future-badge" style="font-size:9px;padding:1px 4px;margin-left:4px"><i class="fas fa-clock"></i></span>':''}</div>
-              <div class="month-badge" style="margin-top:4px">
-                <i class="fas fa-calendar-day" style="margin-right:4px;font-size:9px"></i>
-                ${e.monthName || getMonthName(e.month) || '—'}
-              </div>
-            </td>
-            <td><span class="badge badge-${(e.person||'').toLowerCase()}">${e.person}</span></td>
-            <td style="max-width:140px;white-space:normal;font-size:12px">${e.subcat}</td>
-            ${hasE?`<td>${e.extra||'—'}</td>`:''}
-            <td><strong style="color:var(--primary)">${fmt(e.amount)}</strong></td>
-            <td style="color:var(--muted);max-width:130px;white-space:normal;font-size:12px">${e.desc}</td>
-            <td>${e.files&&e.files.length?`<span style="color:var(--success);font-weight:700"><i class="fas fa-paperclip"></i> ${e.files.length}</span>`:'—'}</td>
-            <td style="color:var(--muted);font-size:11px">${e.date}</td>
-            <td><button class="del-row" onclick="openDelete('${cat}','${e.id}')"><i class="fas fa-trash-alt"></i></button></td>
-          </tr>`).join('')}
-        <tr style="background:#f4f7ff">
-          <td colspan="${3+(hasE?1:0)}"><strong>Total (${sorted.length} entries)</strong></td>
-          <td><strong style="color:var(--primary)">${fmt(total)}</strong></td>
-          <td colspan="4"></td>
-        </tr>
-      </tbody>
-    </table>`;
+  wrap.innerHTML = '<table><thead><tr>' +
+    '<th>Period</th><th>Person</th><th>Sub-Cat</th>' +
+    (hasE ? '<th>' + eL[cat] + '</th>' : '') +
+    '<th>Amount</th><th>Description</th><th>Docs</th><th>Added</th><th></th>' +
+    '</tr></thead><tbody>' + rows_html +
+    '<tr style="background:#f4f7ff"><td colspan="' + (3+(hasE?1:0)) + '"><strong>Total (' + sorted.length + ')</strong></td>' +
+    '<td><strong style="color:var(--primary)">' + fmt(total) + '</strong></td><td colspan="4"></td></tr>' +
+    '</tbody></table>';
 }
 
 // ══════════════════════════════════════════════
 //  DELETE
 // ══════════════════════════════════════════════
-function openDelete(cat,id){deleteTarget={cat,id};document.getElementById('deleteModal').classList.add('open');}
-function closeModal(){document.getElementById('deleteModal').classList.remove('open');deleteTarget=null;}
-async function confirmDelete(){
-  if(!deleteTarget)return;
-  const{cat,id}=deleteTarget;
-  const backup=[...data[cat]];
-  data[cat]=(data[cat]||[]).filter(e=>e.id!==id);
-  const saved=await saveToCloud();
-  if(saved){renderAllTables();updateAll();showToast('Entry deleted from cloud.','error');}
-  else{data[cat]=backup;renderAllTables();showToast('Delete failed.','error');}
+function openDelete(cat,id) { deleteTarget={cat:cat,id:id}; document.getElementById('deleteModal').classList.add('open'); }
+function closeModal() { document.getElementById('deleteModal').classList.remove('open'); deleteTarget=null; }
+async function confirmDelete() {
+  if (!deleteTarget) return;
+  var cat = deleteTarget.cat, id = deleteTarget.id;
+  var backup = data[cat].slice();
+  data[cat] = (data[cat]||[]).filter(function(e) { return e.id !== id; });
+  var saved = await saveToCloud();
+  if (saved) { renderAllTables(); updateAll(); showToast('Entry deleted from cloud.', 'error'); }
+  else        { data[cat] = backup; renderAllTables(); showToast('Delete failed.', 'error'); }
   closeModal();
 }
-document.getElementById('deleteModal').addEventListener('click',function(e){if(e.target===this)closeModal();});
+document.getElementById('deleteModal').addEventListener('click', function(e) { if (e.target===this) closeModal(); });
 
 // ══════════════════════════════════════════════
-//  HISTORY — WITH MONTH FILTER
+//  HISTORY
 // ══════════════════════════════════════════════
-function renderHistoryTable(){
-  const wrap  =document.getElementById('history-table-wrap');
-  const search=(document.getElementById('histSearch')?.value||'').toLowerCase();
-  const fy    =document.getElementById('histYear')?.value||'All';
-  const fm    =document.getElementById('histMonth')?.value||'All';   // ← NEW!
-  const fp    =document.getElementById('histPerson')?.value||'All';
+function renderHistoryTable() {
+  var wrap   = document.getElementById('history-table-wrap');
+  var search = (document.getElementById('histSearch')&&document.getElementById('histSearch').value||'').toLowerCase();
+  var fy     = document.getElementById('histYear')  ? document.getElementById('histYear').value   : 'All';
+  var fm     = document.getElementById('histMonth') ? document.getElementById('histMonth').value  : 'All';
+  var fp     = document.getElementById('histPerson')? document.getElementById('histPerson').value : 'All';
 
-  let all=[];
-  Object.entries(data).forEach(([cat,rows])=>(rows||[]).forEach(e=>all.push({...e,cat})));
-  if(fy!=='All') all=all.filter(e=>e.year===fy);
-  if(fm!=='All') all=all.filter(e=>e.month===fm);                     // ← NEW!
-  if(fp!=='All') all=all.filter(e=>e.person===fp);
-  if(search) all=all.filter(e=>
-    (e.person||'').toLowerCase().includes(search)||
-    (e.subcat||'').toLowerCase().includes(search)||
-    (e.desc||'').toLowerCase().includes(search)||
-    (e.monthName||'').toLowerCase().includes(search)||
-    CATS[e.cat].label.toLowerCase().includes(search)||
-    e.year.includes(search)
-  );
+  var all = [];
+  Object.keys(data).forEach(function(cat) {
+    (data[cat]||[]).forEach(function(e) { all.push(Object.assign({}, e, {cat:cat})); });
+  });
+  if (fy !== 'All') all = all.filter(function(e) { return e.year   === fy; });
+  if (fm !== 'All') all = all.filter(function(e) { return e.month  === fm; });
+  if (fp !== 'All') all = all.filter(function(e) { return e.person === fp; });
+  if (search) all = all.filter(function(e) {
+    return (e.person||'').toLowerCase().includes(search) ||
+           (e.subcat||'').toLowerCase().includes(search) ||
+           (e.desc||'').toLowerCase().includes(search)   ||
+           (e.monthName||'').toLowerCase().includes(search) ||
+           CATS[e.cat].label.toLowerCase().includes(search) ||
+           e.year.includes(search);
+  });
+  all.sort(function(a,b) { return b.year.localeCompare(a.year) || (b.month||'01').localeCompare(a.month||'01'); });
 
-  // Sort: Year DESC → Month DESC
-  all.sort((a,b)=>b.year.localeCompare(a.year)||((b.month||'01').localeCompare(a.month||'01')));
+  if (!all.length) {
+    wrap.innerHTML = '<div class="empty-state"><i class="fas fa-search"></i><p>No entries found.</p></div>';
+    return;
+  }
+  var total = all.reduce(function(s,e) { return s + parseFloat(e.amount||0); }, 0);
 
-  if(!all.length){wrap.innerHTML='<div class="empty-state"><i class="fas fa-search"></i><p>No entries found.</p></div>';return;}
-  const total=all.reduce((s,e)=>s+parseFloat(e.amount||0),0);
+  var rows_html = all.map(function(e) {
+    return '<tr>' +
+      '<td><div><strong>' + e.year + '</strong></div>' +
+      '<div class="month-badge" style="margin-top:4px"><i class="fas fa-calendar-day" style="margin-right:4px;font-size:9px"></i>' + (e.monthName||getMonthName(e.month)||'—') + '</div></td>' +
+      '<td><span class="badge badge-' + (e.person||'').toLowerCase() + '">' + e.person + '</span></td>' +
+      '<td><span style="color:' + CATS[e.cat].color + ';font-weight:600;font-size:12px"><i class="fas ' + CATS[e.cat].icon + '" style="margin-right:4px"></i>' + CATS[e.cat].label + '</span></td>' +
+      '<td style="max-width:120px;white-space:normal;font-size:12px">' + e.subcat + '</td>' +
+      '<td><strong style="color:var(--primary)">' + fmt(e.amount) + '</strong></td>' +
+      '<td style="color:var(--muted);font-size:12px;max-width:120px;white-space:normal">' + e.desc + '</td>' +
+      '<td>' + (e.files&&e.files.length ? '<span style="color:var(--success);font-weight:700"><i class="fas fa-paperclip"></i> ' + e.files.length + '</span>' : '—') + '</td>' +
+      '<td style="color:var(--muted);font-size:11px">' + e.date + '</td>' +
+      '<td><button class="del-row" onclick="openDelete(\'' + e.cat + '\',\'' + e.id + '\')"><i class="fas fa-trash-alt"></i></button></td>' +
+      '</tr>';
+  }).join('');
 
-  wrap.innerHTML=`
-    <table>
-      <thead><tr>
-        <th>Period</th><th>Person</th><th>Category</th>
-        <th>Sub-Cat</th><th>Amount</th><th>Desc</th><th>Docs</th><th>Added</th><th></th>
-      </tr></thead>
-      <tbody>
-        ${all.map(e=>`
-          <tr>
-            <td>
-              <div><strong>${e.year}</strong></div>
-              <div class="month-badge" style="margin-top:4px">
-                <i class="fas fa-calendar-day" style="margin-right:4px;font-size:9px"></i>
-                ${e.monthName||getMonthName(e.month)||'—'}
-              </div>
-            </td>
-            <td><span class="badge badge-${(e.person||'').toLowerCase()}">${e.person}</span></td>
-            <td><span style="color:${CATS[e.cat].color};font-weight:600;font-size:12px">
-              <i class="fas ${CATS[e.cat].icon}" style="margin-right:4px"></i>${CATS[e.cat].label}
-            </span></td>
-            <td style="max-width:120px;white-space:normal;font-size:12px">${e.subcat}</td>
-            <td><strong style="color:var(--primary)">${fmt(e.amount)}</strong></td>
-            <td style="color:var(--muted);font-size:12px;max-width:120px;white-space:normal">${e.desc}</td>
-            <td>${e.files&&e.files.length?`<span style="color:var(--success);font-weight:700"><i class="fas fa-paperclip"></i> ${e.files.length}</span>`:'—'}</td>
-            <td style="color:var(--muted);font-size:11px">${e.date}</td>
-            <td><button class="del-row" onclick="openDelete('${e.cat}','${e.id}')"><i class="fas fa-trash-alt"></i></button></td>
-          </tr>`).join('')}
-        <tr style="background:#f4f7ff">
-          <td colspan="4"><strong>TOTAL (${all.length} entries)</strong></td>
-          <td><strong style="color:var(--primary)">${fmt(total)}</strong></td>
-          <td colspan="4"></td>
-        </tr>
-      </tbody>
-    </table>`;
+  wrap.innerHTML = '<table><thead><tr>' +
+    '<th>Period</th><th>Person</th><th>Category</th><th>Sub-Cat</th>' +
+    '<th>Amount</th><th>Desc</th><th>Docs</th><th>Added</th><th></th>' +
+    '</tr></thead><tbody>' + rows_html +
+    '<tr style="background:#f4f7ff"><td colspan="4"><strong>TOTAL (' + all.length + ' entries)</strong></td>' +
+    '<td><strong style="color:var(--primary)">' + fmt(total) + '</strong></td><td colspan="4"></td></tr>' +
+    '</tbody></table>';
 }
 
 // ══════════════════════════════════════════════
 //  RECEIPT VAULT
 // ══════════════════════════════════════════════
-function renderAllReceipts(){
-  const wrap=document.getElementById('all-receipts-container');
-  let html='',totalFiles=0;
-  Object.entries(data).forEach(([cat,rows])=>{
-    const files=(rows||[]).flatMap(e=>(e.files||[]).map(f=>({...f,entry:e,cat})));
-    if(!files.length)return;
-    totalFiles+=files.length;
-    html+=`<div style="margin-bottom:24px">
-      <div class="section-heading" style="color:${CATS[cat].color}">
-        <i class="fas ${CATS[cat].icon}" style="margin-right:6px"></i>${CATS[cat].label}
-        <span style="font-weight:400;color:var(--muted);font-size:12px;margin-left:6px">(${files.length} file${files.length>1?'s':''})</span>
-      </div>
-      <div class="receipts-grid">
-        ${files.map(f=>`
-          <div class="receipt-thumb" onclick="previewFile('${encodeURIComponent(f.dataUrl)}','${encodeURIComponent(f.name)}','${f.type}')">
-            <span class="receipt-icon-big">${fileIcon(f.type)}</span>
-            <div class="receipt-name" title="${f.name}">${f.name}</div>
-            <div class="receipt-size">${fileSize(f.size)}</div>
-            <div style="font-size:10px;color:var(--muted);margin-top:4px">
-              ${f.entry.monthName||getMonthName(f.entry.month)||''} ${f.entry.year} · ${f.entry.person}
-            </div>
-          </div>`).join('')}
-      </div></div>`;
+function renderAllReceipts() {
+  var wrap = document.getElementById('all-receipts-container');
+  var html = '', totalFiles = 0;
+  Object.keys(data).forEach(function(cat) {
+    var rows  = data[cat] || [];
+    var files = [];
+    rows.forEach(function(e) { (e.files||[]).forEach(function(f) { files.push(Object.assign({},f,{entry:e,cat:cat})); }); });
+    if (!files.length) return;
+    totalFiles += files.length;
+    html += '<div style="margin-bottom:24px">' +
+      '<div class="section-heading" style="color:' + CATS[cat].color + '">' +
+      '<i class="fas ' + CATS[cat].icon + '" style="margin-right:6px"></i>' + CATS[cat].label +
+      '<span style="font-weight:400;color:var(--muted);font-size:12px;margin-left:6px">(' + files.length + ' file' + (files.length>1?'s':'') + ')</span></div>' +
+      '<div class="receipts-grid">' +
+      files.map(function(f) {
+        return '<div class="receipt-thumb" onclick="previewFile(\'' + encodeURIComponent(f.dataUrl) + '\',\'' + encodeURIComponent(f.name) + '\',\'' + f.type + '\')">' +
+          '<span class="receipt-icon-big">' + fileIcon(f.type) + '</span>' +
+          '<div class="receipt-name" title="' + f.name + '">' + f.name + '</div>' +
+          '<div class="receipt-size">' + fileSize(f.size) + '</div>' +
+          '<div style="font-size:10px;color:var(--muted);margin-top:4px">' + (f.entry.monthName||getMonthName(f.entry.month)||'') + ' ' + f.entry.year + ' · ' + f.entry.person + '</div>' +
+          '</div>';
+      }).join('') + '</div></div>';
   });
-  wrap.innerHTML=totalFiles
-    ?`<div style="margin-bottom:14px;font-size:13px;color:var(--muted)">
-        <i class="fas fa-info-circle" style="color:var(--accent);margin-right:5px"></i>
-        ${totalFiles} document${totalFiles>1?'s':''} stored · Tap to preview
-      </div>`+html
-    :'<div class="empty-state"><i class="fas fa-folder-open"></i><p>No documents uploaded yet.</p></div>';
+  wrap.innerHTML = totalFiles
+    ? '<div style="margin-bottom:14px;font-size:13px;color:var(--muted)"><i class="fas fa-info-circle" style="color:var(--accent);margin-right:5px"></i>' + totalFiles + ' document' + (totalFiles>1?'s':'') + ' stored · Tap to preview</div>' + html
+    : '<div class="empty-state"><i class="fas fa-folder-open"></i><p>No documents uploaded yet.</p></div>';
 }
-function previewFile(encoded,name,type){
-  const url=decodeURIComponent(encoded);
-  const win=window.open('','_blank');
-  win.document.write(`<!DOCTYPE html><html><head><title>${decodeURIComponent(name)}</title>
-    <style>body{margin:0;background:#111;display:flex;align-items:center;justify-content:center;min-height:100vh}</style>
-    </head><body>`);
-  if(type&&type.includes('pdf'))win.document.write(`<iframe src="${url}" style="width:100vw;height:100vh;border:none"></iframe>`);
-  else win.document.write(`<img src="${url}" style="max-width:95vw;max-height:95vh;border-radius:8px"/>`);
+
+function previewFile(encoded, name, type) {
+  var url = decodeURIComponent(encoded);
+  var win = window.open('', '_blank');
+  win.document.write('<!DOCTYPE html><html><head><title>' + decodeURIComponent(name) + '</title>' +
+    '<style>body{margin:0;background:#111;display:flex;align-items:center;justify-content:center;min-height:100vh}</style>' +
+    '</head><body>');
+  if (type && type.includes('pdf'))
+    win.document.write('<iframe src="' + url + '" style="width:100vw;height:100vh;border:none"></iframe>');
+  else
+    win.document.write('<img src="' + url + '" style="max-width:95vw;max-height:95vh;border-radius:8px"/>');
   win.document.write('</body></html>');
 }
 
 // ══════════════════════════════════════════════
 //  SUMMARY TABLE
 // ══════════════════════════════════════════════
-function renderSummaryTable(){
-  const person=document.getElementById('summaryPerson')?.value||'All';
-  const fp=person==='All'?null:person;
-  const tbody=document.getElementById('summary-tbody');
-  const totals={gl:0,ce:0,hi:0,pc:0,ao:0};let grandAll=0;
-  tbody.innerHTML=YEARS.map(y=>{
-    const gl=getSum('gl',y,fp),ce=getSum('ce',y,fp),hi=getSum('hi',y,fp),pc=getSum('pc',y,fp),ao=getSum('ao',y,fp);
-    const total=gl+ce+hi+pc+ao;
-    totals.gl+=gl;totals.ce+=ce;totals.hi+=hi;totals.pc+=pc;totals.ao+=ao;grandAll+=total;
-    const future=isFuture(y);
-    const status=future
-      ?`<span style="color:var(--accent);font-size:11px;font-weight:600"><i class="fas fa-clock"></i> Planned</span>`
-      :total>0?`<span style="color:var(--success);font-size:11px;font-weight:600"><i class="fas fa-check-circle"></i> Recorded</span>`
-      :`<span style="color:var(--muted);font-size:11px">—</span>`;
-    return`<tr style="${future?'opacity:.7':''}">
-      <td class="year-cell">${y}${future?'<span class="future-badge" style="font-size:9px;padding:1px 5px"><i class="fas fa-star"></i></span>':''}</td>
-      <td>${gl>0?fmt(gl):'—'}</td><td>${ce>0?fmt(ce):'—'}</td>
-      <td>${hi>0?fmt(hi):'—'}</td><td>${pc>0?fmt(pc):'—'}</td><td>${ao>0?fmt(ao):'—'}</td>
-      <td><strong style="color:${total>0?'var(--primary)':'var(--muted)'}">${total>0?fmt(total):'—'}</strong></td>
-      <td>${status}</td>
-    </tr>`;
-  }).join('')+`<tr class="total-row">
-    <td>Grand Total</td><td>${fmt(totals.gl)}</td><td>${fmt(totals.ce)}</td>
-    <td>${fmt(totals.hi)}</td><td>${fmt(totals.pc)}</td><td>${fmt(totals.ao)}</td>
-    <td>${fmt(grandAll)}</td><td>—</td>
-  </tr>`;
+function renderSummaryTable() {
+  var person = document.getElementById('summaryPerson') ? document.getElementById('summaryPerson').value : 'All';
+  var fp = (person === 'All') ? null : person;
+  var tbody = document.getElementById('summary-tbody');
+  var totals = {gl:0,ce:0,hi:0,pc:0,ao:0};
+  var grandAll = 0;
+
+  tbody.innerHTML = YEARS.map(function(y) {
+    var gl=getSum('gl',y,fp), ce=getSum('ce',y,fp), hi=getSum('hi',y,fp), pc=getSum('pc',y,fp), ao=getSum('ao',y,fp);
+    var total = gl+ce+hi+pc+ao;
+    totals.gl+=gl; totals.ce+=ce; totals.hi+=hi; totals.pc+=pc; totals.ao+=ao; grandAll+=total;
+    var future = isFuture(y);
+    var status = future
+      ? '<span style="color:var(--accent);font-size:11px;font-weight:600"><i class="fas fa-clock"></i> Planned</span>'
+      : (total > 0
+          ? '<span style="color:var(--success);font-size:11px;font-weight:600"><i class="fas fa-check-circle"></i> Recorded</span>'
+          : '<span style="color:var(--muted);font-size:11px">—</span>');
+    return '<tr style="' + (future?'opacity:.7':'') + '">' +
+      '<td class="year-cell">' + y + (future?'<span class="future-badge" style="font-size:9px;padding:1px 5px"><i class="fas fa-star"></i></span>':'') + '</td>' +
+      '<td>' + (gl>0?fmt(gl):'—') + '</td><td>' + (ce>0?fmt(ce):'—') + '</td>' +
+      '<td>' + (hi>0?fmt(hi):'—') + '</td><td>' + (pc>0?fmt(pc):'—') + '</td><td>' + (ao>0?fmt(ao):'—') + '</td>' +
+      '<td><strong style="color:' + (total>0?'var(--primary)':'var(--muted)') + '">' + (total>0?fmt(total):'—') + '</strong></td>' +
+      '<td>' + status + '</td></tr>';
+  }).join('') +
+  '<tr class="total-row"><td>Grand Total</td>' +
+  '<td>' + fmt(totals.gl) + '</td><td>' + fmt(totals.ce) + '</td>' +
+  '<td>' + fmt(totals.hi) + '</td><td>' + fmt(totals.pc) + '</td><td>' + fmt(totals.ao) + '</td>' +
+  '<td>' + fmt(grandAll) + '</td><td>—</td></tr>';
 }
 
 // ══════════════════════════════════════════════
 //  CHARTS
 // ══════════════════════════════════════════════
-function initCharts(){
-  const gc='rgba(0,0,0,0.04)',ff='Inter';
-  lineChart=new Chart(document.getElementById('lineChart').getContext('2d'),{
-    type:'line',data:{labels:YEARS,datasets:[]},
+function initCharts() {
+  var gc = 'rgba(0,0,0,0.04)', ff = 'Inter';
+  lineChart = new Chart(document.getElementById('lineChart').getContext('2d'), {
+    type:'line', data:{labels:YEARS, datasets:[]},
     options:{responsive:true,maintainAspectRatio:false,interaction:{mode:'index',intersect:false},
       plugins:{legend:{position:'top',labels:{font:{family:ff,size:11},usePointStyle:true,pointStyleWidth:8,padding:14}}},
-      scales:{x:{grid:{display:false},ticks:{font:{family:ff,size:11}}},
-        y:{beginAtZero:true,grid:{color:gc},ticks:{font:{family:ff,size:11},callback:v=>'RM'+v.toLocaleString()}}}}
+      scales:{x:{grid:{display:false},ticks:{font:{family:ff,size:11}}},y:{beginAtZero:true,grid:{color:gc},ticks:{font:{family:ff,size:11},callback:function(v){return 'RM'+v.toLocaleString();}}}}}
   });
-  donutChart=new Chart(document.getElementById('donutChart').getContext('2d'),{
+  donutChart = new Chart(document.getElementById('donutChart').getContext('2d'), {
     type:'doughnut',
-    data:{labels:Object.values(CATS).map(c=>c.label),datasets:[{data:[0,0,0,0,0],backgroundColor:Object.values(CATS).map(c=>c.color),borderWidth:3,borderColor:'#fff',hoverOffset:8}]},
+    data:{labels:Object.values(CATS).map(function(c){return c.label;}),datasets:[{data:[0,0,0,0,0],backgroundColor:Object.values(CATS).map(function(c){return c.color;}),borderWidth:3,borderColor:'#fff',hoverOffset:8}]},
     options:{responsive:true,maintainAspectRatio:false,
       plugins:{legend:{position:'bottom',labels:{font:{family:ff,size:11},usePointStyle:true,pointStyleWidth:8,padding:12}},
-        tooltip:{callbacks:{label:ctx=>` ${ctx.label}: RM${Number(ctx.parsed).toLocaleString('en-MY',{minimumFractionDigits:2})}`}}}}
+        tooltip:{callbacks:{label:function(ctx){return ' '+ctx.label+': RM'+Number(ctx.parsed).toLocaleString('en-MY',{minimumFractionDigits:2});}}}}}
   });
-  barChart=new Chart(document.getElementById('barChart').getContext('2d'),{
+  barChart = new Chart(document.getElementById('barChart').getContext('2d'), {
     type:'bar',
-    data:{labels:Object.values(CATS).map(c=>c.label),datasets:[
-      {label:'Amount Claimed',data:[0,0,0,0,0],backgroundColor:Object.values(CATS).map(c=>c.color+'cc'),borderRadius:8,borderSkipped:false},
+    data:{labels:Object.values(CATS).map(function(c){return c.label;}),datasets:[
+      {label:'Amount Claimed',data:[0,0,0,0,0],backgroundColor:Object.values(CATS).map(function(c){return c.color+'cc';}),borderRadius:8,borderSkipped:false},
       {label:'Relief Limit',data:[2500,8000,3000,8000,0],backgroundColor:'rgba(0,0,0,.07)',borderRadius:8,borderSkipped:false}
     ]},
     options:{responsive:true,maintainAspectRatio:false,
       plugins:{legend:{position:'top',labels:{font:{family:ff,size:11},usePointStyle:true,padding:14}}},
-      scales:{x:{grid:{display:false},ticks:{font:{family:ff,size:11}}},
-        y:{beginAtZero:true,grid:{color:gc},ticks:{font:{family:ff,size:11},callback:v=>'RM'+v.toLocaleString()}}}}
+      scales:{x:{grid:{display:false},ticks:{font:{family:ff,size:11}}},y:{beginAtZero:true,grid:{color:gc},ticks:{font:{family:ff,size:11},callback:function(v){return 'RM'+v.toLocaleString();}}}}}
   });
 }
 
-function updateAll(){
-  const year=document.getElementById('yearFilter').value;
-  const limits=[2500,8000,3000,8000,null];
-  let grand=0;
-  Object.keys(CATS).forEach((cat,i)=>{
-    const s=getSum(cat,year,currentPerson);grand+=s;
-    document.getElementById('sum-'+cat).textContent=fmt(s);
-    const lim=limits[i];
-    document.getElementById('bar-'+cat).style.width=lim?Math.min(100,s/lim*100)+'%':(s>0?'100%':'0%');
+function updateAll() {
+  var year   = document.getElementById('yearFilter').value;
+  var limits = [2500, 8000, 3000, 8000, null];
+  var grand  = 0;
+  Object.keys(CATS).forEach(function(cat, i) {
+    var s = getSum(cat, year, currentPerson); grand += s;
+    document.getElementById('sum-'+cat).textContent = fmt(s);
+    var lim = limits[i];
+    document.getElementById('bar-'+cat).style.width = lim ? Math.min(100, s/lim*100)+'%' : (s>0?'100%':'0%');
   });
-  document.getElementById('trend-badge').textContent=fmt(grand);
-  document.getElementById('donut-year-label').textContent='Year '+year+(isFuture(year)?' ★ Planned':'');
-  document.getElementById('bar-chart-sub').textContent=`Year ${year} · ${currentPerson}`;
-  lineChart.data.datasets=Object.keys(CATS).map(cat=>({
-    label:CATS[cat].label,data:YEARS.map(y=>getSum(cat,y,currentPerson)),
-    borderColor:CATS[cat].color,backgroundColor:CATS[cat].color+'18',
-    fill:true,tension:0.4,pointBackgroundColor:CATS[cat].color,pointRadius:4,pointHoverRadius:7
-  }));
+  document.getElementById('trend-badge').textContent    = fmt(grand);
+  document.getElementById('donut-year-label').textContent = 'Year ' + year + (isFuture(year)?' ★ Planned':'');
+  document.getElementById('bar-chart-sub').textContent  = 'Year ' + year + ' · ' + currentPerson;
+
+  lineChart.data.datasets = Object.keys(CATS).map(function(cat) {
+    return {
+      label:CATS[cat].label, data:YEARS.map(function(y){return getSum(cat,y,currentPerson);}),
+      borderColor:CATS[cat].color, backgroundColor:CATS[cat].color+'18',
+      fill:true, tension:0.4, pointBackgroundColor:CATS[cat].color, pointRadius:4, pointHoverRadius:7
+    };
+  });
   lineChart.update();
-  donutChart.data.datasets[0].data=Object.keys(CATS).map(cat=>getSum(cat,year,currentPerson));
+  donutChart.data.datasets[0].data = Object.keys(CATS).map(function(cat){return getSum(cat,year,currentPerson);});
   donutChart.update();
-  barChart.data.datasets[0].data=Object.keys(CATS).map(cat=>getSum(cat,year,currentPerson));
+  barChart.data.datasets[0].data = Object.keys(CATS).map(function(cat){return getSum(cat,year,currentPerson);});
   barChart.update();
 }
 
 // ══════════════════════════════════════════════
-//  EXPORT CSV — WITH MONTH
+//  EXPORT CSV
 // ══════════════════════════════════════════════
-function exportCSV(){
-  let csv='Year,Month,Person,Category,Sub-Category,Extra,Amount(RM),Description,Date Added,Attachments\n';
-  Object.entries(data).forEach(([cat,rows])=>{
-    (rows||[]).forEach(e=>{
-      csv+=`${e.year},"${e.monthName||getMonthName(e.month)||''}","${e.person}","${CATS[cat].label}","${e.subcat}","${e.extra||''}",${e.amount},"${e.desc}","${e.date}",${(e.files||[]).length}\n`;
+function exportCSV() {
+  var csv = 'Year,Month,Person,Category,Sub-Category,Extra,Amount(RM),Description,Date Added,Attachments\n';
+  Object.keys(data).forEach(function(cat) {
+    (data[cat]||[]).forEach(function(e) {
+      csv += e.year + ',"' + (e.monthName||getMonthName(e.month)||'') + '","' + e.person + '","' +
+        CATS[cat].label + '","' + e.subcat + '","' + (e.extra||'') + '",' +
+        e.amount + ',"' + e.desc + '","' + e.date + '",' + (e.files||[]).length + '\n';
     });
   });
-  const a=document.createElement('a');
-  a.href=URL.createObjectURL(new Blob([csv],{type:'text/csv'}));
-  a.download='SF_LHDN_TaxTracker_2020-2030.csv';
+  var a = document.createElement('a');
+  a.href = URL.createObjectURL(new Blob([csv], {type:'text/csv'}));
+  a.download = 'SF_LHDN_TaxTracker_2020-2030.csv';
   a.click();
-  showToast('📊 Exported with Month column!');
+  showToast('📊 Exported: SF_LHDN_TaxTracker_2020-2030.csv');
 }
 
 // ══════════════════════════════════════════════
 //  TOAST
 // ══════════════════════════════════════════════
-function showToast(msg,type='success'){
-  const c=document.getElementById('toastContainer');
-  const t=document.createElement('div');
-  t.className='toast'+(type==='error'?' error':'');
-  t.innerHTML=`<i class="fas fa-${type==='error'?'exclamation-circle':'check-circle'}" style="color:var(--${type==='error'?'danger':'success'});font-size:16px;flex-shrink:0"></i>${msg}`;
+function showToast(msg, type) {
+  type = type || 'success';
+  var c = document.getElementById('toastContainer');
+  var t = document.createElement('div');
+  t.className = 'toast' + (type==='error' ? ' error' : '');
+  t.innerHTML = '<i class="fas fa-' + (type==='error'?'exclamation-circle':'check-circle') + '" style="color:var(--' + (type==='error'?'danger':'success') + ');font-size:16px;flex-shrink:0"></i>' + msg;
   c.appendChild(t);
-  setTimeout(()=>{t.style.opacity='0';t.style.transform='translateX(30px)';t.style.transition='.4s';setTimeout(()=>t.remove(),420)},3200);
+  setTimeout(function() {
+    t.style.opacity = '0';
+    t.style.transform = 'translateX(30px)';
+    t.style.transition = '.4s';
+    setTimeout(function() { t.remove(); }, 420);
+  }, 3200);
 }
 
 // ══════════════════════════════════════════════
 //  INIT
 // ══════════════════════════════════════════════
 initCharts();
-setDefaultMonths();   // ← Auto-set current month on load
+setDefaultMonths();
 loadFromCloud();
 startAutoRefresh();
 </script>
